@@ -1,0 +1,55 @@
+<section class="k-container" style="padding: 34px 40px 10px">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px">
+    <h2 class="k-h2">{{ section.settings.title | default: "Mes univers ⛩️" }}</h2>
+    <span style="font: 500 13px var(--k-font-ui); color: var(--k-text-muted)">{{ section.settings.subtitle }}</span>
+  </div>
+  <div class="k-grid k-grid-5">
+    {% for block in section.blocks %}
+      {% if block.type == 'univers' %}
+        <a href="{{ block.settings.url }}" style="display: flex; flex-direction: column; align-items: center; gap: 10px; background: {{ block.settings.bg }}; border-radius: 20px; padding: 18px 12px 16px; border: 1.5px solid {{ block.settings.border }}; text-align: center" {{ block.shopify_attributes }}>
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | image_url: width: 200 }}" style="width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 3px solid var(--k-pink-soft)" alt="{{ block.settings.name }}">
+          {% endif %}
+          <div style="font: 700 14px var(--k-font-title); color: var(--k-text)">{{ block.settings.name }}</div>
+          <div style="font: 500 11px var(--k-font-ui); color: var(--k-text-muted)">{{ block.settings.subtitle }}</div>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mes univers",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Mes univers ⛩️" },
+    { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "choisis ton fandom" }
+  ],
+  "blocks": [
+    {
+      "type": "univers",
+      "name": "Univers",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nom", "default": "Kawaii" },
+        { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "les classiques cutes" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "url", "label": "Lien" },
+        { "type": "color", "id": "bg", "label": "Fond", "default": "#fdeef2" },
+        { "type": "color", "id": "border", "label": "Bordure", "default": "#f6cdd9" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mes univers",
+      "blocks": [
+        { "type": "univers", "settings": { "name": "Kawaii", "subtitle": "les classiques cutes", "bg": "#fdeef2", "border": "#f6cdd9" } },
+        { "type": "univers", "settings": { "name": "Animés & manga", "subtitle": "tes héros en laine", "bg": "#f3edfa", "border": "#dfceef" } },
+        { "type": "univers", "settings": { "name": "K-pop", "subtitle": "bias en peluche", "bg": "#eaf6f0", "border": "#c9e6d8" } },
+        { "type": "univers", "settings": { "name": "Jeux vidéo", "subtitle": "pixel & pelote", "bg": "#fdf1e6", "border": "#f4dcc2" } },
+        { "type": "univers", "settings": { "name": "Accessoires", "subtitle": "trousses & totes", "bg": "#fdeef2", "border": "#f6cdd9" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

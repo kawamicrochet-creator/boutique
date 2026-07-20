@@ -1,0 +1,33 @@
+<section style="position: relative; background: var(--k-pink-soft){% if section.settings.bg_image %}; overflow: hidden{% endif %}">
+  {% if section.settings.bg_image %}
+    <div style="position: absolute; inset: 0; background: url('{{ section.settings.bg_image | image_url: width: 1600 }}') center/cover"></div>
+    <div style="position: absolute; inset: 0; background: rgba(253,243,244,.55)"></div>
+  {% endif %}
+  <div style="position: relative; max-width: 680px; margin: 0 auto; padding: 56px 40px; text-align: center">
+    <div style="display: inline-block; background: var(--k-pink-soft); border: 1.5px solid var(--k-pink); border-radius: 24px; padding: 34px 40px; box-shadow: 0 10px 30px rgba(197,93,120,.28)">
+      <div style="font-size: 30px; margin-bottom: 8px">💌</div>
+      <h2 style="font: 900 26px var(--k-font-title); color: var(--k-text); margin: 0 0 10px">{{ section.settings.title | default: "La petite lettre de l'atelier" }}</h2>
+      <p style="font: 500 14px/1.6 var(--k-font-ui); color: #8a5f70; margin: 0 0 22px">{{ section.settings.text }}</p>
+      {% form 'customer', class: 'k-newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div style="display: flex; gap: 10px; max-width: 420px; margin: 0 auto">
+          <input type="email" name="contact[email]" class="k-input" style="flex: 1" placeholder="ton@email.fr" required>
+          <button type="submit" class="k-btn k-btn-dark">S'inscrire</button>
+        </div>
+        {% if form.posted_successfully? %}<p style="font: 600 12px var(--k-font-ui); color: var(--k-text); margin-top: 10px">Merci, c'est noté 🌸</p>{% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "image_picker", "id": "bg_image", "label": "Image de fond" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "La petite lettre de l'atelier" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Nouveautés, précommandes et retours en convention (promis, pas de spam — juste de la douceur)." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

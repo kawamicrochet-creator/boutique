@@ -1,0 +1,11 @@
+<section class="k-container" style="padding: 44px 40px 60px; max-width: 760px">
+  <div class="k-breadcrumb"><a href="{{ blog.url }}">{{ blog.title }}</a> <span style="opacity: .5">›</span> {{ article.title }}</div>
+  <h1 class="k-h1">{{ article.title }}</h1>
+  <div style="font: 500 12px var(--k-font-ui); color: var(--k-text-muted); margin-bottom: 24px">{{ article.published_at | date: '%d %B %Y' }}</div>
+  {% if article.image %}<img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title }}" style="border-radius: 20px; margin-bottom: 24px">{% endif %}
+  <div style="font: 500 15px/1.75 var(--k-font-ui); color: var(--k-text-soft)">{{ article.content }}</div>
+</section>
+
+{% schema %}
+{ "name": "Article" }
+{% endschema %}

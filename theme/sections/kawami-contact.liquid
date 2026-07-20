@@ -1,0 +1,98 @@
+<section style="max-width: 1000px; margin: 0 auto; padding: 48px 40px 60px">
+  <h1 class="k-h1">{{ section.settings.title | default: "Écris-moi 💌" }}</h1>
+  <p class="k-lead" style="margin: 0 0 30px; max-width: 520px">{{ section.settings.intro }}</p>
+  <div class="k-grid k-grid-2" style="grid-template-columns: 1.15fr .85fr; align-items: start">
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 24px; padding: 30px 32px">
+      {% form 'contact', class: 'k-contact-form' %}
+        {% if form.posted_successfully? %}
+          <p style="font: 700 15px var(--k-font-ui); color: var(--k-text)">{{ 'contact.form.sent' | t }}</p>
+        {% else %}
+          {% if form.errors %}
+            <p style="font: 600 13px var(--k-font-ui); color: #a94f6e; margin-bottom: 12px">{{ 'contact.form.error' | t }}</p>
+          {% endif %}
+          <div class="k-grid k-grid-2" style="margin-bottom: 14px">
+            <div>
+              <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">{{ 'contact.form.name' | t }}</div>
+              <input type="text" class="k-field" name="contact[name]" placeholder="Sakura" value="{{ form.name }}">
+            </div>
+            <div>
+              <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">{{ 'contact.form.email' | t }}</div>
+              <input type="email" class="k-field" name="contact[email]" placeholder="toi@email.fr" value="{{ form.email }}" required>
+            </div>
+          </div>
+          <div style="margin-bottom: 14px">
+            <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Sujet</div>
+            <select name="contact[subject]" class="k-field">
+              <option>Une question</option>
+              <option>Ma commande</option>
+              <option>Précommande</option>
+              <option>Presse / collab</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 16px">
+            <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">{{ 'contact.form.message' | t }}</div>
+            <textarea class="k-field" name="contact[body]" placeholder="{{ 'contact.form.message_placeholder' | t }}">{{ form.body }}</textarea>
+          </div>
+          <button type="submit" class="k-btn k-btn-primary" style="width: 100%">{{ 'contact.form.send' | t }}</button>
+        {% endif %}
+      {% endform %}
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 22px 24px">
+        <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 10px">Retrouve-moi ici</div>
+        <div style="display: flex; flex-direction: column; gap: 9px; font: 500 13.5px var(--k-font-ui); color: var(--k-text-soft)">
+          {% if section.settings.email != blank %}<div>📮 {{ section.settings.email }}</div>{% endif %}
+          {% if settings.social_instagram_url != blank %}<div>📸 <a href="{{ settings.social_instagram_url }}" target="_blank" rel="noopener">@{{ settings.social_instagram }}</a> sur Instagram</div>{% endif %}
+          {% if settings.social_tiktok_url != blank %}<div>🎵 <a href="{{ settings.social_tiktok_url }}" target="_blank" rel="noopener">Kawami</a> sur TikTok</div>{% endif %}
+        </div>
+      </div>
+      {% if section.blocks.size > 0 %}
+        <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 22px 24px">
+          <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 10px">Petites questions fréquentes</div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font: 500 13px/1.55 var(--k-font-ui); color: var(--k-text-soft)">
+            {% for block in section.blocks %}
+              {% if block.type == 'faq' %}
+                <div {{ block.shopify_attributes }}><strong style="color: var(--k-text)">{{ block.settings.question }}</strong><br>{{ block.settings.answer }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% if section.settings.tip_text != blank %}
+        <div style="background: var(--k-pink-soft); border-radius: 20px; padding: 20px 24px; font: 600 13px/1.6 var(--k-font-ui); color: var(--k-text)">{{ section.settings.tip_text }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Écris-moi 💌" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Une question sur une peluche, une précommande, ta commande en cours ? Je réponds en général sous 48 h (le crochet occupe beaucoup mes mains !)." },
+    { "type": "text", "id": "email", "label": "Email de contact", "default": "info@kawami.fr" },
+    { "type": "textarea", "id": "tip_text", "label": "Astuce encadrée", "default": "🌸 Astuce : pour suivre la naissance des prochaines peluches, c'est sur Instagram que tout se passe !" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "textarea", "id": "answer", "label": "Réponse" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Quel délai pour une précommande ?", "answer": "2 à 3 semaines de fabrication, puis envoi suivi sous 48 h." } },
+        { "type": "faq", "settings": { "question": "Cela convient-il aux enfants ?", "answer": "Nos peluches sont avant tout des objets de décoration et de collection. Certaines ont des yeux de sécurité (normes CE en cours) ; si c'est pour un enfant, privilégiez les modèles aux yeux brodés." } },
+        { "type": "faq", "settings": { "question": "Seras-tu en convention cette année ?", "answer": "Pas cette année — rendez-vous l'année prochaine 💕" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

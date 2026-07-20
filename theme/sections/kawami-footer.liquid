@@ -1,0 +1,55 @@
+{% liquid
+  assign shop_collection = section.settings.nav_shop_collection
+  assign apropos_page = section.settings.nav_apropos_page
+  assign contact_page = section.settings.nav_contact_page
+%}
+<footer class="k-footer">
+  <div class="k-footer__top">
+    <div>
+      <div class="k-footer__brand">
+        {% if settings.logo %}
+          <img src="{{ settings.logo | image_url: width: 96 }}" alt="">
+        {% else %}
+          <img src="{{ 'kawami-mark.png' | asset_url }}" alt="">
+        {% endif %}
+        <span style="font: 900 18px var(--k-font-title); color: #fff; letter-spacing: .06em">
+          {{ shop.name | default: 'KAWAMI' | upcase }}
+          <span style="font: 500 11px var(--k-font-title); color: var(--k-pink); letter-spacing: .3em; margin-left: 4px">親友</span>
+        </span>
+      </div>
+      <p style="font: 500 12.5px/1.6 var(--k-font-ui); color: #c7a8b6; margin: 0; max-width: 260px">Peluches au crochet et accessoires cousus main, depuis un petit atelier français.</p>
+    </div>
+    <div>
+      <div class="k-footer__heading">Boutique</div>
+      <div class="k-footer__links">
+        <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Toutes les peluches</a>
+      </div>
+    </div>
+    <div>
+      <div class="k-footer__heading">Infos</div>
+      <div class="k-footer__links">
+        {% if apropos_page %}<a href="{{ apropos_page.url }}">Mon histoire</a>{% endif %}
+        {% if contact_page %}<a href="{{ contact_page.url }}">Contact</a>{% endif %}
+      </div>
+    </div>
+    <div>
+      <div class="k-footer__heading">Suis l'atelier</div>
+      <div class="k-footer__links">
+        {% if settings.social_instagram_url != blank %}<a href="{{ settings.social_instagram_url }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        {% if settings.social_tiktok_url != blank %}<a href="{{ settings.social_tiktok_url }}" target="_blank" rel="noopener">TikTok</a>{% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="k-footer__bottom">© {{ 'now' | date: '%Y' }} {{ shop.name | default: 'Kawami' }} · fait main avec 💕 et beaucoup de laine</div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page Kawami",
+  "settings": [
+    { "type": "collection", "id": "nav_shop_collection", "label": "Collection « Boutique »" },
+    { "type": "page", "id": "nav_apropos_page", "label": "Page « Mon histoire »" },
+    { "type": "page", "id": "nav_contact_page", "label": "Page « Contact »" }
+  ]
+}
+{% endschema %}

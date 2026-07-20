@@ -1,0 +1,101 @@
+{% liquid
+  assign shop_collection = section.settings.nav_shop_collection
+  assign accessoires_page = section.settings.nav_accessoires_page
+  assign journaux_page = section.settings.nav_journaux_page
+  assign apropos_page = section.settings.nav_apropos_page
+  assign contact_page = section.settings.nav_contact_page
+%}
+
+{% if section.blocks.size > 0 %}
+<div class="k-announce">
+  <div class="k-announce__track-wrap">
+    <div class="k-announce__track">
+      {% for i in (1..2) %}
+        {% for block in section.blocks %}
+          <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          <span class="k-announce__sep">·</span>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<header class="k-header">
+  <a href="{{ routes.root_url }}" class="k-header__logo">
+    {% if settings.logo %}
+      <img src="{{ settings.logo | image_url: width: 112 }}" width="56" height="56" alt="{{ shop.name }}">
+    {% else %}
+      <img src="{{ 'kawami-mark.png' | asset_url }}" width="56" height="56" alt="{{ shop.name }}">
+    {% endif %}
+    <span>
+      <span class="k-header__wordmark">
+        <span class="k-header__wordmark-name">{{ shop.name | default: 'KAWAMI' | upcase }}</span>
+        <span class="k-header__wordmark-mark">親友</span>
+      </span>
+      <span class="k-header__tagline">Peluches &amp; accessoires · fait main</span>
+    </span>
+  </a>
+
+  <nav class="k-nav">
+    <a href="{{ routes.root_url }}" {% if request.page_type == 'index' %}class="is-active"{% endif %}>Accueil</a>
+    <div class="k-drop">
+      <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Boutique<span style="color: var(--k-text-muted)"> ▾</span></a>
+      <div class="k-drop__menu">
+        <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Peluches</a>
+        {% if accessoires_page %}<a href="{{ accessoires_page.url }}">Accessoires</a>{% endif %}
+        {% if journaux_page %}<a href="{{ journaux_page.url }}">Journaux</a>{% endif %}
+      </div>
+    </div>
+    {% if apropos_page %}<a href="{{ apropos_page.url }}">Mon histoire</a>{% endif %}
+    {% if contact_page %}<a href="{{ contact_page.url }}">Contact</a>{% endif %}
+    {% if section.settings.show_account_link %}
+      <a href="{{ routes.account_url }}">Mon compte</a>
+    {% endif %}
+  </nav>
+
+  <div class="k-header__icons">
+    <a href="{{ routes.search_url }}" aria-label="Rechercher">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--k-text)"><circle cx="9" cy="9" r="6"></circle><path d="M13.5 13.5 L18 18"></path></svg>
+    </a>
+    {% if section.settings.show_account_link %}
+      <a href="{{ routes.account_url }}" class="k-icon-link" aria-label="Mon compte">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--k-text)" stroke-width="1.8"><circle cx="10" cy="6.5" r="3.5"></circle><path d="M3.5 18 Q10 12 16.5 18"></path></svg>
+      </a>
+    {% endif %}
+    <a href="{{ routes.cart_url }}" class="k-icon-link" aria-label="Panier">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--k-text)" stroke-width="1.8"><path d="M4 6 H16 L15 17 H5 Z"></path><path d="M7 6 V5 a3 3 0 0 1 6 0 V6"></path></svg>
+      {% if cart.item_count > 0 %}<div class="k-cart-count">{{ cart.item_count }}</div>{% endif %}
+    </a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "En-tête Kawami",
+  "settings": [
+    { "type": "collection", "id": "nav_shop_collection", "label": "Collection « Boutique »" },
+    { "type": "page", "id": "nav_accessoires_page", "label": "Page « Accessoires »" },
+    { "type": "page", "id": "nav_journaux_page", "label": "Page « Journaux »" },
+    { "type": "page", "id": "nav_apropos_page", "label": "Page « Mon histoire »" },
+    { "type": "page", "id": "nav_contact_page", "label": "Page « Contact »" },
+    { "type": "checkbox", "id": "show_account_link", "label": "Afficher compte / connexion", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Message du bandeau",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texte", "default": "🌍 Livraison soignée dans le monde entier 🌍" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "announcement", "settings": { "text": "🌍 Livraison soignée dans le monde entier 🌍" } },
+      { "type": "announcement", "settings": { "text": "🎁 Livraison gratuite en France dès 120 € 🎁" } },
+      { "type": "announcement", "settings": { "text": "🧵 Précommandes : fabrication en 2-3 semaines 🧵" } }
+    ]
+  }
+}
+{% endschema %}

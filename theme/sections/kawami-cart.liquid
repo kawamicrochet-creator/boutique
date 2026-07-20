@@ -1,0 +1,68 @@
+{% liquid
+  assign shop_collection = section.settings.nav_shop_collection
+  assign threshold = settings.free_shipping_threshold | times: 100
+  assign remaining = threshold | minus: cart.total_price
+%}
+<section class="k-container" style="padding: 44px 40px 60px">
+  <h1 class="k-h1">{{ 'cart.title' | t }} 🧺</h1>
+  <p style="font: 500 14px var(--k-font-ui); color: var(--k-text-soft); margin: 0 0 26px">{{ cart.item_count }} petites merveilles prêtes à partir 💕</p>
+
+  {% if cart.item_count == 0 %}
+    <div style="background: var(--k-card); border: 1.5px dashed var(--k-pink); border-radius: 20px; padding: 40px; text-align: center; font: 600 15px var(--k-font-ui); color: var(--k-text-soft)">
+      {{ 'cart.empty' | t }} <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">visite la boutique 🌸</a>
+    </div>
+  {% else %}
+    {% form 'cart', cart %}
+      <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          {% for item in cart.items %}
+            <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 16px 18px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
+              <div style="width: 92px; height: 92px; border-radius: 14px; overflow: hidden; flex: none">
+                {% if item.image %}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover">{% endif %}
+              </div>
+              <div style="flex: 1; min-width: 160px">
+                <a href="{{ item.url }}" style="font: 700 15px var(--k-font-title); color: var(--k-text)">{{ item.product.title }}</a>
+                {% unless item.variant.title == 'Default Title' %}
+                  <div style="font: 500 11.5px var(--k-font-ui); color: var(--k-text-muted); margin: 2px 0 6px">{{ item.variant.title }}</div>
+                {% endunless %}
+                <div class="k-badge {% if item.product.available %}k-badge-instock{% else %}k-badge-preorder{% endif %}">{% if item.product.available %}En stock{% else %}Précommande · {{ settings.preorder_delay_text }}{% endif %}</div>
+              </div>
+              <div class="k-qty">
+                <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" style="width: 44px">
+              </div>
+              <div style="font: 700 15px var(--k-font-ui); color: var(--k-primary); min-width: 76px; text-align: right">{{ item.final_line_price | money }}</div>
+              <a href="{{ item.url_to_remove }}" style="color: #c9b2bc; font: 700 16px var(--k-font-ui); padding: 4px 6px">✕</a>
+            </div>
+          {% endfor %}
+          <button type="submit" name="update" class="k-btn k-btn-secondary" style="align-self: flex-start">Mettre à jour le panier</button>
+          <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" style="font: 700 13px var(--k-font-ui); color: #c76b88; margin-top: 4px">← {{ 'cart.continue_shopping' | t }}</a>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 24px 26px">
+            <div style="font: 700 17px var(--k-font-title); color: var(--k-text); margin-bottom: 16px">Résumé</div>
+            <div style="display: flex; font: 500 13.5px var(--k-font-ui); color: var(--k-text-soft); margin-bottom: 8px">{{ 'cart.subtotal' | t }}<span style="margin-left: auto; color: var(--k-text); font-weight: 700">{{ cart.original_total_price | money }}</span></div>
+            {% if remaining > 0 %}
+              <div style="font: 500 11px/1.5 var(--k-font-ui); color: var(--k-text-muted); margin-bottom: 14px">Plus que {{ remaining | money }} pour la livraison offerte en France 🎁</div>
+            {% else %}
+              <div style="font: 700 11px/1.5 var(--k-font-ui); color: var(--k-instock-text); margin-bottom: 14px">🎁 Livraison offerte en France !</div>
+            {% endif %}
+            <div style="border-top: 1.5px solid var(--k-border); padding-top: 14px; display: flex; font: 700 16px var(--k-font-ui); color: var(--k-text)">{{ 'cart.total' | t }}<span style="margin-left: auto; color: var(--k-primary); font-size: 20px">{{ cart.total_price | money }}</span></div>
+            <a href="{{ routes.cart_url }}/checkout" class="k-btn k-btn-primary" style="display: block; width: 100%; margin-top: 18px">{{ 'cart.checkout' | t }}</a>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px; font: 600 10.5px var(--k-font-ui); color: var(--k-text-muted)"><span>🔒 Paiement sécurisé</span></div>
+          </div>
+          <div style="background: var(--k-pink-soft); border-radius: 20px; padding: 18px 22px; font: 600 12.5px/1.6 var(--k-font-ui); color: var(--k-text)">🌸 {{ 'cart.mixed_order_note' | t }}</div>
+        </div>
+      </div>
+    {% endform %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Panier Kawami",
+  "settings": [
+    { "type": "collection", "id": "nav_shop_collection", "label": "Collection « Boutique »" }
+  ]
+}
+{% endschema %}

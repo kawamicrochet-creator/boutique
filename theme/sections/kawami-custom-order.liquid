@@ -1,0 +1,63 @@
+<section class="k-container" id="commande-perso" style="padding: 56px 40px">
+  <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 28px; padding: 38px 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center">
+    <div>
+      <div class="k-eyebrow" style="margin-bottom: 16px">{{ section.settings.eyebrow | default: "🎨 Commande personnalisée" }}</div>
+      <h2 style="font: 900 30px/1.22 var(--k-font-title); color: var(--k-text); margin: 0 0 14px; text-wrap: pretty">{{ section.settings.title }}</h2>
+      <p class="k-lead" style="margin: 0 0 16px">{{ section.settings.text }}</p>
+      {% if section.settings.note != blank %}
+        <div style="background: #fff7e8; border: 1.5px solid #f0dcb8; border-radius: 16px; padding: 14px 18px; font: 600 12.5px/1.6 var(--k-font-ui); color: var(--k-beige-darker)">{{ section.settings.note }}</div>
+      {% endif %}
+    </div>
+    <div style="background: var(--k-bg); border-radius: 20px; padding: 28px 30px">
+      <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 14px">Comment ça marche</div>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px">
+        {% for block in section.blocks %}
+          {% if block.type == 'step' %}
+            <div style="display: flex; gap: 12px" {{ block.shopify_attributes }}>
+              <div style="width: 26px; height: 26px; flex: none; border-radius: 50%; background: {{ block.settings.bg }}; color: var(--k-text); font: 700 12px var(--k-font-ui); display: flex; align-items: center; justify-content: center">{{ forloop.index }}</div>
+              <div style="font: 500 13px/1.5 var(--k-font-ui); color: var(--k-text-soft)">{{ block.settings.text }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if section.settings.cta_text != blank %}
+        <a href="{{ section.settings.cta_url }}" class="k-btn k-btn-primary" style="display: block; width: 100%">{{ section.settings.cta_text }}</a>
+      {% endif %}
+      <div style="font: 500 11px/1.5 var(--k-font-ui); color: var(--k-text-muted); text-align: center; margin-top: 10px">La faisabilité dépend du volume de commandes en cours 💌</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Commande personnalisée",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Petit texte", "default": "🎨 Commande personnalisée" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Ta peluche, dans tes couleurs" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Tu craques pour un de mes modèles mais tu le rêves dans d'autres teintes ? On peut adapter les couleurs d'un modèle existant rien que pour toi 💕" },
+    { "type": "textarea", "id": "note", "label": "Note encadrée", "default": "🧵 Je réalise uniquement des variantes de couleur sur mes modèles déjà testés — je n'accepte pas les patrons extérieurs, pour garantir la qualité de chaque pièce." },
+    { "type": "text", "id": "cta_text", "label": "Bouton", "default": "Demander si c'est possible" },
+    { "type": "url", "id": "cta_url", "label": "Lien du bouton" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Étape",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texte" },
+        { "type": "color", "id": "bg", "label": "Fond du numéro", "default": "#f8cdd8" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Commande personnalisée",
+      "blocks": [
+        { "type": "step", "settings": { "text": "Choisis un modèle existant et les couleurs qui te font envie", "bg": "#f8cdd8" } },
+        { "type": "step", "settings": { "text": "Écris-moi pour vérifier si c'est faisable selon le carnet de commandes du moment", "bg": "#d5c3e8" } },
+        { "type": "step", "settings": { "text": "Je te confirme le délai et on lance ta pièce unique 🌸", "bg": "#bfe3d2" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

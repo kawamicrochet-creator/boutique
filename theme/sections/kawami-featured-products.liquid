@@ -1,0 +1,54 @@
+{% liquid
+  assign col = section.settings.collection
+  assign count = section.settings.products_count | default: 4
+%}
+<section class="k-container" style="padding: 48px 40px 26px">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px">
+    <h2 class="k-h2">{{ section.settings.title | default: "Les petites nouveautés ✨" }}</h2>
+    {% if col %}<a href="{{ col.url }}" style="margin-left: auto; font: 700 13px var(--k-font-ui); color: #c76b88">Tout voir →</a>{% endif %}
+  </div>
+  <p class="k-lead" style="font-size: 13.5px; margin: 0 0 22px">{{ section.settings.subtitle }}</p>
+  <div class="k-grid k-grid-4">
+    {% if col %}
+      {% for product in col.products limit: count %}
+        <a href="{{ product.url }}" class="k-card">
+          <div class="k-card__media">
+            {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" loading="lazy">{% endif %}
+            {% if product.available %}
+              {% if product.tags contains 'precommande' %}
+                <div class="k-card__badge k-badge k-badge-preorder">Précommande · {{ settings.preorder_delay_text }}</div>
+              {% else %}
+                <div class="k-card__badge k-badge k-badge-instock">En stock</div>
+              {% endif %}
+            {% else %}
+              <div class="k-card__badge k-badge" style="background: var(--k-border); color: var(--k-text)">Épuisé</div>
+            {% endif %}
+          </div>
+          <div class="k-card__body">
+            <div class="k-card__title">{{ product.title }}</div>
+            <div class="k-card__subtitle">{{ product.type }}</div>
+            <div class="k-card__price-row">
+              <span class="k-card__price">{{ product.price | money }}</span>
+              <span class="k-card__add">Voir +</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p style="font: 500 13px var(--k-font-ui); color: var(--k-text-muted)">Choisis une collection dans les réglages de cette section pour afficher les produits.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produits en vedette",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Les petites nouveautés ✨" },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Certaines peluches partent tout de suite, d'autres sont crochetées rien que pour toi." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_count", "label": "Nombre de produits", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Produits en vedette" }]
+}
+{% endschema %}

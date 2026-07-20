@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "kawami-page-content" }
+  },
+  "order": ["main"]
+}

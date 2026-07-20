@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "kawami-coming-soon" }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,144 @@
+{% liquid
+  assign shop_collection = section.settings.nav_shop_collection
+  assign variant = product.selected_or_first_available_variant
+  assign related_collection = product.collections.first
+%}
+<section class="k-container" style="padding: 36px 40px 60px">
+  <div class="k-breadcrumb">
+    <a href="{{ routes.root_url }}">Accueil</a> <span style="opacity: .5">›</span>
+    <a href="{% if shop_collection %}{{ shop_collection.url }}{% elsif related_collection %}{{ related_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Boutique</a> <span style="opacity: .5">›</span>
+    {{ product.title }}
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: start">
+    <div>
+      <div style="border-radius: 26px; overflow: hidden; background: var(--k-card); border: 1.5px solid var(--k-border); aspect-ratio: 1">
+        {% if product.featured_image %}
+          <img id="kawami-main-image" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title }}" style="width: 100%; height: 100%; object-fit: cover">
+        {% endif %}
+      </div>
+      {% if product.media.size > 1 %}
+        <div style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap">
+          {% for media in product.media limit: 6 %}
+            <a href="{{ media | image_url: width: 1000 }}" onclick="document.getElementById('kawami-main-image').src=this.href;return false;" style="width: 86px; height: 86px; border-radius: 16px; overflow: hidden; border: 2.5px solid {% if forloop.first %}var(--k-primary){% else %}var(--k-border){% endif %}; display: block">
+              <img src="{{ media | image_url: width: 200 }}" style="width: 100%; height: 100%; object-fit: cover" alt="">
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <div class="k-badge {% if product.available %}k-badge-instock{% else %}k-badge-preorder{% endif %}" style="margin-bottom: 14px" data-availability
+        data-in-stock-text="{{ 'products.product.in_stock' | t }}"
+        data-sold-out-text="{{ 'products.product.preorder' | t: delay: settings.preorder_delay_text }}"
+      >{% if product.available %}{{ 'products.product.in_stock' | t }}{% else %}{{ 'products.product.preorder' | t: delay: settings.preorder_delay_text }}{% endif %}</div>
+
+      <h1 style="font: 900 36px/1.2 var(--k-font-title); color: var(--k-text); margin: 0 0 8px">{{ product.title }}</h1>
+      <div style="font: 500 13px var(--k-font-ui); color: var(--k-text-muted); margin-bottom: 14px">{{ product.type }} · pièce crochetée à la main</div>
+
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px">
+        <span data-price style="font: 700 30px var(--k-font-ui); color: var(--k-primary)">{{ variant.price | money }}</span>
+        {% if variant.compare_at_price > variant.price %}
+          <span data-compare-price style="font: 600 17px var(--k-font-ui); color: var(--k-text-muted); text-decoration: line-through">{{ variant.compare_at_price | money }}</span>
+        {% else %}
+          <span data-compare-price style="display: none"></span>
+        {% endif %}
+      </div>
+
+      <div style="background: #fff7e8; border: 1.5px solid #f0dcb8; border-radius: 16px; padding: 14px 18px; margin-bottom: 18px; font: 600 13px/1.6 var(--k-font-ui); color: var(--k-beige-darker)">
+        🏮 <strong>{{ 'products.product.decoration_note' | t }}</strong>
+      </div>
+
+      <div style="font: 500 14.5px/1.7 var(--k-font-ui); color: var(--k-text-soft); margin: 0 0 20px">{{ product.description }}</div>
+
+      {% form 'product', product, data-kawami-product-form: true %}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <script type="application/json" data-variants-json>{{ product.variants | json }}</script>
+
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <div style="margin-bottom: 20px">
+              <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 8px">{{ option.name }}</div>
+              <select class="k-field" data-option-select style="max-width: 260px">
+                {% for value in option.values %}
+                  <option value="{{ value | escape }}" {% if variant.options[option.position | minus: 1] == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 16px 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 9px">
+          <div style="display: flex; gap: 10px; font: 500 13px var(--k-font-ui); color: var(--k-text)"><span>🌿</span><span>Laine et rembourrage sans matière animale, certifiés Oeko-Tex / GOTS</span></div>
+          {% if product.metafields.custom.dimensions != blank %}
+            <div style="display: flex; gap: 10px; font: 500 13px var(--k-font-ui); color: var(--k-text)"><span>📏</span><span>{{ product.metafields.custom.dimensions }}</span></div>
+          {% endif %}
+          <div style="display: flex; gap: 10px; font: 500 13px var(--k-font-ui); color: var(--k-text)"><span>🫧</span><span>Lavage max 40°, séchage à l'air libre</span></div>
+          <div style="display: flex; gap: 10px; font: 500 13px var(--k-font-ui); color: var(--k-text)"><span>🎀</span><span>Pièce unique faite main — de légères variations la rendent unique</span></div>
+        </div>
+
+        <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 22px">
+          <div class="k-qty">
+            <button type="button" onclick="const i=this.nextElementSibling;i.value=Math.max(1,(+i.value||1)-1)">−</button>
+            <input type="number" name="quantity" value="1" min="1">
+            <button type="button" onclick="const i=this.previousElementSibling;i.value=(+i.value||1)+1">+</button>
+          </div>
+          <button
+            type="submit"
+            class="k-btn k-btn-primary"
+            style="flex: 1"
+            data-add-button
+            data-add-text="{{ 'products.product.add_to_cart' | t }}"
+            data-sold-out-text="{{ 'products.product.sold_out' | t }}"
+            {% unless variant.available %}disabled{% endunless %}
+          >{% if variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
+        </div>
+      {% endform %}
+
+      <details class="k-accordion-item" open>
+        <summary class="k-accordion-item__head">{{ 'products.product.accordion_shipping_title' | t }}</summary>
+        <div class="k-accordion-item__body">{{ 'products.product.accordion_shipping_text' | t }}</div>
+      </details>
+      <details class="k-accordion-item">
+        <summary class="k-accordion-item__head">{{ 'products.product.accordion_madeorder_title' | t }}</summary>
+        <div class="k-accordion-item__body">{{ 'products.product.accordion_madeorder_text' | t: delay: settings.preorder_delay_text }}</div>
+      </details>
+      <details class="k-accordion-item">
+        <summary class="k-accordion-item__head">{{ 'products.product.accordion_safety_title' | t }}</summary>
+        <div class="k-accordion-item__body">{{ 'products.product.accordion_safety_text' | t }}</div>
+      </details>
+    </div>
+  </div>
+
+  {% if related_collection %}
+    {% assign related = related_collection.products | where_not: 'id', product.id %}
+    {% if related.size > 0 %}
+      <div style="margin-top: 56px">
+        <h2 style="font: 900 24px var(--k-font-title); color: var(--k-text); margin: 0 0 18px">Ils iraient bien ensemble 💕</h2>
+        <div class="k-grid k-grid-4">
+          {% for p in related limit: 4 %}
+            <a href="{{ p.url }}" class="k-card">
+              <div class="k-card__media">{% if p.featured_image %}<img src="{{ p.featured_image | image_url: width: 500 }}" alt="{{ p.title }}" loading="lazy">{% endif %}</div>
+              <div class="k-card__body">
+                <div class="k-card__title">{{ p.title }}</div>
+                <div style="font: 700 13px var(--k-font-ui); color: var(--k-primary); margin-top: 4px">{{ p.price | money }}</div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+</section>
+
+<script src="{{ 'kawami-product.js' | asset_url }}" type="module" defer></script>
+
+{% schema %}
+{
+  "name": "Fiche produit Kawami",
+  "settings": [
+    { "type": "collection", "id": "nav_shop_collection", "label": "Collection « Boutique » (fil d'ariane)" }
+  ]
+}
+{% endschema %}

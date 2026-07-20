@@ -1,0 +1,70 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kawami",
+    "theme_version": "1.0.0",
+    "theme_author": "Kawami",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Logo & favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Couleurs Sakura",
+    "settings": [
+      { "type": "header", "content": "Ces teintes pilotent tout le site (boutons, badges, fond)." },
+      { "type": "color", "id": "color_bg", "label": "Fond général", "default": "#fdf3f4" },
+      { "type": "color", "id": "color_card", "label": "Fond des cartes", "default": "#fffdfd" },
+      { "type": "color", "id": "color_primary", "label": "Couleur principale (CTA)", "default": "#e58ba5" },
+      { "type": "color", "id": "color_primary_hover", "label": "Couleur principale (survol)", "default": "#d97a95" },
+      { "type": "color", "id": "color_text", "label": "Texte principal (prune)", "default": "#5c4351" },
+      { "type": "color", "id": "color_text_soft", "label": "Texte doux", "default": "#8d7180" },
+      { "type": "color", "id": "color_text_muted", "label": "Texte discret", "default": "#c98da0" },
+      { "type": "color", "id": "color_border", "label": "Bordures", "default": "#f8e2e8" },
+      { "type": "color", "id": "color_footer_bg", "label": "Fond du pied de page", "default": "#5c4351" },
+      { "type": "color", "id": "color_footer_text", "label": "Texte du pied de page", "default": "#e9d3dc" },
+      { "type": "color", "id": "color_instock_bg", "label": "Badge en stock (fond)", "default": "#bfe3d2" },
+      { "type": "color", "id": "color_instock_text", "label": "Badge en stock (texte)", "default": "#3f6b56" },
+      { "type": "color", "id": "color_preorder_bg", "label": "Badge précommande (fond)", "default": "#d5c3e8" },
+      { "type": "color", "id": "color_preorder_text", "label": "Badge précommande (texte)", "default": "#5b4479" }
+    ]
+  },
+  {
+    "name": "Livraison & panier",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Seuil de livraison offerte (France, en €)",
+        "default": 120
+      },
+      {
+        "type": "text",
+        "id": "preorder_delay_text",
+        "label": "Délai de précommande affiché",
+        "default": "2-3 semaines"
+      }
+    ]
+  },
+  {
+    "name": "Réseaux sociaux",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Identifiant Instagram", "default": "kawami_crochet" },
+      { "type": "url", "id": "social_instagram_url", "label": "Lien Instagram" },
+      { "type": "url", "id": "social_tiktok_url", "label": "Lien TikTok" }
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "kawami-list-collections" }
+  },
+  "order": ["main"]
+}

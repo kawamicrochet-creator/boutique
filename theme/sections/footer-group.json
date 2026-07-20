@@ -1,0 +1,11 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "main-footer": {
+      "type": "kawami-footer",
+      "settings": {}
+    }
+  },
+  "order": ["main-footer"]
+}

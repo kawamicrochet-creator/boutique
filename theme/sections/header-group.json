@@ -1,0 +1,11 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "main-header": {
+      "type": "kawami-header",
+      "settings": {}
+    }
+  },
+  "order": ["main-header"]
+}

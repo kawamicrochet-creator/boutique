@@ -1,0 +1,78 @@
+{% liquid
+  assign journaux_page = section.settings.nav_journaux_page
+  assign accessoires_page = section.settings.nav_accessoires_page
+%}
+<section class="k-container" style="padding: 44px 40px 60px">
+  <div class="k-breadcrumb"><a href="{{ routes.root_url }}">Accueil</a> <span style="opacity: .5">›</span> {{ collection.title }}</div>
+  <div style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap">
+    <h1 class="k-h1">{{ collection.title }} 🧸</h1>
+    <span style="font: 500 14px var(--k-font-ui); color: var(--k-text-soft)">{{ collection.products_count }} petites merveilles faites main</span>
+  </div>
+  {% if collection.description != blank %}
+    <div class="k-lead" style="margin: 6px 0 24px; max-width: 560px">{{ collection.description }}</div>
+  {% else %}
+    <p class="k-lead" style="margin: 6px 0 24px; max-width: 560px">« En stock » part sous 48 h ; « Précommande » est crocheté rien que pour toi sous {{ settings.preorder_delay_text }}.</p>
+  {% endif %}
+
+  <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 26px">
+    <a href="{{ collection.url }}" class="k-pill-choice{% if current_tags == blank %} is-active{% endif %}">{{ 'collection.all' | t }}</a>
+    {% for tag in collection.all_tags %}
+      <a href="{{ collection.url }}/{{ tag | handleize }}" class="k-pill-choice{% if current_tags contains tag %} is-active{% endif %}">{{ tag | capitalize }}</a>
+    {% endfor %}
+  </div>
+
+  {% paginate collection.products by 24 %}
+    {% if collection.products.size > 0 %}
+      <div class="k-grid k-grid-4">
+        {% for product in collection.products %}
+          <a href="{{ product.url }}" class="k-card">
+            <div class="k-card__media">
+              {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" loading="lazy">{% endif %}
+              {% if product.available %}
+                {% if product.tags contains 'precommande' %}
+                  <div class="k-card__badge k-badge k-badge-preorder">Précommande · {{ settings.preorder_delay_text }}</div>
+                {% else %}
+                  <div class="k-card__badge k-badge k-badge-instock">En stock</div>
+                {% endif %}
+              {% else %}
+                <div class="k-card__badge k-badge" style="background: var(--k-border); color: var(--k-text)">Épuisé</div>
+              {% endif %}
+            </div>
+            <div class="k-card__body">
+              <div class="k-card__title">{{ product.title }}</div>
+              <div class="k-card__subtitle">{{ product.type }}</div>
+              <div class="k-card__price-row">
+                <span class="k-card__price">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <span style="font: 600 12px var(--k-font-ui); color: var(--k-text-muted); text-decoration: line-through; margin-left: 8px">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+                <span class="k-card__add">Ajouter +</span>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+      {{ paginate | default_pagination }}
+    {% else %}
+      <p style="font: 600 14px var(--k-font-ui); color: var(--k-text-soft)">{{ 'collection.empty' | t }}</p>
+    {% endif %}
+  {% endpaginate %}
+
+  <div style="margin-top: 36px; background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; padding: 26px 30px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap">
+    <div style="font-size: 26px">🎀</div>
+    <div style="flex: 1; min-width: 260px">
+      <div style="font: 700 16px var(--k-font-title); color: var(--k-text); margin-bottom: 4px">Tu ne trouves pas ton bonheur ?</div>
+      <div style="font: 500 13px/1.55 var(--k-font-ui); color: var(--k-text-soft)">De nouvelles peluches arrivent régulièrement — suis @{{ settings.social_instagram }} pour les voir naître maille par maille.</div>
+    </div>
+    {% if section.settings.contact_page %}<a href="{{ section.settings.contact_page.url }}" class="k-btn k-btn-primary">Écris-moi</a>{% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Kawami",
+  "settings": [
+    { "type": "page", "id": "contact_page", "label": "Page « Contact »" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,26 @@
+{
+  "current": {
+    "color_bg": "#fdf3f4",
+    "color_card": "#fffdfd",
+    "color_primary": "#e58ba5",
+    "color_primary_hover": "#d97a95",
+    "color_text": "#5c4351",
+    "color_text_soft": "#8d7180",
+    "color_text_muted": "#c98da0",
+    "color_border": "#f8e2e8",
+    "color_footer_bg": "#5c4351",
+    "color_footer_text": "#e9d3dc",
+    "color_instock_bg": "#bfe3d2",
+    "color_instock_text": "#3f6b56",
+    "color_preorder_bg": "#d5c3e8",
+    "color_preorder_text": "#5b4479",
+    "free_shipping_threshold": 120,
+    "preorder_delay_text": "2-3 semaines",
+    "social_instagram": "kawami_crochet",
+    "social_instagram_url": "https://www.instagram.com/kawami_crochet",
+    "social_tiktok_url": "https://www.tiktok.com/@kawami_crochet"
+  },
+  "presets": {
+    "Kawami": {}
+  }
+}

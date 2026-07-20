@@ -1,0 +1,34 @@
+<section class="k-container" style="padding: 60px 40px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 52px; align-items: center">
+  <div style="position: relative">
+    <div class="k-photo-frame k-rotate-n2">
+      {% if section.settings.image %}<img src="{{ section.settings.image | image_url: width: 1000 }}" style="width: 100%; aspect-ratio: 1; object-fit: cover" alt="">{% endif %}
+    </div>
+    {% if section.settings.tag_text != blank %}
+      <div style="position: absolute; right: -10px; bottom: -14px; background: var(--k-pink-soft); border-radius: 999px; padding: 10px 18px; font: 700 12.5px var(--k-font-ui); color: var(--k-text); transform: rotate(3deg); box-shadow: 0 6px 16px rgba(92,67,81,.15)">{{ section.settings.tag_text }}</div>
+    {% endif %}
+  </div>
+  <div>
+    <div style="font: 700 12px var(--k-font-ui); letter-spacing: .22em; color: var(--k-text-muted); text-transform: uppercase; margin-bottom: 12px">{{ section.settings.eyebrow | default: "Mon histoire" }}</div>
+    <h2 style="font: 900 32px/1.25 var(--k-font-title); color: var(--k-text); margin: 0 0 16px; text-wrap: pretty">{{ section.settings.title }}</h2>
+    <p class="k-lead" style="font-size: 15px; margin: 0 0 14px">{{ section.settings.text }}</p>
+    {% if section.settings.link_text != blank %}
+      <a href="{{ section.settings.link_url }}" style="font: 700 14px var(--k-font-ui); color: #c76b88">{{ section.settings.link_text }} →</a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mon histoire (teaser)",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "tag_text", "label": "Étiquette sur la photo", "default": "crocheté avec amour 💕" },
+    { "type": "text", "id": "eyebrow", "label": "Petit texte", "default": "Mon histoire" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Derrière Kawami, il y a Savie (et beaucoup de laine)" },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Kawami, c'est moi, Savannah ! Non-binaire, à mobilité réduite et atteinte de maladies chroniques, j'ai voulu offrir des amis réconfortants inspirés des univers que j'aime. Chaque vente contribue à mon confort et à mes frais médicaux. 親友, c'est « meilleur ami » : ce que chaque peluche devient en arrivant chez toi." },
+    { "type": "text", "id": "link_text", "label": "Lien", "default": "Lire mon histoire" },
+    { "type": "url", "id": "link_url", "label": "URL du lien" }
+  ],
+  "presets": [{ "name": "Mon histoire (teaser)" }]
+}
+{% endschema %}

@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "hero": { "type": "kawami-hero" },
+    "univers": { "type": "kawami-univers" },
+    "featured": { "type": "kawami-featured-products" },
+    "custom-order": { "type": "kawami-custom-order" },
+    "atelier": { "type": "kawami-atelier-couture" },
+    "story": { "type": "kawami-story-teaser" },
+    "instagram": { "type": "kawami-instagram" },
+    "newsletter": { "type": "kawami-newsletter" }
+  },
+  "order": ["hero", "univers", "featured", "custom-order", "atelier", "story", "instagram", "newsletter"]
+}
