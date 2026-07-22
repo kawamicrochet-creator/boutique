@@ -1,6 +1,5 @@
 <section class="k-container" style="padding: 44px 40px 60px">
   <h1 class="k-h1">Résultats de recherche</h1>
-  {% form 'predictive-search' %}{% endform %}
   <form action="{{ routes.search_url }}" method="get" role="search" style="margin: 0 0 30px; display: flex; gap: 10px; max-width: 420px">
     <input type="search" name="q" class="k-field" value="{{ search.terms | escape }}" placeholder="Rechercher une peluche…">
     <button type="submit" class="k-btn k-btn-primary">OK</button>

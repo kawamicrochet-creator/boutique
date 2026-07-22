@@ -20,9 +20,11 @@
       {% if product.media.size > 1 %}
         <div style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap">
           {% for media in product.media limit: 6 %}
-            <a href="{{ media | image_url: width: 1000 }}" onclick="document.getElementById('kawami-main-image').src=this.href;return false;" style="width: 86px; height: 86px; border-radius: 16px; overflow: hidden; border: 2.5px solid {% if forloop.first %}var(--k-primary){% else %}var(--k-border){% endif %}; display: block">
-              <img src="{{ media | image_url: width: 200 }}" style="width: 100%; height: 100%; object-fit: cover" alt="">
-            </a>
+            {% if media.media_type == 'image' %}
+              <a href="{{ media | image_url: width: 1000 }}" onclick="document.getElementById('kawami-main-image').src=this.href;return false;" style="width: 86px; height: 86px; border-radius: 16px; overflow: hidden; border: 2.5px solid {% if forloop.first %}var(--k-primary){% else %}var(--k-border){% endif %}; display: block">
+                <img src="{{ media | image_url: width: 200 }}" style="width: 100%; height: 100%; object-fit: cover" alt="">
+              </a>
+            {% endif %}
           {% endfor %}
         </div>
       {% endif %}
@@ -58,11 +60,13 @@
 
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
+            {% assign option_zero_index = option.position | minus: 1 %}
+            {% assign selected_value = variant.options[option_zero_index] %}
             <div style="margin-bottom: 20px">
               <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 8px">{{ option.name }}</div>
               <select class="k-field" data-option-select style="max-width: 260px">
                 {% for value in option.values %}
-                  <option value="{{ value | escape }}" {% if variant.options[option.position | minus: 1] == value %}selected{% endif %}>{{ value }}</option>
+                  <option value="{{ value | escape }}" {% if value == selected_value %}selected{% endif %}>{{ value }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -111,13 +115,24 @@
     </div>
   </div>
 
-  {% if related_collection %}
-    {% assign related = related_collection.products | where_not: 'id', product.id %}
-    {% if related.size > 0 %}
-      <div style="margin-top: 56px">
-        <h2 style="font: 900 24px var(--k-font-title); color: var(--k-text); margin: 0 0 18px">Ils iraient bien ensemble 💕</h2>
-        <div class="k-grid k-grid-4">
-          {% for p in related limit: 4 %}
+  {% liquid
+    assign related_shown = 0
+    if related_collection
+      for p in related_collection.products
+        unless p.id == product.id or related_shown >= 4
+          assign related_shown = related_shown | plus: 1
+        endunless
+      endfor
+    endif
+  %}
+  {% if related_shown > 0 %}
+    <div style="margin-top: 56px">
+      <h2 style="font: 900 24px var(--k-font-title); color: var(--k-text); margin: 0 0 18px">Ils iraient bien ensemble 💕</h2>
+      <div class="k-grid k-grid-4">
+        {% assign related_rendered = 0 %}
+        {% for p in related_collection.products %}
+          {% unless p.id == product.id or related_rendered >= 4 %}
+            {% assign related_rendered = related_rendered | plus: 1 %}
             <a href="{{ p.url }}" class="k-card">
               <div class="k-card__media">{% if p.featured_image %}<img src="{{ p.featured_image | image_url: width: 500 }}" alt="{{ p.title }}" loading="lazy">{% endif %}</div>
               <div class="k-card__body">
@@ -125,10 +140,10 @@
                 <div style="font: 700 13px var(--k-font-ui); color: var(--k-primary); margin-top: 4px">{{ p.price | money }}</div>
               </div>
             </a>
-          {% endfor %}
-        </div>
+          {% endunless %}
+        {% endfor %}
       </div>
-    {% endif %}
+    </div>
   {% endif %}
 </section>
 

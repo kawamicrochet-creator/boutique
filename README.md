@@ -58,6 +58,13 @@ shopify theme push --store your-store.myshopify.com
 or zip the `theme/` folder's contents (not the folder itself) and upload
 via **Online Store → Themes → Add theme → Upload zip file**.
 
+## Product tagging convention
+
+Products without stock show a "Précommande" badge automatically; tag a
+product **`precommande`** in Shopify admin to force that badge even while
+`available` is still true (e.g. made-to-order items). Everything else
+in stock shows "En stock".
+
 ## Scope notes
 
 - Fonts are loaded via Google Fonts (matching the design exactly) rather
