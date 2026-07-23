@@ -1,0 +1,40 @@
+<section class="k-container" style="padding: 48px 40px 60px; max-width: 920px">
+  <div style="text-align: center; margin-bottom: 30px">
+    <h1 style="font: 900 36px var(--k-font-title); color: var(--k-text); margin: 0 0 8px">Mon compte</h1>
+    <p style="font: 500 14px var(--k-font-ui); color: var(--k-text-soft); margin: 0">Suis tes commandes et tes précommandes, gère tes adresses 🌸</p>
+  </div>
+  <div class="k-grid k-grid-2" style="align-items: start">
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 24px; padding: 30px 32px">
+      <div style="font: 700 19px var(--k-font-title); color: var(--k-text); margin-bottom: 18px">Connexion</div>
+      {% form 'customer_login' %}
+        {% if form.errors %}
+          <p style="font: 600 13px var(--k-font-ui); color: #a94f6e; margin-bottom: 12px">{{ form.errors | default_errors }}</p>
+        {% endif %}
+        <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Email</div>
+        <input type="email" class="k-field" name="customer[email]" placeholder="toi@email.fr" autocomplete="email" required style="margin-bottom: 14px">
+        {% if form.password_needed %}
+          <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Mot de passe</div>
+          <input type="password" class="k-field" name="customer[password]" placeholder="••••••••" autocomplete="current-password" style="margin-bottom: 8px">
+          <a href="{{ routes.account_recover_url }}" style="font: 600 12px var(--k-font-ui)">Mot de passe oublié ?</a>
+        {% endif %}
+        <button type="submit" class="k-btn k-btn-primary" style="width: 100%; margin-top: 18px">Me connecter</button>
+      {% endform %}
+    </div>
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 24px; padding: 30px 32px">
+      <div style="font: 700 19px var(--k-font-title); color: var(--k-text); margin-bottom: 10px">Première visite ?</div>
+      <p style="font: 500 13.5px/1.65 var(--k-font-ui); color: var(--k-text-soft); margin: 0 0 16px">Crée ton compte pour :</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; font: 500 13.5px var(--k-font-ui); color: var(--k-text); margin-bottom: 20px">
+        <div style="display: flex; gap: 10px"><span>📦</span><span>Suivre tes commandes et tes précommandes en fabrication</span></div>
+        <div style="display: flex; gap: 10px"><span>🏠</span><span>Enregistrer tes adresses de livraison</span></div>
+        <div style="display: flex; gap: 10px"><span>🌸</span><span>Être prévenue en avant-première des nouveautés</span></div>
+      </div>
+      {% if shop.checkout.guest_login %}
+        {% form 'guest_login' %}
+          <button type="submit" class="k-btn k-btn-secondary" style="width: 100%">Continuer en tant qu'invité·e</button>
+        {% endform %}
+      {% else %}
+        <a href="{{ routes.account_register_url }}" class="k-btn k-btn-secondary" style="width: 100%; display: block; text-align: center">Créer mon compte</a>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+<section class="k-container" style="padding: 48px 40px 60px; max-width: 520px">
+  <h1 style="font: 900 32px var(--k-font-title); color: var(--k-text); margin: 0 0 20px; text-align: center">Créer mon compte 🌸</h1>
+  <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 24px; padding: 30px 32px">
+    {% form 'create_customer' %}
+      {% if form.errors %}
+        <p style="font: 600 13px var(--k-font-ui); color: #a94f6e; margin-bottom: 12px">{{ form.errors | default_errors }}</p>
+      {% endif %}
+      <div class="k-grid k-grid-2" style="margin-bottom: 14px">
+        <div>
+          <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Prénom</div>
+          <input type="text" class="k-field" name="customer[first_name]" autocomplete="given-name">
+        </div>
+        <div>
+          <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Nom</div>
+          <input type="text" class="k-field" name="customer[last_name]" autocomplete="family-name">
+        </div>
+      </div>
+      <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Email</div>
+      <input type="email" class="k-field" name="customer[email]" autocomplete="email" required style="margin-bottom: 14px">
+      <div style="font: 700 12px var(--k-font-ui); color: var(--k-text); margin-bottom: 6px">Mot de passe</div>
+      <input type="password" class="k-field" name="customer[password]" autocomplete="new-password" style="margin-bottom: 18px">
+      <button type="submit" class="k-btn k-btn-primary" style="width: 100%">Créer mon compte</button>
+    {% endform %}
+    <a href="{{ routes.account_login_url }}" style="display: block; text-align: center; font: 600 12px var(--k-font-ui); margin-top: 14px">J'ai déjà un compte</a>
+  </div>
+</section>

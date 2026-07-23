@@ -34,12 +34,24 @@ transactional (cart, checkout, product, collection, customer, forms).
 - **Contact** (`page.contact.json`) — Shopify's native contact form.
 - **Panier** (`cart.json`) — native cart object, free-shipping threshold,
   mixed stock/preorder note.
-- **Mon compte** — uses Shopify's native hosted customer accounts (no
-  theme template needed for new customer accounts).
+- **Mon compte** (`customers/*.liquid`) — classic customer account
+  templates (login, register, account, order, addresses, reset/activate
+  password), styled to match. If the store is switched to Shopify's newer
+  hosted customer accounts these files are simply unused — no change
+  needed either way.
 
 Standard fallback templates (404, search, blog, article, list-collections,
 gift card, password page) are included so the theme is fully installable,
 even though they weren't part of the original 8-screen design brief.
+
+## First-time setup after uploading the theme
+
+**See `SETUP.md`** — a theme zip only contains code; the Journaux,
+Accessoires, Mon histoire, and Contact pages need to be created once as
+actual Shopify Pages (with the matching template assigned) before they'll
+appear anywhere, and the header/footer need those pages picked in the
+theme editor. This is normal Shopify behavior, not specific to this
+theme, but it trips people up on the first install.
 
 ## Brand settings
 

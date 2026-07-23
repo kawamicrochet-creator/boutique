@@ -1,0 +1,26 @@
+<section class="k-container" style="padding: 44px 40px 60px; max-width: 760px">
+  <div class="k-breadcrumb"><a href="{{ routes.account_url }}">Mon compte</a> <span style="opacity: .5">›</span> {{ order.name }}</div>
+  <h1 style="font: 900 30px var(--k-font-title); color: var(--k-text); margin: 0 0 8px">Commande {{ order.name }}</h1>
+  <div style="font: 500 13px var(--k-font-ui); color: var(--k-text-muted); margin-bottom: 24px">Passée le {{ order.created_at | date: '%d %B %Y' }}</div>
+
+  <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 24px 26px; margin-bottom: 20px">
+    {% for line_item in order.line_items %}
+      <div style="display: flex; gap: 16px; align-items: center; padding: 10px 0; {% unless forloop.last %}border-bottom: 1px solid var(--k-border);{% endunless %}">
+        <div style="width: 64px; height: 64px; border-radius: 12px; overflow: hidden; flex: none">
+          {% if line_item.image %}<img src="{{ line_item.image | image_url: width: 150 }}" alt="{{ line_item.title }}" style="width: 100%; height: 100%; object-fit: cover">{% endif %}
+        </div>
+        <div style="flex: 1">
+          <div style="font: 700 14px var(--k-font-title); color: var(--k-text)">{{ line_item.title }}</div>
+          <div style="font: 500 12px var(--k-font-ui); color: var(--k-text-muted)">Qté {{ line_item.quantity }}</div>
+        </div>
+        <div style="font: 700 14px var(--k-font-ui); color: var(--k-primary)">{{ line_item.final_line_price | money }}</div>
+      </div>
+    {% endfor %}
+    <div style="display: flex; font: 700 16px var(--k-font-ui); color: var(--k-text); border-top: 1.5px solid var(--k-border); padding-top: 14px; margin-top: 10px">Total<span style="margin-left: auto; color: var(--k-primary)">{{ order.total_price | money }}</span></div>
+  </div>
+
+  <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 22px 24px">
+    <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 10px">Adresse de livraison</div>
+    <div style="font: 500 13px/1.6 var(--k-font-ui); color: var(--k-text-soft)">{{ order.shipping_address | format_address }}</div>
+  </div>
+</section>

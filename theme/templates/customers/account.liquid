@@ -1,0 +1,42 @@
+<section class="k-container" style="padding: 44px 40px 60px">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; flex-wrap: wrap">
+    <h1 style="font: 900 32px var(--k-font-title); color: var(--k-text); margin: 0">Coucou {{ customer.first_name | default: customer.name }} 🌸</h1>
+    <a href="{{ routes.account_logout_url }}" style="margin-left: auto; font: 700 12.5px var(--k-font-ui); color: #c76b88; border: 1.5px solid var(--k-pink); border-radius: 999px; padding: 8px 16px">Me déconnecter</a>
+  </div>
+  <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: start">
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; padding: 26px 28px">
+      <div style="font: 700 17px var(--k-font-title); color: var(--k-text); margin-bottom: 16px">Mes commandes</div>
+      {% if customer.orders.size > 0 %}
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          {% for order in customer.orders %}
+            <a href="{{ order.customer_url }}" style="border: 1.5px solid var(--k-border); border-radius: 16px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; color: var(--k-text)">
+              <div style="flex: 1">
+                <div style="font: 700 13.5px var(--k-font-ui); color: var(--k-text)">{{ order.name }}</div>
+                <div style="font: 500 12px var(--k-font-ui); color: var(--k-text-muted)">Passée le {{ order.created_at | date: '%d %B %Y' }} · {{ order.total_price | money }}</div>
+              </div>
+              {% if order.fulfillment_status == 'fulfilled' %}
+                <div class="k-badge k-badge-instock">Livrée ✓</div>
+              {% else %}
+                <div class="k-badge k-badge-preorder">En fabrication 🧵</div>
+              {% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p style="font: 500 13.5px var(--k-font-ui); color: var(--k-text-soft)">Tu n'as pas encore de commande — <a href="{{ routes.all_products_collection_url }}">visite la boutique 🌸</a></p>
+      {% endif %}
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; padding: 22px 24px">
+        <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 10px">Mon adresse</div>
+        {% if customer.default_address %}
+          <div style="font: 500 13px/1.6 var(--k-font-ui); color: var(--k-text-soft)">{{ customer.default_address | format_address }}</div>
+        {% else %}
+          <div style="font: 500 13px/1.6 var(--k-font-ui); color: var(--k-text-soft)">Aucune adresse enregistrée</div>
+        {% endif %}
+        <a href="{{ routes.account_addresses_url }}" style="font: 600 12px var(--k-font-ui); display: inline-block; margin-top: 8px">Gérer mes adresses</a>
+      </div>
+      <div style="background: var(--k-pink-soft); border-radius: 22px; padding: 20px 24px; font: 600 12.5px/1.6 var(--k-font-ui); color: var(--k-text)">🧵 Une précommande en cours ? Tu recevras une photo de ta peluche terminée avant l'envoi !</div>
+    </div>
+  </div>
+</section>
