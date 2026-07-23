@@ -25,8 +25,6 @@
   <a href="{{ routes.root_url }}" class="k-header__logo">
     {% if settings.logo %}
       <img src="{{ settings.logo | image_url: width: 112 }}" width="56" height="56" alt="{{ shop.name }}">
-    {% else %}
-      <img src="{{ 'kawami-mark.png' | asset_url }}" width="56" height="56" alt="{{ shop.name }}">
     {% endif %}
     <span>
       <span class="k-header__wordmark">

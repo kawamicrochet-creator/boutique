@@ -10,7 +10,7 @@
     {{ product.title }}
   </div>
 
-  <div style="display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: start">
+  <div class="k-split" style="display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: start">
     <div>
       <div style="border-radius: 26px; overflow: hidden; background: var(--k-card); border: 1.5px solid var(--k-border); aspect-ratio: 1">
         {% if product.featured_image %}
@@ -31,15 +31,28 @@
     </div>
 
     <div>
-      {% if product.tags contains 'precommande' %}
+      {% liquid
+        assign has_preorder_tag = false
+        if product.tags contains 'precommande'
+          assign has_preorder_tag = true
+        endif
+        assign badge_state = 'instock'
+        if has_preorder_tag
+          assign badge_state = 'preorder'
+        elsif variant.available == false
+          assign badge_state = 'soldout'
+        elsif variant.inventory_management != blank and variant.inventory_quantity <= 0
+          assign badge_state = 'preorder'
+        endif
+      %}
+      {% if has_preorder_tag %}
         <div class="k-badge k-badge-preorder" style="margin-bottom: 14px">Précommande · {{ settings.preorder_delay_text }}</div>
       {% else %}
-        <div class="k-badge {% if product.available %}k-badge-instock{% else %}k-badge{% endif %}"
-          style="margin-bottom: 14px{% unless product.available %}; background: var(--k-border); color: var(--k-text){% endunless %}"
+        <div class="k-badge {% if badge_state == 'instock' %}k-badge-instock{% elsif badge_state == 'preorder' %}k-badge-preorder{% endif %}"
+          style="margin-bottom: 14px{% if badge_state == 'soldout' %}; background: var(--k-border); color: var(--k-text){% endif %}"
           data-availability
-          data-in-stock-text="En stock"
-          data-sold-out-text="Épuisé"
-        >{% if product.available %}En stock{% else %}Épuisé{% endif %}</div>
+          data-preorder-text="Précommande · {{ settings.preorder_delay_text }}"
+        >{% case badge_state %}{% when 'preorder' %}Précommande · {{ settings.preorder_delay_text }}{% when 'soldout' %}Épuisé{% else %}En stock{% endcase %}</div>
       {% endif %}
 
       <h1 style="font: 900 36px/1.2 var(--k-font-title); color: var(--k-text); margin: 0 0 8px">{{ product.title }}</h1>

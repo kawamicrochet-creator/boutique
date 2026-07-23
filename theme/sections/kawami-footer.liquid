@@ -9,8 +9,6 @@
       <div class="k-footer__brand">
         {% if settings.logo %}
           <img src="{{ settings.logo | image_url: width: 96 }}" alt="">
-        {% else %}
-          <img src="{{ 'kawami-mark.png' | asset_url }}" alt="">
         {% endif %}
         <span style="font: 900 18px var(--k-font-title); color: #fff; letter-spacing: .06em">
           {{ shop.name | default: 'KAWAMI' | upcase }}

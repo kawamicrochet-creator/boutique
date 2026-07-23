@@ -264,3 +264,26 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .k-italic-accent { font-family: var(--k-font-accent); font-style: italic; font-weight: 600; }
 .k-rotate-n2 { transform: rotate(-2deg); }
 .k-photo-frame { border-radius: 26px; overflow: hidden; border: 8px solid #fff; box-shadow: 0 14px 40px rgba(92, 67, 81, .16); }
+
+/* ---------- Two-column marketing sections: collapse to one column on mobile ----------
+   Sections keep their desktop ratio via an inline grid-template-columns; this class
+   just forces a single column below the breakpoint regardless of that inline value. */
+@media (max-width: 749px) {
+  .k-split {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+}
+
+/* ---------- Hero photo collage: shrink so it never overflows a narrow viewport ---------- */
+@media (max-width: 749px) {
+  .k-hero-visual { height: 300px !important; margin-top: 20px; }
+  .k-hero-visual__main { width: 210px !important; height: 210px !important; right: 8px !important; }
+  .k-hero-visual__accent { width: 130px !important; height: 130px !important; left: 0 !important; bottom: 0 !important; }
+  .k-hero-visual__tag { top: 60px !important; right: -6px !important; padding: 8px 12px !important; }
+}
+
+/* ---------- Instagram grid: fewer columns on mobile ---------- */
+.k-insta-grid { display: grid; gap: 12px; grid-template-columns: repeat(6, 1fr); }
+@media (max-width: 989px) { .k-insta-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 599px) { .k-insta-grid { grid-template-columns: repeat(2, 1fr); } }

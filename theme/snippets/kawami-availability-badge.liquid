@@ -1,0 +1,31 @@
+{% doc %}
+  Renders the Kawami availability badge (En stock / Précommande / Épuisé).
+
+  Rule: a `precommande` tag always forces the Précommande badge. Otherwise,
+  a product that Shopify still lets customers buy (available = true) despite
+  having zero tracked inventory is exactly Shopify's "continue selling when
+  out of stock" case - i.e. made-to-order / précommande, not truly sold out.
+  Genuinely unavailable (available = false) is Épuisé.
+
+  @param {product} product
+  @param {string} [class] - extra classes to append (e.g. "k-card__badge")
+{% enddoc %}
+{% liquid
+  assign variant = product.selected_or_first_available_variant
+  assign badge_state = 'instock'
+  if product.tags contains 'precommande'
+    assign badge_state = 'preorder'
+  elsif product.available == false
+    assign badge_state = 'soldout'
+  elsif variant.inventory_management != blank and variant.inventory_quantity <= 0
+    assign badge_state = 'preorder'
+  endif
+%}
+{% case badge_state %}
+  {% when 'preorder' %}
+    <div class="k-badge k-badge-preorder {{ class }}">Précommande · {{ settings.preorder_delay_text }}</div>
+  {% when 'soldout' %}
+    <div class="k-badge {{ class }}" style="background: var(--k-border); color: var(--k-text)">Épuisé</div>
+  {% else %}
+    <div class="k-badge k-badge-instock {{ class }}">En stock</div>
+{% endcase %}

@@ -1,7 +1,7 @@
 <section style="max-width: 1000px; margin: 0 auto; padding: 48px 40px 60px">
   <h1 class="k-h1">{{ section.settings.title | default: "Écris-moi 💌" }}</h1>
   <p class="k-lead" style="margin: 0 0 30px; max-width: 520px">{{ section.settings.intro }}</p>
-  <div class="k-grid k-grid-2" style="grid-template-columns: 1.15fr .85fr; align-items: start">
+  <div class="k-grid k-grid-2 k-split" style="grid-template-columns: 1.15fr .85fr; align-items: start">
     <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 24px; padding: 30px 32px">
       {% form 'contact', class: 'k-contact-form' %}
         {% if form.posted_successfully? %}

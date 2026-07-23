@@ -7,7 +7,7 @@
         {% if settings.social_tiktok_url != blank %}<a href="{{ settings.social_tiktok_url }}" target="_blank" rel="noopener">TikTok ↗</a>{% endif %}
       </div>
     </div>
-    <div class="k-grid" style="grid-template-columns: repeat(6, 1fr)">
+    <div class="k-insta-grid">
       {% for block in section.blocks %}
         {% if block.type == 'photo' %}
           <a href="{{ block.settings.url | default: '#' }}" style="aspect-ratio: 1; border-radius: 14px; overflow: hidden; position: relative; display: block" {{ block.shopify_attributes }}>

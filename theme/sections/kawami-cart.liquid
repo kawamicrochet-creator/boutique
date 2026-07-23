@@ -13,7 +13,7 @@
     </div>
   {% else %}
     {% form 'cart', cart %}
-      <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start">
+      <div class="k-split" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start">
         <div style="display: flex; flex-direction: column; gap: 14px">
           {% for item in cart.items %}
             <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 16px 18px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
@@ -25,13 +25,7 @@
                 {% unless item.variant.title == 'Default Title' %}
                   <div style="font: 500 11.5px var(--k-font-ui); color: var(--k-text-muted); margin: 2px 0 6px">{{ item.variant.title }}</div>
                 {% endunless %}
-                {% if item.product.tags contains 'precommande' %}
-                  <div class="k-badge k-badge-preorder">Précommande · {{ settings.preorder_delay_text }}</div>
-                {% elsif item.product.available %}
-                  <div class="k-badge k-badge-instock">En stock</div>
-                {% else %}
-                  <div class="k-badge" style="background: var(--k-border); color: var(--k-text)">Épuisé</div>
-                {% endif %}
+                {% render 'kawami-availability-badge', product: item.product %}
               </div>
               <div class="k-qty">
                 <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" style="width: 44px">

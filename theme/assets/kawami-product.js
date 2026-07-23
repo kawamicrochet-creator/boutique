@@ -23,6 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return (cents / 100).toFixed(2).replace('.', ',') + ' €';
     }
 
+    // Mirrors snippets/kawami-availability-badge.liquid: a variant Shopify still
+    // lets customers buy despite zero tracked inventory is "continue selling
+    // when out of stock" - i.e. made-to-order / précommande, not truly sold out.
+    function badgeState(variant) {
+      if (!variant.available) return 'soldout';
+      if (variant.inventory_management && variant.inventory_quantity <= 0) return 'preorder';
+      return 'instock';
+    }
+
     function update() {
       const variant = findVariant();
       if (!variant) return;
@@ -41,7 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
         addBtn.textContent = variant.available ? addBtn.dataset.addText : addBtn.dataset.soldOutText;
       }
       if (availabilityEl) {
-        availabilityEl.textContent = variant.available ? availabilityEl.dataset.inStockText : availabilityEl.dataset.soldOutText;
+        const state = badgeState(variant);
+        availabilityEl.classList.remove('k-badge-instock', 'k-badge-preorder');
+        availabilityEl.style.background = '';
+        availabilityEl.style.color = '';
+        if (state === 'instock') {
+          availabilityEl.classList.add('k-badge-instock');
+          availabilityEl.textContent = 'En stock';
+        } else if (state === 'preorder') {
+          availabilityEl.classList.add('k-badge-preorder');
+          availabilityEl.textContent = availabilityEl.dataset.preorderText || 'Précommande';
+        } else {
+          availabilityEl.style.background = 'var(--k-border)';
+          availabilityEl.style.color = 'var(--k-text)';
+          availabilityEl.textContent = 'Épuisé';
+        }
       }
     }
 
