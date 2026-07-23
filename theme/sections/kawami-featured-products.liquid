@@ -14,12 +14,10 @@
         <a href="{{ product.url }}" class="k-card">
           <div class="k-card__media">
             {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" loading="lazy">{% endif %}
-            {% if product.available %}
-              {% if product.tags contains 'precommande' %}
-                <div class="k-card__badge k-badge k-badge-preorder">Précommande · {{ settings.preorder_delay_text }}</div>
-              {% else %}
-                <div class="k-card__badge k-badge k-badge-instock">En stock</div>
-              {% endif %}
+            {% if product.tags contains 'precommande' %}
+              <div class="k-card__badge k-badge k-badge-preorder">Précommande · {{ settings.preorder_delay_text }}</div>
+            {% elsif product.available %}
+              <div class="k-card__badge k-badge k-badge-instock">En stock</div>
             {% else %}
               <div class="k-card__badge k-badge" style="background: var(--k-border); color: var(--k-text)">Épuisé</div>
             {% endif %}

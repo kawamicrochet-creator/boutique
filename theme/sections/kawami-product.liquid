@@ -31,10 +31,16 @@
     </div>
 
     <div>
-      <div class="k-badge {% if product.available %}k-badge-instock{% else %}k-badge-preorder{% endif %}" style="margin-bottom: 14px" data-availability
-        data-in-stock-text="{{ 'products.product.in_stock' | t }}"
-        data-sold-out-text="{{ 'products.product.preorder' | t: delay: settings.preorder_delay_text }}"
-      >{% if product.available %}{{ 'products.product.in_stock' | t }}{% else %}{{ 'products.product.preorder' | t: delay: settings.preorder_delay_text }}{% endif %}</div>
+      {% if product.tags contains 'precommande' %}
+        <div class="k-badge k-badge-preorder" style="margin-bottom: 14px">Précommande · {{ settings.preorder_delay_text }}</div>
+      {% else %}
+        <div class="k-badge {% if product.available %}k-badge-instock{% else %}k-badge{% endif %}"
+          style="margin-bottom: 14px{% unless product.available %}; background: var(--k-border); color: var(--k-text){% endunless %}"
+          data-availability
+          data-in-stock-text="En stock"
+          data-sold-out-text="Épuisé"
+        >{% if product.available %}En stock{% else %}Épuisé{% endif %}</div>
+      {% endif %}
 
       <h1 style="font: 900 36px/1.2 var(--k-font-title); color: var(--k-text); margin: 0 0 8px">{{ product.title }}</h1>
       <div style="font: 500 13px var(--k-font-ui); color: var(--k-text-muted); margin-bottom: 14px">{{ product.type }} · pièce crochetée à la main</div>

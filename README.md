@@ -72,10 +72,16 @@ via **Online Store → Themes → Add theme → Upload zip file**.
 
 ## Product tagging convention
 
-Products without stock show a "Précommande" badge automatically; tag a
-product **`precommande`** in Shopify admin to force that badge even while
-`available` is still true (e.g. made-to-order items). Everything else
-in stock shows "En stock".
+Tag a product **`precommande`** in Shopify admin to show the "Précommande"
+badge (collection grid, featured products, cart, product page) — this is
+the only thing that triggers it, independent of actual inventory count.
+Untagged products show "En stock" if purchasable or "Épuisé" if not.
+
+If you also want customers to actually be able to *buy* a tagged
+`precommande` product with zero inventory, turn on **"Continue selling
+when out of stock"** for that product/variant in Shopify admin
+(Inventory section) — otherwise add-to-cart will correctly stay disabled
+regardless of the badge, since that reflects real purchasability.
 
 ## Scope notes
 

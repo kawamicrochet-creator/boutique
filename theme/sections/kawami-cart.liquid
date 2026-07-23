@@ -25,7 +25,13 @@
                 {% unless item.variant.title == 'Default Title' %}
                   <div style="font: 500 11.5px var(--k-font-ui); color: var(--k-text-muted); margin: 2px 0 6px">{{ item.variant.title }}</div>
                 {% endunless %}
-                <div class="k-badge {% if item.product.available %}k-badge-instock{% else %}k-badge-preorder{% endif %}">{% if item.product.available %}En stock{% else %}Précommande · {{ settings.preorder_delay_text }}{% endif %}</div>
+                {% if item.product.tags contains 'precommande' %}
+                  <div class="k-badge k-badge-preorder">Précommande · {{ settings.preorder_delay_text }}</div>
+                {% elsif item.product.available %}
+                  <div class="k-badge k-badge-instock">En stock</div>
+                {% else %}
+                  <div class="k-badge" style="background: var(--k-border); color: var(--k-text)">Épuisé</div>
+                {% endif %}
               </div>
               <div class="k-qty">
                 <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" style="width: 44px">
