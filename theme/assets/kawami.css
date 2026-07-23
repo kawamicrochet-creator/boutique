@@ -142,17 +142,22 @@ img { max-width: 100%; display: block; }
 .k-badge-preorder { color: var(--k-preorder-text); background: var(--k-preorder-bg); }
 
 /* ---------- Cards / grids ---------- */
-.k-grid { display: grid; gap: 20px; }
+.k-grid { display: grid; gap: 20px; align-items: start; }
 .k-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .k-grid-3 { grid-template-columns: repeat(3, 1fr); }
 .k-grid-4 { grid-template-columns: repeat(4, 1fr); }
 .k-grid-5 { grid-template-columns: repeat(5, 1fr); }
 @media (max-width: 989px) {
-  .k-grid-3, .k-grid-4, .k-grid-5 { grid-template-columns: repeat(2, 1fr); }
+  .k-grid-3, .k-grid-4 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 599px) {
-  .k-grid-2, .k-grid-3, .k-grid-4, .k-grid-5 { grid-template-columns: 1fr; }
+  .k-grid-2, .k-grid-3, .k-grid-4 { grid-template-columns: 1fr; }
 }
+/* k-grid-5 (Mes univers) steps down more gradually so tiles never get
+   stretched far wider than their content at in-between viewport widths */
+@media (max-width: 1100px) { .k-grid-5 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .k-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px) { .k-grid-5 { grid-template-columns: 1fr; } }
 
 .k-card {
   background: var(--k-card);
