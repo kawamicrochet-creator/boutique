@@ -11,10 +11,14 @@
     <div style="background: var(--k-bg); border-radius: 20px; padding: 28px 30px">
       <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 14px">Comment ça marche</div>
       <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px">
+        {% liquid
+          assign step_colors = '#f8cdd8|#d5c3e8|#bfe3d2' | split: '|'
+        %}
         {% for block in section.blocks %}
           {% if block.type == 'step' %}
+            {% assign step_color_index = forloop.index0 | modulo: step_colors.size %}
             <div style="display: flex; gap: 12px" {{ block.shopify_attributes }}>
-              <div style="width: 26px; height: 26px; flex: none; border-radius: 50%; background: {{ block.settings.bg }}; color: var(--k-text); font: 700 12px var(--k-font-ui); display: flex; align-items: center; justify-content: center">{{ forloop.index }}</div>
+              <div style="width: 26px; height: 26px; flex: none; border-radius: 50%; background: {{ step_colors[step_color_index] }}; color: var(--k-text); font: 700 12px var(--k-font-ui); display: flex; align-items: center; justify-content: center">{{ forloop.index }}</div>
               <div style="font: 500 13px/1.5 var(--k-font-ui); color: var(--k-text-soft)">{{ block.settings.text }}</div>
             </div>
           {% endif %}
@@ -44,8 +48,7 @@
       "type": "step",
       "name": "Étape",
       "settings": [
-        { "type": "text", "id": "text", "label": "Texte" },
-        { "type": "color", "id": "bg", "label": "Fond du numéro", "default": "#f8cdd8" }
+        { "type": "text", "id": "text", "label": "Texte" }
       ]
     }
   ],
@@ -53,9 +56,9 @@
     {
       "name": "Commande personnalisée",
       "blocks": [
-        { "type": "step", "settings": { "text": "Choisis un modèle existant et les couleurs qui te font envie", "bg": "#f8cdd8" } },
-        { "type": "step", "settings": { "text": "Écris-moi pour vérifier si c'est faisable selon le carnet de commandes du moment", "bg": "#d5c3e8" } },
-        { "type": "step", "settings": { "text": "Je te confirme le délai et on lance ta pièce unique 🌸", "bg": "#bfe3d2" } }
+        { "type": "step", "settings": { "text": "Choisis un modèle existant et les couleurs qui te font envie" } },
+        { "type": "step", "settings": { "text": "Écris-moi pour vérifier si c'est faisable selon le carnet de commandes du moment" } },
+        { "type": "step", "settings": { "text": "Je te confirme le délai et on lance ta pièce unique 🌸" } }
       ]
     }
   ]
