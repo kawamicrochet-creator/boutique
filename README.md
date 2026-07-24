@@ -34,11 +34,17 @@ transactional (cart, checkout, product, collection, customer, forms).
 - **Contact** (`page.contact.json`) — Shopify's native contact form.
 - **Panier** (`cart.json`) — native cart object, free-shipping threshold,
   mixed stock/preorder note.
-- **Mon compte** (`customers/*.liquid`) — classic customer account
-  templates (login, register, account, order, addresses, reset/activate
-  password), styled to match. If the store is switched to Shopify's newer
-  hosted customer accounts these files are simply unused — no change
-  needed either way.
+- **Mon compte** — this store uses Shopify's **new hosted customer
+  accounts** (confirmed: no Classic/New toggle exists in Settings →
+  Customer accounts, so this can't be switched back). That hosted flow
+  lives entirely on `shopify.com`, outside the theme, so it can't be
+  restyled from code at all — not a bug, a Shopify platform limitation
+  for this store. The theme previously shipped classic
+  `customers/*.liquid` templates for this; removed, since they can never
+  render here. For at least some brand consistency (logo/colors/font on
+  that hosted page), use Shopify admin → Settings → Checkout →
+  Personnaliser (checkout and new customer-accounts share one branding
+  editor).
 
 Standard fallback templates (404, search, blog, article, list-collections,
 gift card, password page) are included so the theme is fully installable,

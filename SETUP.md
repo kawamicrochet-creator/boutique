@@ -56,15 +56,18 @@ Toujours dans **Personnaliser** :
 
 ## 4. Comptes clients (Mon compte)
 
-Si "Mon compte" plantait, c'est que ta boutique utilise les **comptes
-clients classiques** (pas les nouveaux comptes hébergés par Shopify). Le
-thème inclut maintenant les bons templates (`customers/login.liquid`,
-`account.liquid`, etc.) — reuploade le zip et la page devrait s'afficher
-normalement, connectée ou non.
+Ta boutique utilise les **nouveaux comptes clients hébergés par
+Shopify** (confirmé : aucune option pour repasser en comptes classiques
+dans Réglages → Comptes clients). Cette page vit entièrement sur
+`shopify.com`, en dehors du thème — impossible à styliser depuis le
+code, ce n'est pas un bug. Pour au moins harmoniser les couleurs/logo de
+cette page hébergée : **Réglages → Paiement → Personnaliser** (le
+paiement et les nouveaux comptes clients partagent le même éditeur de
+marque).
 
-## 5. Images de marque
+## 5. Logo
 
-Le logo, la photo héro des Journaux, les photos de l'accueil, etc. sont
-des champs `image_picker` vides par défaut (normal pour un thème neuf) —
-ajoute-les toi-même via **Personnaliser** → clique sur chaque section →
-uploade tes images.
+Le logo est un champ `image_picker` vide par défaut (normal pour un
+thème neuf) — ajoute le tien via **Personnaliser → Paramètres du
+thème → Logo et favicon**. Les autres images (photo héro des Journaux,
+photos de l'accueil, etc.) se configurent pareil, section par section.
