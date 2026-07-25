@@ -6,31 +6,18 @@
   assign contact_page = section.settings.nav_contact_page
 %}
 
-{% liquid
-  assign has_localization = false
-  if localization.available_languages.size > 1 or localization.available_countries.size > 1
-    assign has_localization = true
-  endif
-%}
-{% if section.blocks.size > 0 or has_localization %}
+{% if section.blocks.size > 0 %}
 <div class="k-announce">
-  {% if section.blocks.size > 0 %}
-    <div class="k-announce__track-wrap">
-      <div class="k-announce__track">
-        {% for i in (1..2) %}
-          {% for block in section.blocks %}
-            <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-            <span class="k-announce__sep">·</span>
-          {% endfor %}
+  <div class="k-announce__track-wrap">
+    <div class="k-announce__track">
+      {% for i in (1..2) %}
+        {% for block in section.blocks %}
+          <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          <span class="k-announce__sep">·</span>
         {% endfor %}
-      </div>
+      {% endfor %}
     </div>
-  {% else %}
-    <div class="k-announce__track-wrap"></div>
-  {% endif %}
-  {% if has_localization %}
-    {% render 'kawami-localization' %}
-  {% endif %}
+  </div>
 </div>
 {% endif %}
 
@@ -64,6 +51,8 @@
       <a href="{{ routes.account_url }}">Mon compte</a>
     {% endif %}
   </nav>
+
+  {% render 'kawami-localization' %}
 
   <div class="k-header__icons">
     <a href="{{ routes.search_url }}" aria-label="Rechercher">
