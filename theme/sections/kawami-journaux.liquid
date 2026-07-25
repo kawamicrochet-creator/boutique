@@ -34,10 +34,10 @@
     <h2 style="font: 900 30px var(--k-font-title); color: var(--k-text); margin: 0 0 10px">{{ section.settings.benefits_title | default: "Pourquoi tenir un journal ? ✿" }}</h2>
     <p style="font: 500 14px/1.7 var(--k-font-ui); color: var(--k-text-soft); margin: 0">{{ section.settings.benefits_text }}</p>
   </div>
-  <div class="k-grid k-grid-4">
+  <div class="k-grid k-grid-4" style="align-items: stretch">
     {% for block in section.blocks %}
       {% if block.type == 'benefit' %}
-        <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 22px 20px; text-align: center" {{ block.shopify_attributes }}>
+        <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 20px; padding: 22px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center" {{ block.shopify_attributes }}>
           <div style="width: 52px; height: 52px; margin: 0 auto 12px; border-radius: 50%; background: {{ block.settings.bg }}; display: flex; align-items: center; justify-content: center; font-size: 24px">{{ block.settings.emoji }}</div>
           <div style="font: 700 15px var(--k-font-title); color: var(--k-text); margin-bottom: 5px">{{ block.settings.title }}</div>
           <div style="font: 500 12.5px/1.55 var(--k-font-ui); color: var(--k-text-soft)">{{ block.settings.text }}</div>
