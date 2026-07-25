@@ -361,3 +361,15 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .k-insta-grid { display: grid; gap: 12px; grid-template-columns: repeat(6, 1fr); }
 @media (max-width: 989px) { .k-insta-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 599px) { .k-insta-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- Journaux page hero: photo with text overlay, resized so text never gets clipped ---------- */
+.k-journal-hero { height: 540px; }
+.k-journal-hero__overlay { max-width: 600px; padding: 0 8%; }
+.k-journal-hero__title { font-size: 46px; }
+.k-journal-hero__subtitle { font-size: 21px; }
+@media (max-width: 749px) {
+  .k-journal-hero { height: auto !important; aspect-ratio: 3 / 4; }
+  .k-journal-hero__overlay { max-width: 100% !important; padding: 0 24px !important; gap: 10px !important; }
+  .k-journal-hero__title { font-size: 28px !important; }
+  .k-journal-hero__subtitle { font-size: 15px !important; }
+}
