@@ -65,8 +65,22 @@
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--k-text)" stroke-width="1.8"><path d="M4 6 H16 L15 17 H5 Z"></path><path d="M7 6 V5 a3 3 0 0 1 6 0 V6"></path></svg>
       {% if cart.item_count > 0 %}<div class="k-cart-count">{{ cart.item_count }}</div>{% endif %}
     </a>
+    <button type="button" class="k-mobile-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="kawami-mobile-nav">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--k-text)" stroke-width="1.8" stroke-linecap="round"><path d="M3 6 H19"></path><path d="M3 11 H19"></path><path d="M3 16 H19"></path></svg>
+    </button>
   </div>
 </header>
+
+<nav id="kawami-mobile-nav" class="k-mobile-nav">
+  <a href="{{ routes.root_url }}">Accueil</a>
+  <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Boutique</a>
+  <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="k-mobile-nav__sub">Peluches</a>
+  {% if accessoires_page %}<a href="{{ accessoires_page.url }}" class="k-mobile-nav__sub">Accessoires</a>{% endif %}
+  {% if journaux_page %}<a href="{{ journaux_page.url }}" class="k-mobile-nav__sub">Journaux</a>{% endif %}
+  {% if apropos_page %}<a href="{{ apropos_page.url }}">Mon histoire</a>{% endif %}
+  {% if contact_page %}<a href="{{ contact_page.url }}">Contact</a>{% endif %}
+  {% if section.settings.show_account_link %}<a href="{{ routes.account_url }}">Mon compte</a>{% endif %}
+</nav>
 
 {% schema %}
 {

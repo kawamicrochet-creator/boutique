@@ -115,6 +115,41 @@ img { max-width: 100%; display: block; }
 }
 .k-icon-link { position: relative; display: block; }
 
+/* ---------- Mobile menu (hamburger + drawer) ---------- */
+.k-mobile-toggle {
+  display: none;
+  background: none; border: none; padding: 4px; cursor: pointer;
+}
+@media (max-width: 989px) {
+  .k-mobile-toggle { display: flex; align-items: center; justify-content: center; }
+}
+.k-mobile-nav {
+  display: none;
+  flex-direction: column;
+  background: var(--k-card);
+  border-bottom: 1px solid var(--k-border);
+  box-shadow: 0 12px 24px rgba(92, 67, 81, .12);
+  position: sticky;
+  top: 0;
+  z-index: 49;
+}
+.k-mobile-nav.is-open { display: flex; }
+.k-mobile-nav a {
+  padding: 14px 24px;
+  font: 700 14px var(--k-font-ui);
+  color: var(--k-text);
+  border-top: 1px solid var(--k-border);
+}
+.k-mobile-nav a:first-child { border-top: none; }
+.k-mobile-nav a.k-mobile-nav__sub {
+  padding-left: 40px;
+  font-weight: 600;
+  color: var(--k-text-soft);
+}
+@media (min-width: 990px) {
+  .k-mobile-nav { display: none !important; }
+}
+
 /* ---------- Buttons ---------- */
 .k-btn {
   display: inline-flex; align-items: center; justify-content: center;
