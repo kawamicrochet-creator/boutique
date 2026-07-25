@@ -58,8 +58,20 @@ img { max-width: 100%; display: block; }
 }
 .k-localization-select:hover { border-color: var(--k-primary); }
 .k-localization-submit { display: none; }
+
+/* Desktop copy (header row) vs. drawer copy (inside the mobile hamburger nav):
+   only one is ever visible at a given width. */
+.k-localization-desktop { display: contents; }
+.k-mobile-nav__localization { display: none; }
 @media (max-width: 989px) {
-  .k-localization-form { margin-left: 0; }
+  .k-localization-desktop { display: none; }
+  .k-mobile-nav__localization {
+    display: block;
+    padding: 14px 24px;
+    border-top: 1px solid var(--k-border);
+  }
+  .k-mobile-nav__localization .k-localization-form { margin-left: 0; }
+  .k-mobile-nav__localization .k-localization-select { width: 100%; }
 }
 
 /* ---------- Header ---------- */
