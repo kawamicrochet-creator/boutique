@@ -50,6 +50,17 @@ img { max-width: 100%; display: block; }
 }
 .k-announce__sep { opacity: .4; padding: 0 30px; }
 
+.k-localization-form { display: flex; gap: 8px; flex: none; margin-left: 12px; }
+.k-localization-select {
+  background: #6d5262; color: #fbe9ee; border: 1px solid #8a6a78;
+  border-radius: 8px; padding: 5px 8px; font: 600 11px var(--k-font-ui);
+  cursor: pointer;
+}
+.k-localization-submit { display: none; }
+@media (max-width: 599px) {
+  .k-localization-select { font-size: 10px; padding: 4px 6px; }
+}
+
 /* ---------- Header ---------- */
 .k-header {
   background: var(--k-card);
