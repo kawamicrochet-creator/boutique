@@ -10,7 +10,7 @@
       <p style="font: 500 14px/1.6 var(--k-font-ui); color: #8a5f70; margin: 0 0 22px">{{ section.settings.text }}</p>
       {% form 'customer', class: 'k-newsletter-form' %}
         <input type="hidden" name="contact[tags]" value="newsletter">
-        <div style="display: flex; gap: 10px; max-width: 420px; margin: 0 auto">
+        <div class="k-form-row" style="display: flex; gap: 10px; max-width: 420px; margin: 0 auto">
           <input type="email" name="contact[email]" class="k-input" style="flex: 1" placeholder="ton@email.fr" required>
           <button type="submit" class="k-btn k-btn-dark">S'inscrire</button>
         </div>
