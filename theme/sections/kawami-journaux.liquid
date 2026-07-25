@@ -100,9 +100,9 @@
       <div class="k-callout__title">De nouveaux journaux arrivent</div>
       <div class="k-callout__text">Inscris-toi à la petite lettre de l'atelier pour être prévenue des prochaines sorties (et recevoir des pages bonus à imprimer 🎁).</div>
     </div>
-    {% form 'customer', class: 'k-newsletter-form', style: 'display:flex;gap:10px' %}
+    {% form 'customer', class: 'k-newsletter-form k-form-row', style: 'display:flex;gap:10px;flex:1;min-width:260px' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
-      <input type="email" name="contact[email]" class="k-input" placeholder="ton@email.fr" required style="min-width: 220px">
+      <input type="email" name="contact[email]" class="k-input" placeholder="ton@email.fr" required style="flex: 1; min-width: 140px">
       <button type="submit" class="k-btn k-btn-dark">S'inscrire</button>
       {% if form.posted_successfully? %}<div style="font: 600 12px var(--k-font-ui); color: var(--k-text)">Merci, c'est noté 🌸</div>{% endif %}
     {% endform %}
