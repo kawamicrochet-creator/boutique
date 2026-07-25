@@ -1,30 +1,18 @@
 {% doc %}
-  Renders Shopify's native language/currency (market) selectors, using
-  the store's actual configured languages and markets. Each only
-  renders if the store actually has more than one option - if the
-  merchant's translation app doesn't hook into Shopify's native locale
-  system, the language select simply won't appear.
+  Renders Shopify's native currency/market selector. Language selection
+  was removed - the merchant's translation app handles that separately
+  (its own selector), and Shopify's native locale_code switch didn't
+  work correctly for all configured languages (e.g. Spanish).
 {% enddoc %}
-{% if localization.available_languages.size > 1 or localization.available_countries.size > 1 %}
+{% if localization.available_countries.size > 1 %}
   {% form 'localization', class: 'k-localization-form' %}
-    {% if localization.available_languages.size > 1 %}
-      <select name="locale_code" class="k-localization-select" onchange="this.form.submit()" aria-label="Langue">
-        {% for language in localization.available_languages %}
-          <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
-            {{ language.endonym_name | capitalize }}
-          </option>
-        {% endfor %}
-      </select>
-    {% endif %}
-    {% if localization.available_countries.size > 1 %}
-      <select name="country_code" class="k-localization-select" onchange="this.form.submit()" aria-label="Devise">
-        {% for country in localization.available_countries %}
-          <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
-            {{ country.iso_code }} · {{ country.currency.iso_code }} {{ country.currency.symbol }}
-          </option>
-        {% endfor %}
-      </select>
-    {% endif %}
+    <select name="country_code" class="k-localization-select" onchange="this.form.submit()" aria-label="Devise">
+      {% for country in localization.available_countries %}
+        <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+          {{ country.iso_code }} · {{ country.currency.iso_code }} {{ country.currency.symbol }}
+        </option>
+      {% endfor %}
+    </select>
     <noscript><button type="submit" class="k-localization-submit">OK</button></noscript>
   {% endform %}
 {% endif %}
