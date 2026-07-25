@@ -1,5 +1,7 @@
 {% liquid
   assign shop_collection = section.settings.nav_shop_collection
+  assign accessoires_page = section.settings.nav_accessoires_page
+  assign journaux_page = section.settings.nav_journaux_page
   assign apropos_page = section.settings.nav_apropos_page
   assign contact_page = section.settings.nav_contact_page
 %}
@@ -21,6 +23,8 @@
       <div class="k-footer__heading">Boutique</div>
       <div class="k-footer__links">
         <a href="{% if shop_collection %}{{ shop_collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Toutes les peluches</a>
+        {% if accessoires_page %}<a href="{{ accessoires_page.url }}">Accessoires</a>{% endif %}
+        {% if journaux_page %}<a href="{{ journaux_page.url }}">Journaux</a>{% endif %}
       </div>
     </div>
     <div>
@@ -46,6 +50,8 @@
   "name": "Pied de page Kawami",
   "settings": [
     { "type": "collection", "id": "nav_shop_collection", "label": "Collection « Boutique »" },
+    { "type": "page", "id": "nav_accessoires_page", "label": "Page « Accessoires »" },
+    { "type": "page", "id": "nav_journaux_page", "label": "Page « Journaux »" },
     { "type": "page", "id": "nav_apropos_page", "label": "Page « Mon histoire »" },
     { "type": "page", "id": "nav_contact_page", "label": "Page « Contact »" }
   ]
