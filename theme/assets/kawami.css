@@ -50,6 +50,7 @@ img { max-width: 100%; display: block; }
 }
 .k-announce__sep { opacity: .4; padding: 0 30px; }
 
+/* Default (drawer context): stacked, full-width selects */
 .k-localization-form { display: flex; flex-direction: column; gap: 8px; }
 .k-localization-select {
   background: #fff; color: var(--k-text); border: 1.5px solid var(--k-border);
@@ -62,6 +63,14 @@ img { max-width: 100%; display: block; }
 .k-mobile-nav__localization {
   padding: 14px 24px;
   border-top: 1px solid var(--k-border);
+}
+
+/* Desktop header row: compact, side-by-side pills instead of stacked/full-width */
+.k-localization-desktop { display: contents; }
+.k-localization-desktop .k-localization-form { flex-direction: row; gap: 8px; margin-left: 20px; }
+.k-localization-desktop .k-localization-select { width: auto; }
+@media (max-width: 989px) {
+  .k-localization-desktop { display: none; }
 }
 
 /* ---------- Header ---------- */
