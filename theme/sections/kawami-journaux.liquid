@@ -15,7 +15,7 @@
 <section class="k-container" style="padding: 0 40px 30px">
   <div class="k-journal-hero" style="position: relative; height: 540px; border-radius: 30px; overflow: hidden; border: 10px solid #fff; box-shadow: 0 18px 44px rgba(92,67,81,.16)">
     {% if section.settings.hero_image %}
-      <img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="{{ section.settings.title | escape }}" width="1600" height="540" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 62%">
+      <img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="{{ section.settings.title | escape }}" width="1600" height="540" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 40%">
     {% else %}
       <div style="width: 100%; height: 100%; background: var(--k-pink-soft)"></div>
     {% endif %}
@@ -69,7 +69,7 @@
             <div style="font: 700 19px var(--k-font-title); color: var(--k-text)">{{ block.settings.name }}</div>
             <div style="font: 500 12px var(--k-font-ui); color: var(--k-text-muted); margin: 3px 0 10px">{{ block.settings.subtitle }}</div>
             <div style="font: 500 13px/1.6 var(--k-font-ui); color: var(--k-text-soft); margin-bottom: 16px">{{ block.settings.description }}</div>
-            <a href="{% if block.settings.product %}{{ block.settings.product.url }}{% elsif purchase_page %}{{ purchase_page.url }}{% else %}#{% endif %}" class="k-btn k-btn-primary" style="margin-top: auto; text-align: center">{{ section.settings.premiers_cta_text | default: "Voir & précommander →" }}</a>
+            <a href="{% if block.settings.product %}{{ block.settings.product.url }}{% elsif purchase_page %}{{ purchase_page.url }}{% else %}#{% endif %}" class="k-btn k-btn-primary" style="margin-top: auto; text-align: center">{{ section.settings.premiers_cta_text | default: "Bientôt disponible" }}</a>
           </div>
         </div>
       {% endif %}
@@ -100,35 +100,35 @@
   </div>
 </section>
 
-<section class="k-container" style="padding: 44px 40px 10px">
-  <div style="background: var(--k-beige); border: 1px solid var(--k-beige-border); border-radius: 26px; padding: 34px 38px">
-    <div style="text-align: center; max-width: 600px; margin: 0 auto 24px">
-      <h2 style="font: 900 26px var(--k-font-title); color: var(--k-text); margin: 0 0 8px">{{ section.settings.formats_title | default: "Un format pour chacun·e 📐" }}</h2>
-      <p style="font: 500 13.5px/1.65 var(--k-font-ui); color: var(--k-text-soft); margin: 0">{{ section.settings.formats_text }}</p>
-    </div>
-    <div class="k-grid k-grid-4">
-      {% for block in section.blocks %}
-        {% if block.type == 'format' %}
-          <div style="background: #fff; border: 1.5px solid var(--k-beige-border); border-radius: 18px; padding: 20px 18px; text-align: center" {{ block.shopify_attributes }}>
-            <div style="font-size: 24px; margin-bottom: 8px">{{ block.settings.emoji }}</div>
-            <div style="font: 700 14px var(--k-font-title); color: var(--k-text)">{{ block.settings.name }}</div>
-            <div style="font: 500 11.5px/1.5 var(--k-font-ui); color: var(--k-text-soft); margin-top: 4px">{{ block.settings.text }}</div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-    {% if section.settings.format_note_text != blank %}
-      <div style="margin-top: 16px; background: #fff; border: 1.5px solid var(--k-pink); border-radius: 18px; padding: 18px 22px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
-        <div style="font-size: 26px">📕</div>
-        <div style="flex: 1; min-width: 0; font: 500 13px/1.6 var(--k-font-ui); color: var(--k-text)">{{ section.settings.format_note_text }}</div>
-      </div>
+<section class="k-container k-split" style="padding: 40px 40px 6px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center">
+  <div style="border-radius: 28px; overflow: hidden; border: 1.5px solid var(--k-border); box-shadow: 0 14px 40px rgba(92,67,81,.14)">
+    {% if section.settings.feature_image %}
+      <img src="{{ section.settings.feature_image | image_url: width: 1200 }}" alt="{{ section.settings.feature_title | escape }}" width="1200" height="900" style="display: block; width: 100%; height: auto" loading="lazy">
+    {% else %}
+      <div style="width: 100%; aspect-ratio: 4/3; background: var(--k-pink-soft)"></div>
     {% endif %}
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <div style="font: 700 11px var(--k-font-ui); letter-spacing: .2em; color: var(--k-text-muted); text-transform: uppercase">{{ section.settings.feature_eyebrow | default: "📱 Numérique & 📖 papier" }}</div>
+    <h2 style="font: 900 27px/1.2 var(--k-font-title); color: var(--k-text); margin: 0; text-wrap: pretty">{{ section.settings.feature_title | default: "Sur ta tablette, à imprimer ou en joli livret" }}</h2>
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 18px 22px; display: flex; gap: 12px; align-items: center">
+      <span style="font-size: 22px; flex: none">{{ section.settings.feature_1_emoji | default: "📱" }}</span>
+      <span style="font: 600 13.5px/1.5 var(--k-font-ui); color: var(--k-text)">{{ section.settings.feature_1_text | default: "Version numérique interactive — Notability / GoodNotes" }}</span>
+    </div>
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 18px 22px; display: flex; gap: 12px; align-items: center">
+      <span style="font-size: 22px; flex: none">{{ section.settings.feature_2_emoji | default: "📖" }}</span>
+      <span style="font: 600 13.5px/1.5 var(--k-font-ui); color: var(--k-text)">{{ section.settings.feature_2_text | default: "Format livret A5 — à imprimer ou en édition papier à couverture rigide" }}</span>
+    </div>
+    <div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 18px 22px; display: flex; gap: 12px; align-items: center">
+      <span style="font-size: 22px; flex: none">{{ section.settings.feature_3_emoji | default: "📄" }}</span>
+      <span style="font: 600 13.5px/1.5 var(--k-font-ui); color: var(--k-text)">{{ section.settings.feature_3_text | default: "Fichier PDF à imprimer — incluant les formats A4 et Lettre (US)" }}</span>
+    </div>
   </div>
 </section>
 
 <section class="k-container" style="padding: 44px 40px 10px">
   <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; flex-wrap: wrap">
-    <h2 style="font: 900 26px var(--k-font-title); color: var(--k-text); margin: 0">{{ section.settings.goodies_title | default: "À assortir avec des goodies cousus main 🪡" }}</h2>
+    <h2 style="font: 900 26px var(--k-font-title); color: var(--k-text); margin: 0">{{ section.settings.goodies_title | default: "À assortir avec des goodies 🪡" }}</h2>
   </div>
   <p style="font: 500 13.5px var(--k-font-ui); color: var(--k-text-soft); margin: 0 0 22px">{{ section.settings.goodies_text }}</p>
   <div class="k-grid k-grid-3">
@@ -145,15 +145,18 @@
 </section>
 
 <section class="k-container" style="padding: 44px 40px 60px">
-  <div style="position: relative; background: var(--k-pink-soft); border-radius: 28px; padding: 44px 40px; text-align: center; overflow: hidden">
-    <div class="k-anim-twinkle" style="position: absolute; left: 36px; top: 26px; font-size: 22px">✨</div>
-    <div class="k-anim-twinkle" style="position: absolute; right: 44px; bottom: 28px; font-size: 20px; animation-delay: 1s">🌸</div>
-    <div style="font-size: 32px; margin-bottom: 8px">💌</div>
-    <h2 style="font: 900 28px var(--k-font-title); color: var(--k-text); margin: 0 0 10px">{{ section.settings.cta_title | default: "Sois au courant du lancement" }}</h2>
-    <p style="font: 500 14px/1.6 var(--k-font-ui); color: #8a5f70; margin: 0 auto 22px; max-width: 470px">{{ section.settings.cta_text }}</p>
-    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap">
-      <a href="{% if purchase_page %}{{ purchase_page.url }}{% else %}#{% endif %}" class="k-btn k-btn-dark">{{ section.settings.purchase_cta_text | default: "Voir les journaux →" }}</a>
-      <a href="{% if contact_page %}{{ contact_page.url }}{% else %}#{% endif %}" class="k-btn k-btn-secondary" style="background: #fff">{{ section.settings.notify_cta_text | default: "Me prévenir" }}</a>
+  <div style="position: relative; border-radius: 28px; padding: 56px 40px; text-align: center; overflow: hidden{% if section.settings.cta_background %}; background: url('{{ section.settings.cta_background | image_url: width: 1600 }}') center 22%/cover{% else %}; background: var(--k-pink-soft){% endif %}">
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,241,244,.62), rgba(253,241,244,.42))"></div>
+    <div style="position: relative">
+      <div style="font-size: 32px; margin-bottom: 8px">💌</div>
+      <h2 style="font: 900 28px var(--k-font-title); color: var(--k-text); margin: 0 0 10px">{{ section.settings.cta_title | default: "Sois au courant du lancement" }}</h2>
+      <p style="font: 600 14px/1.6 var(--k-font-ui); color: #7a5566; margin: 0 auto 22px; max-width: 470px">{{ section.settings.cta_text }}</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap">
+        {% if section.settings.show_purchase_button %}
+          <a href="{% if purchase_page %}{{ purchase_page.url }}{% else %}#{% endif %}" class="k-btn k-btn-dark">{{ section.settings.purchase_cta_text | default: "Voir les journaux →" }}</a>
+        {% endif %}
+        <a href="{% if contact_page %}{{ contact_page.url }}{% else %}#{% endif %}" class="k-btn k-btn-secondary" style="background: #fff">{{ section.settings.notify_cta_text | default: "Me prévenir" }}</a>
+      </div>
     </div>
   </div>
 </section>
@@ -163,7 +166,7 @@
   "name": "Journaux Kawami (bientôt)",
   "settings": [
     { "type": "collection", "id": "nav_shop_collection", "label": "Collection « Boutique » (fil d'ariane)" },
-    { "type": "page", "id": "purchase_page", "label": "Page/collection d'achat des journaux", "info": "À relier plus tard, une fois la page d'achat créée. Les boutons « Voir & précommander » y renverront." },
+    { "type": "page", "id": "purchase_page", "label": "Page/collection d'achat des journaux", "info": "À relier plus tard, une fois la page d'achat créée." },
     { "type": "page", "id": "contact_page", "label": "Page Contact (bouton « Me prévenir »)" },
     { "type": "header", "content": "Bannière" },
     { "type": "image_picker", "id": "hero_image", "label": "Image bannière" },
@@ -178,20 +181,28 @@
     { "type": "text", "id": "premiers_title", "label": "Titre", "default": "Les tout premiers 🌷" },
     { "type": "text", "id": "premiers_tag", "label": "Petite étiquette", "default": "disponibles au lancement" },
     { "type": "textarea", "id": "premiers_text", "label": "Texte", "default": "Deux carnets pour commencer en douceur — en numérique à imprimer, ou en joli carnet papier." },
-    { "type": "text", "id": "premiers_cta_text", "label": "Texte du bouton", "default": "Voir & précommander →" },
+    { "type": "text", "id": "premiers_cta_text", "label": "Texte du bouton", "default": "Bientôt disponible" },
     { "type": "header", "content": "Et bientôt d'autres" },
     { "type": "text", "id": "avenir_title", "label": "Titre", "default": "Et bientôt d'autres… 💫" },
     { "type": "text", "id": "avenir_tag", "label": "Petite étiquette", "default": "en préparation dans l'atelier" },
-    { "type": "header", "content": "Formats" },
-    { "type": "text", "id": "formats_title", "label": "Titre", "default": "Un format pour chacun·e 📐" },
-    { "type": "textarea", "id": "formats_text", "label": "Texte", "default": "Chaque journal existera en plusieurs versions, pour s'adapter à ta façon d'écrire — sur écran ou sur papier." },
-    { "type": "textarea", "id": "format_note_text", "label": "Encart papier (fin de bloc formats)", "default": "Pour les amoureux du papier : une édition A5 reliée avec couverture rigide, papier crème épais — un bel objet à garder et à offrir 🎀" },
+    { "type": "header", "content": "Numérique & papier (image + 3 points)" },
+    { "type": "image_picker", "id": "feature_image", "label": "Image (tablette + livret)" },
+    { "type": "text", "id": "feature_eyebrow", "label": "Petit texte", "default": "📱 Numérique & 📖 papier" },
+    { "type": "text", "id": "feature_title", "label": "Titre", "default": "Sur ta tablette, à imprimer ou en joli livret" },
+    { "type": "text", "id": "feature_1_emoji", "label": "Point 1 — émoji", "default": "📱" },
+    { "type": "text", "id": "feature_1_text", "label": "Point 1 — texte", "default": "Version numérique interactive — Notability / GoodNotes" },
+    { "type": "text", "id": "feature_2_emoji", "label": "Point 2 — émoji", "default": "📖" },
+    { "type": "text", "id": "feature_2_text", "label": "Point 2 — texte", "default": "Format livret A5 — à imprimer ou en édition papier à couverture rigide" },
+    { "type": "text", "id": "feature_3_emoji", "label": "Point 3 — émoji", "default": "📄" },
+    { "type": "text", "id": "feature_3_text", "label": "Point 3 — texte", "default": "Fichier PDF à imprimer — incluant les formats A4 et Lettre (US)" },
     { "type": "header", "content": "Goodies" },
-    { "type": "text", "id": "goodies_title", "label": "Titre", "default": "À assortir avec des goodies cousus main 🪡" },
+    { "type": "text", "id": "goodies_title", "label": "Titre", "default": "À assortir avec des goodies 🪡" },
     { "type": "textarea", "id": "goodies_text", "label": "Texte", "default": "Pour prendre soin de tes carnets et de tes livres, des petits accessoires en tissu fleuri, à venir aussi." },
     { "type": "header", "content": "Bandeau final" },
+    { "type": "image_picker", "id": "cta_background", "label": "Photo de fond" },
     { "type": "text", "id": "cta_title", "label": "Titre", "default": "Sois au courant du lancement" },
     { "type": "textarea", "id": "cta_text", "label": "Texte", "default": "Inscris-toi à la petite lettre de l'atelier : tu sauras dès que les premiers journaux seront disponibles (et tu recevras des pages bonus à imprimer 🎁)." },
+    { "type": "checkbox", "id": "show_purchase_button", "label": "Afficher le bouton « Voir les journaux »", "default": false, "info": "À activer une fois la page d'achat prête." },
     { "type": "text", "id": "purchase_cta_text", "label": "Texte bouton « achat »", "default": "Voir les journaux →" },
     { "type": "text", "id": "notify_cta_text", "label": "Texte bouton « contact »", "default": "Me prévenir" }
   ],
@@ -210,7 +221,7 @@
       "type": "journal_preview",
       "name": "Journal (à venir)",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Couverture" },
+        { "type": "image_picker", "id": "image", "label": "Visuel (mockup tablette/livret)" },
         { "type": "text", "id": "badge_label", "label": "Badge", "default": "Bientôt" },
         { "type": "text", "id": "name", "label": "Nom", "default": "Mon Journal de Gratitude" },
         { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "cultiver la gratitude, enrichir chaque jour" },
@@ -226,15 +237,6 @@
         { "type": "color", "id": "bg", "label": "Fond de l'icône", "default": "#d5c3e8" },
         { "type": "text", "id": "name", "label": "Nom", "default": "Journal d'anxiété" },
         { "type": "textarea", "id": "text", "label": "Texte", "default": "Un carnet doux pour accueillir ses émotions, repérer ses déclencheurs et respirer." }
-      ]
-    },
-    {
-      "type": "format",
-      "name": "Format",
-      "settings": [
-        { "type": "text", "id": "emoji", "label": "Émoji", "default": "📄" },
-        { "type": "text", "id": "name", "label": "Nom", "default": "A4" },
-        { "type": "text", "id": "text", "label": "Texte", "default": "grand format à imprimer" }
       ]
     },
     {
@@ -257,13 +259,9 @@
         { "type": "benefit", "settings": { "emoji": "📚", "bg": "#d5c3e8", "title": "Garder une trace", "text": "Tes lectures, tes projets, tes envies — tout au même endroit, joliment." } },
         { "type": "benefit", "settings": { "emoji": "🌸", "bg": "#fce3c8", "title": "Un moment pour soi", "text": "Un rituel doux, sans pression, rien qu'à toi. Du self-care en quelques minutes." } },
         { "type": "journal_preview", "settings": { "badge_label": "Bientôt", "name": "Mon Journal de Gratitude", "subtitle": "cultiver la gratitude, enrichir chaque jour", "description": "Chaque jour, quelques lignes pour cultiver la douceur : humeur, gratitude et petites victoires, guidé par de tendres illustrations." } },
-        { "type": "journal_preview", "settings": { "badge_label": "Bientôt", "name": "Journal de mes Lectures", "subtitle": "pour les amoureux des livres", "description": "Note tes lectures, tes citations préférées, tes avis et ta PAL — un carnet cosy pour suivre ton année littéraire." } },
+        { "type": "journal_preview", "settings": { "badge_label": "Bientôt", "name": "Journal de mes Lectures", "subtitle": "pour les amoureux des livres", "description": "Note tes lectures, tes citations préférées, tes avis et ta PAL — un carnet cosy pour garder en mémoire tes meilleurs moments de lecture." } },
         { "type": "coming_soon", "settings": { "emoji": "🫧", "bg": "#d5c3e8", "name": "Journal d'anxiété", "text": "Un carnet doux pour accueillir ses émotions, repérer ses déclencheurs et respirer." } },
         { "type": "coming_soon", "settings": { "emoji": "☀️", "bg": "#bfe3d2", "name": "Journal quotidien — parents occupés", "text": "Un format rapide et bienveillant pour les journées bien remplies, pensé pour les parents." } },
-        { "type": "format", "settings": { "emoji": "📄", "name": "A4", "text": "grand format à imprimer" } },
-        { "type": "format", "settings": { "emoji": "📃", "name": "Lettre (US)", "text": "format américain / canadien" } },
-        { "type": "format", "settings": { "emoji": "📱", "name": "Notability", "text": "version numérique pour tablette (GoodNotes / Notability)" } },
-        { "type": "format", "settings": { "emoji": "📓", "name": "A5", "text": "format carnet compact" } },
         { "type": "goodie", "settings": { "emoji": "🔖", "bg": "#f8cdd8", "name": "Repère-pages", "text": "marque-pages en tissu fleuri, cousus main." } },
         { "type": "goodie", "settings": { "emoji": "📖", "bg": "#d5c3e8", "name": "Book sleeves", "text": "housses matelassées pour protéger tes livres." } },
         { "type": "goodie", "settings": { "emoji": "✏️", "bg": "#bfe3d2", "name": "Marqueurs", "text": "jolis marqueurs assortis à tes carnets." } }
