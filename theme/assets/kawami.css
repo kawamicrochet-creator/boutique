@@ -374,9 +374,3 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   .k-journal-hero__subtitle { font-size: 15px !important; }
 }
 
-/* ---------- Journaux "premiers" card: image column has a fixed 44% width for the
-   side-by-side desktop layout, but once the row wraps on narrow screens that width
-   stays fixed too, leaving a blank strip - force it to fill the row once wrapped. ---------- */
-@media (max-width: 640px) {
-  .k-journal-card__media { width: 100% !important; min-height: 280px !important; }
-}
