@@ -396,6 +396,7 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   flex: 0 0 calc(25% - 15px) !important;
   width: calc(25% - 15px) !important;
   max-width: calc(25% - 15px) !important;
+  min-width: 0 !important;
   margin: 0 !important;
   position: static !important;
   left: auto !important;
