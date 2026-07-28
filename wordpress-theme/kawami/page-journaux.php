@@ -9,7 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 get_header();
 
-$hero_image = kawami_field_image( 'kawami_jr_image' );
+$hero_image    = kawami_field_image( 'kawami_jr_image' );
+$feature_image = kawami_field_image( 'kawami_jr_feature_image' );
+$cta_image     = kawami_field_image( 'kawami_jr_cta_image' );
 
 $benefits = array(
 	array( 'emoji' => '🌿', 'bg' => '#bfe3d2', 'title' => 'Apaiser le mental', 'text' => 'Poser ses pensées sur le papier libère la tête et calme les journées agitées.' ),
@@ -120,6 +122,32 @@ $goodies = array(
 	</div>
 </section>
 
+<section class="k-container" style="padding: 40px 40px 6px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center">
+	<div style="border-radius: 28px; overflow: hidden; border: 1.5px solid var(--k-border); box-shadow: 0 14px 40px rgba(92,67,81,.14)">
+		<?php if ( $feature_image ) : ?>
+			<img src="<?php echo esc_url( $feature_image ); ?>" alt="Numérique et papier" style="display: block; width: 100%; height: auto">
+		<?php else : ?>
+			<div style="width: 100%; aspect-ratio: 4/3; background: var(--k-pink-soft)"></div>
+		<?php endif; ?>
+	</div>
+	<div style="display: flex; flex-direction: column; gap: 16px">
+		<div style="font: 700 11px var(--k-font-ui); letter-spacing: .2em; color: var(--k-text-muted); text-transform: uppercase">📱 Numérique & 📖 papier</div>
+		<h2 style="font: 900 27px/1.2 var(--k-font-title); color: var(--k-text); margin: 0; text-wrap: pretty">Sur ta tablette, à imprimer ou en joli livret</h2>
+		<div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 18px 22px; display: flex; gap: 12px; align-items: center">
+			<span style="font-size: 22px; flex: none">📱</span>
+			<span style="font: 600 13.5px/1.5 var(--k-font-ui); color: var(--k-text)">Version numérique interactive — Notability / GoodNotes</span>
+		</div>
+		<div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 18px 22px; display: flex; gap: 12px; align-items: center">
+			<span style="font-size: 22px; flex: none">📖</span>
+			<span style="font: 600 13.5px/1.5 var(--k-font-ui); color: var(--k-text)">Format livret A5 — à imprimer ou en édition papier à couverture rigide</span>
+		</div>
+		<div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 18px; padding: 18px 22px; display: flex; gap: 12px; align-items: center">
+			<span style="font-size: 22px; flex: none">📄</span>
+			<span style="font: 600 13.5px/1.5 var(--k-font-ui); color: var(--k-text)">Fichier PDF à imprimer — incluant les formats A4 et Lettre (US)</span>
+		</div>
+	</div>
+</section>
+
 <section class="k-container" style="padding: 44px 40px 10px">
 	<div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px">
 		<h2 style="font: 900 26px var(--k-font-title); color: var(--k-text); margin: 0">À assortir avec des goodies 🪡</h2>
@@ -137,8 +165,9 @@ $goodies = array(
 </section>
 
 <?php get_template_part( 'template-parts/coming-soon', 'newsletter', array(
-	'title' => 'Sois au courant du lancement',
-	'text'  => 'Inscris-toi à la petite lettre de l\'atelier : tu sauras dès que les premiers journaux seront disponibles (et tu recevras des pages bonus à imprimer 🎁).',
+	'title'    => 'Sois au courant du lancement',
+	'text'     => 'Inscris-toi à la petite lettre de l\'atelier : tu sauras dès que les premiers journaux seront disponibles (et tu recevras des pages bonus à imprimer 🎁).',
+	'bg_image' => $cta_image,
 ) ); ?>
 
 <?php get_footer(); ?>

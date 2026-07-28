@@ -6,11 +6,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$title = $args['title'] ?? "Sois la première prévenue du lancement";
-$text  = $args['text'] ?? '';
+$title    = $args['title'] ?? "Sois la première prévenue du lancement";
+$text     = $args['text'] ?? '';
+$bg_image = $args['bg_image'] ?? '';
+$bg_style = $bg_image
+	? sprintf( "background: url('%s') center 22%%/cover", esc_url( $bg_image ) )
+	: 'background: var(--k-pink-soft)';
 ?>
 <section style="max-width: 1080px; margin: 0 auto; padding: 44px 40px 64px">
-	<div style="position: relative; background: var(--k-pink-soft); border-radius: 28px; overflow: hidden; padding: 48px 40px; text-align: center">
+	<div style="position: relative; <?php echo $bg_style; ?>; border-radius: 28px; overflow: hidden; padding: 48px 40px; text-align: center">
+		<?php if ( $bg_image ) : ?>
+			<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,241,244,.62), rgba(253,241,244,.42))"></div>
+		<?php endif; ?>
 		<div class="k-anim-twinkle" style="position: absolute; left: 34px; top: 26px; font-size: 22px">✨</div>
 		<div class="k-anim-twinkle" style="position: absolute; right: 40px; bottom: 30px; font-size: 20px; animation-delay: 1s">🌸</div>
 		<div style="font-size: 32px; margin-bottom: 8px">💌</div>
