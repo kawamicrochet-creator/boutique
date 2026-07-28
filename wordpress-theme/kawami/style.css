@@ -431,6 +431,11 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .kawami-care-list span.icon { margin-right: 10px; }
 
 /* ---------- Related products ---------- */
+/* WooCommerce fires woocommerce_after_single_product_summary (which prints
+   related products) INSIDE .woocommerce div.product - our 2-column product
+   grid (gallery | summary) - so without this it gets squeezed into a
+   single column instead of spanning the full page width. */
+.woocommerce div.product .related.products { grid-column: 1 / -1; }
 .related.products { margin-top: 56px; clear: both; }
 .related.products > h2 { font: 900 24px var(--k-font-title); color: var(--k-text); margin: 0 0 18px; }
 .related.products ul.products { grid-template-columns: repeat(4, 1fr); }
