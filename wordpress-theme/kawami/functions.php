@@ -182,7 +182,7 @@ function kawami_customize_register( $wp_customize ) {
 		foreach ( $section['fields'] as $id => $field ) {
 			$setting_args = array( 'default' => $field['default'] ?? '' );
 			if ( 'image' === $field['type'] ) {
-				$setting_args['sanitize_callback'] = 'absint';
+				$setting_args['sanitize_callback'] = 'esc_url_raw';
 			} elseif ( 'url' === $field['type'] ) {
 				$setting_args['sanitize_callback'] = 'esc_url_raw';
 			} elseif ( 'textarea' === $field['type'] ) {
