@@ -360,6 +360,16 @@ function kawami_woocommerce_setup() {
 add_action( 'init', 'kawami_woocommerce_setup' );
 
 /**
+ * Show 4 related products (in 4 columns) instead of WooCommerce's default.
+ */
+function kawami_related_products_args( $args ) {
+	$args['posts_per_page'] = 4;
+	$args['columns']        = 4;
+	return $args;
+}
+add_filter( 'woocommerce_output_related_products_args', 'kawami_related_products_args' );
+
+/**
  * Returns the permalink for a nav page picked in the Customizer
  * (kawami_page_accessoires, kawami_page_journaux, kawami_page_apropos,
  * kawami_page_contact), or empty string if not set/published.
