@@ -391,3 +391,43 @@ function kawami_handle_newsletter_signup() {
 }
 add_action( 'admin_post_kawami_newsletter_signup', 'kawami_handle_newsletter_signup' );
 add_action( 'admin_post_nopriv_kawami_newsletter_signup', 'kawami_handle_newsletter_signup' );
+
+/**
+ * Single product page extras: availability badge before the title, a
+ * small "care info" list + shipping/preorder/safety accordion after the
+ * short description. Mirrors the Shopify kawami-product.liquid content
+ * that isn't native to WooCommerce's own summary hooks.
+ */
+function kawami_product_availability_badge() {
+	global $product;
+	echo '<div class="kawami-availability-badge">' . kawami_availability_badge( $product ) . '</div>'; // phpcs:ignore
+}
+add_action( 'woocommerce_single_product_summary', 'kawami_product_availability_badge', 4 );
+
+function kawami_product_care_info_and_accordion() {
+	global $product;
+	$delay = esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) );
+	?>
+	<div style="background: #fff7e8; border: 1.5px solid #f0dcb8; border-radius: 16px; padding: 14px 18px; margin: 0 0 18px; font: 600 13px/1.6 var(--k-font-ui); color: var(--k-beige-darker)">
+		🏮 <strong>Chaque pièce est crochetée à la main, prévois un léger délai de fabrication.</strong>
+	</div>
+	<div class="kawami-care-list">
+		<div><span class="icon">🌿</span>Laine et rembourrage sans matière animale, certifiés Oeko-Tex / GOTS</div>
+		<div><span class="icon">🫧</span>Lavage max 40°, séchage à l'air libre</div>
+		<div><span class="icon">🎀</span>Pièce unique faite main — de légères variations la rendent unique</div>
+	</div>
+	<details class="k-accordion-item" open>
+		<summary class="k-accordion-item__head">Livraison</summary>
+		<div class="k-accordion-item__body">Expédiée soigneusement sous 2 à 5 jours ouvrés pour les articles en stock.</div>
+	</details>
+	<details class="k-accordion-item">
+		<summary class="k-accordion-item__head">Précommande</summary>
+		<div class="k-accordion-item__body">Les pièces en précommande sont crochetées à la main et expédiées sous <?php echo $delay; // phpcs:ignore ?>.</div>
+	</details>
+	<details class="k-accordion-item">
+		<summary class="k-accordion-item__head">Sécurité & entretien</summary>
+		<div class="k-accordion-item__body">Convient à partir de 3 ans. Lavage à la main ou en machine à 30-40°, séchage à l'air libre.</div>
+	</details>
+	<?php
+}
+add_action( 'woocommerce_single_product_summary', 'kawami_product_care_info_and_accordion', 25 );
