@@ -39,12 +39,15 @@ function kawami_assets() {
 		array(),
 		null
 	);
-	wp_enqueue_style( 'kawami-style', get_stylesheet_uri(), array( 'kawami-fonts' ), KAWAMI_VERSION );
-	wp_enqueue_script( 'kawami-header', get_template_directory_uri() . '/assets/js/kawami-header.js', array(), KAWAMI_VERSION, true );
+	// Use the file's last-modified time as the version string instead of a
+	// fixed constant, so editing style.css (or the header script) always
+	// busts any browser/server cache automatically - no more stale CSS
+	// after an update.
+	$style_path = get_stylesheet_directory() . '/style.css';
+	wp_enqueue_style( 'kawami-style', get_stylesheet_uri(), array( 'kawami-fonts' ), file_exists( $style_path ) ? filemtime( $style_path ) : KAWAMI_VERSION );
 
-	if ( is_product() ) {
-		wp_enqueue_script( 'kawami-product', get_template_directory_uri() . '/assets/js/kawami-product.js', array(), KAWAMI_VERSION, true );
-	}
+	$header_js_path = get_template_directory() . '/assets/js/kawami-header.js';
+	wp_enqueue_script( 'kawami-header', get_template_directory_uri() . '/assets/js/kawami-header.js', array(), file_exists( $header_js_path ) ? filemtime( $header_js_path ) : KAWAMI_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'kawami_assets' );
 
