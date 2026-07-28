@@ -58,10 +58,11 @@ add_action( 'wp_enqueue_scripts', 'kawami_assets' );
  * allowed) is a preorder, out of stock is "Épuisé", anything else is
  * "En stock".
  */
-function kawami_availability_badge( $product ) {
+function kawami_availability_badge( $product, $extra_class = 'k-card__badge' ) {
 	if ( ! $product instanceof WC_Product ) {
 		return '';
 	}
+	$extra_class = $extra_class ? ' ' . $extra_class : '';
 
 	// WooCommerce has three stock statuses, not two: 'instock', 'outofstock',
 	// and 'onbackorder' - a 0-qty product with backorders allowed is
@@ -81,11 +82,11 @@ function kawami_availability_badge( $product ) {
 	switch ( $state ) {
 		case 'preorder':
 			$delay = get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' );
-			return '<div class="k-badge k-badge-preorder k-card__badge">Précommande · ' . esc_html( $delay ) . '</div>';
+			return '<div class="k-badge k-badge-preorder' . esc_attr( $extra_class ) . '">Précommande · ' . esc_html( $delay ) . '</div>';
 		case 'soldout':
-			return '<div class="k-badge k-card__badge" style="background:var(--k-border);color:var(--k-text)">Épuisé</div>';
+			return '<div class="k-badge' . esc_attr( $extra_class ) . '" style="background:var(--k-border);color:var(--k-text)">Épuisé</div>';
 		default:
-			return '<div class="k-badge k-badge-instock k-card__badge">En stock</div>';
+			return '<div class="k-badge k-badge-instock' . esc_attr( $extra_class ) . '">En stock</div>';
 	}
 }
 
@@ -437,7 +438,7 @@ add_action( 'admin_post_nopriv_kawami_newsletter_signup', 'kawami_handle_newslet
  */
 function kawami_product_availability_badge() {
 	global $product;
-	echo '<div class="kawami-availability-badge">' . kawami_availability_badge( $product ) . '</div>'; // phpcs:ignore
+	echo '<div class="kawami-availability-badge">' . kawami_availability_badge( $product, '' ) . '</div>'; // phpcs:ignore
 }
 add_action( 'woocommerce_single_product_summary', 'kawami_product_availability_badge', 4 );
 
