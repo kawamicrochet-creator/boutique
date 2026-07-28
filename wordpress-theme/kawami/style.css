@@ -372,6 +372,17 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .woocommerce ul.products, .woocommerce-page ul.products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; list-style: none; margin: 0; padding: 0; }
 @media (max-width: 989px) { .woocommerce ul.products, .woocommerce-page ul.products { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 599px) { .woocommerce ul.products, .woocommerce-page ul.products { grid-template-columns: 1fr; } }
+/* WooCommerce core CSS gives li.product a float + percentage width (its
+   own legacy grid system) which fights our CSS Grid above, compounding
+   into extremely narrow columns - force it back to a plain grid item. */
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product,
+.woocommerce ul.products li.product.first,
+.woocommerce ul.products li.product.last {
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+}
 .woocommerce ul.products li.product { background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; overflow: hidden; }
 .woocommerce ul.products li.product img { border-radius: 0; }
 .woocommerce div.product p.price, .woocommerce ul.products li.product .price { color: var(--k-primary); font: 700 15px var(--k-font-ui); }
