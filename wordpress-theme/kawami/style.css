@@ -369,19 +369,42 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 @media (max-width: 599px) { .k-insta-grid { grid-template-columns: repeat(2, 1fr); } }
 
 /* ---------- WooCommerce overrides: make Woo's default markup match the Kawami look ---------- */
-.woocommerce ul.products, .woocommerce-page ul.products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; list-style: none; margin: 0; padding: 0; }
-@media (max-width: 989px) { .woocommerce ul.products, .woocommerce-page ul.products { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 599px) { .woocommerce ul.products, .woocommerce-page ul.products { grid-template-columns: 1fr; } }
-/* WooCommerce core CSS gives li.product a float + percentage width (its
-   own legacy grid system) which fights our CSS Grid above, compounding
-   into extremely narrow columns - force it back to a plain grid item. */
+/* WooCommerce's own stylesheet applies a float+percentage-width layout to
+   ul.products/li.product with rules that can load after ours and don't
+   use !important, so previous attempts to override with plain rules were
+   unreliable. Every property that system touches is forced here with
+   !important so there's no ambiguity about which system is in control. */
+.woocommerce ul.products,
+.woocommerce-page ul.products,
+.related.products ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  width: 100% !important;
+  justify-content: normal !important;
+}
+@media (max-width: 989px) {
+  .woocommerce ul.products, .woocommerce-page ul.products, .related.products ul.products { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 599px) {
+  .woocommerce ul.products, .woocommerce-page ul.products, .related.products ul.products { grid-template-columns: 1fr !important; }
+}
 .woocommerce ul.products li.product,
 .woocommerce-page ul.products li.product,
+.related.products ul.products li.product,
 .woocommerce ul.products li.product.first,
 .woocommerce ul.products li.product.last {
   float: none !important;
   width: auto !important;
+  max-width: none !important;
   margin: 0 !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
 }
 .woocommerce ul.products li.product { background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; overflow: hidden; }
 .woocommerce ul.products li.product img { border-radius: 0; }
