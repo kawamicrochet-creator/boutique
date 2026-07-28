@@ -452,9 +452,7 @@ function kawami_product_availability_badge() {
 }
 add_action( 'woocommerce_single_product_summary', 'kawami_product_availability_badge', 4 );
 
-function kawami_product_care_info_and_accordion() {
-	global $product;
-	$delay = esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) );
+function kawami_product_care_info() {
 	?>
 	<div style="background: #fff7e8; border: 1.5px solid #f0dcb8; border-radius: 16px; padding: 14px 18px; margin: 0 0 18px; font: 600 13px/1.6 var(--k-font-ui); color: var(--k-beige-darker)">
 		🏮 <strong>Chaque pièce est crochetée à la main, prévois un léger délai de fabrication.</strong>
@@ -464,6 +462,15 @@ function kawami_product_care_info_and_accordion() {
 		<div><span class="icon">🫧</span>Lavage max 40°, séchage à l'air libre</div>
 		<div><span class="icon">🎀</span>Pièce unique faite main — de légères variations la rendent unique</div>
 	</div>
+	<?php
+}
+// Before the add-to-cart form (priority 30), so the buy button stays close
+// to the price instead of being buried under extra info blocks.
+add_action( 'woocommerce_single_product_summary', 'kawami_product_care_info', 25 );
+
+function kawami_product_accordion() {
+	$delay = esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) );
+	?>
 	<details class="k-accordion-item" open>
 		<summary class="k-accordion-item__head">Livraison</summary>
 		<div class="k-accordion-item__body">Expédiée soigneusement sous 2 à 5 jours ouvrés pour les articles en stock.</div>
@@ -478,7 +485,8 @@ function kawami_product_care_info_and_accordion() {
 	</details>
 	<?php
 }
-add_action( 'woocommerce_single_product_summary', 'kawami_product_care_info_and_accordion', 25 );
+// After the add-to-cart form (priority 30) and before product meta (40).
+add_action( 'woocommerce_single_product_summary', 'kawami_product_accordion', 35 );
 
 /**
  * Contact page form handler: sends a plain wp_mail() to the site admin

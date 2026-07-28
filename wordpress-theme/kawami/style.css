@@ -417,8 +417,23 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   .woocommerce div.product { grid-template-columns: 1fr; gap: 28px; }
 }
 .woocommerce div.product div.images { border-radius: 26px; overflow: hidden; background: var(--k-card); border: 1.5px solid var(--k-border); }
-.woocommerce div.product div.images img { aspect-ratio: 1; object-fit: cover; }
+.woocommerce div.product div.images img {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
 .woocommerce div.product .woocommerce-product-gallery__wrapper { margin: 0; }
+/* WooCommerce's gallery reserves image height via a padding-bottom
+   placeholder (percentage-based aspect ratio hack) - it doesn't know
+   about our own aspect-ratio on the img, so it was reserving extra
+   height on top of it, leaving dead space below a small floated image. */
+.woocommerce div.product .woocommerce-product-gallery__image,
+.woocommerce div.product .woocommerce-product-gallery__image--placeholder {
+  padding-bottom: 0 !important;
+  height: auto !important;
+}
 .woocommerce div.product div.summary { padding: 0; }
 .woocommerce div.product .product_title { font: 900 36px/1.2 var(--k-font-title); color: var(--k-text); margin: 0 0 8px; }
 .woocommerce div.product .summary p.price, .woocommerce div.product .summary span.price { font: 700 30px var(--k-font-ui) !important; }
