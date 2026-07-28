@@ -343,3 +343,51 @@ function kawami_cart_count() {
 	}
 	return WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
 }
+
+/**
+ * Newsletter signup handler (front-page.php form) - no 3rd-party email
+ * service required. Stores each address as a 'kawami_lead' post so it
+ * shows up as a simple list in wp-admin; wire a real ESP (Brevo,
+ * Mailchimp...) later by hooking into 'kawami_newsletter_signup' below.
+ */
+function kawami_register_lead_cpt() {
+	register_post_type( 'kawami_lead', array(
+		'label'        => __( 'Newsletter', 'kawami' ),
+		'public'       => false,
+		'show_ui'      => true,
+		'show_in_menu' => true,
+		'menu_icon'    => 'dashicons-email',
+		'supports'     => array( 'title' ),
+	) );
+}
+add_action( 'init', 'kawami_register_lead_cpt' );
+
+function kawami_handle_newsletter_signup() {
+	if ( ! isset( $_POST['kawami_newsletter_nonce'] ) || ! wp_verify_nonce( $_POST['kawami_newsletter_nonce'], 'kawami_newsletter_signup' ) ) {
+		wp_die( esc_html__( 'Requête invalide.', 'kawami' ) );
+	}
+
+	$email = isset( $_POST['kawami_email'] ) ? sanitize_email( wp_unslash( $_POST['kawami_email'] ) ) : '';
+
+	if ( $email && is_email( $email ) ) {
+		$existing = get_page_by_title( $email, OBJECT, 'kawami_lead' );
+		if ( ! $existing ) {
+			wp_insert_post( array(
+				'post_type'   => 'kawami_lead',
+				'post_title'  => $email,
+				'post_status' => 'publish',
+			) );
+		}
+		/**
+		 * Fires after a newsletter signup is stored - hook a real email
+		 * service provider here (Brevo, Mailchimp, etc).
+		 */
+		do_action( 'kawami_newsletter_signup', $email );
+	}
+
+	$redirect = wp_get_referer() ?: home_url( '/' );
+	wp_safe_redirect( add_query_arg( 'kawami_newsletter', 'ok', $redirect ) . '#newsletter' );
+	exit;
+}
+add_action( 'admin_post_kawami_newsletter_signup', 'kawami_handle_newsletter_signup' );
+add_action( 'admin_post_nopriv_kawami_newsletter_signup', 'kawami_handle_newsletter_signup' );
