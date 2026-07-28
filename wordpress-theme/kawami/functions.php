@@ -360,14 +360,11 @@ function kawami_woocommerce_setup() {
 add_action( 'init', 'kawami_woocommerce_setup' );
 
 /**
- * Show 4 related products (in 4 columns) instead of WooCommerce's default.
+ * "Produits similaires" was fought over several rounds without a working
+ * fix (its grid layout wouldn't cooperate). Disabled outright for now -
+ * remove this line to bring it back once someone can debug it live.
  */
-function kawami_related_products_args( $args ) {
-	$args['posts_per_page'] = 4;
-	$args['columns']        = 4;
-	return $args;
-}
-add_filter( 'woocommerce_output_related_products_args', 'kawami_related_products_args' );
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 
 /**
  * Returns the permalink for a nav page picked in the Customizer
