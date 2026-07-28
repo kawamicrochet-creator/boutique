@@ -60,14 +60,19 @@ function kawami_availability_badge( $product ) {
 		return '';
 	}
 
-	$state = 'instock';
+	// WooCommerce has three stock statuses, not two: 'instock', 'outofstock',
+	// and 'onbackorder' - a 0-qty product with backorders allowed is
+	// 'onbackorder', which is_in_stock() reports as NOT in stock (it only
+	// checks for 'instock'), so checking is_in_stock() first wrongly
+	// classified backorder-allowed products as sold out.
+	$stock_status = $product->get_stock_status();
 
-	if ( has_term( 'precommande', 'product_tag', $product->get_id() ) ) {
+	if ( has_term( 'precommande', 'product_tag', $product->get_id() ) || 'onbackorder' === $stock_status ) {
 		$state = 'preorder';
-	} elseif ( ! $product->is_in_stock() ) {
+	} elseif ( 'outofstock' === $stock_status ) {
 		$state = 'soldout';
-	} elseif ( $product->managing_stock() && $product->get_stock_quantity() !== null && $product->get_stock_quantity() <= 0 ) {
-		$state = 'preorder';
+	} else {
+		$state = 'instock';
 	}
 
 	switch ( $state ) {
