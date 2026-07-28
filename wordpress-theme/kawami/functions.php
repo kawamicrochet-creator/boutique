@@ -305,7 +305,9 @@ function kawami_homepage_fields() {
 		'kawami_journaux_page' => array(
 			'title'  => __( 'Page — Journaux (bientôt)', 'kawami' ),
 			'fields' => array(
-				'kawami_jr_image' => array( 'type' => 'image', 'label' => 'Image centrale' ),
+				'kawami_jr_image'           => array( 'type' => 'image', 'label' => 'Image centrale (bandeau)' ),
+				'kawami_jr_gratitude_image' => array( 'type' => 'image', 'label' => 'Image — Mon Journal de Gratitude' ),
+				'kawami_jr_lectures_image'  => array( 'type' => 'image', 'label' => 'Image — Journal de mes Lectures' ),
 			),
 		),
 		'kawami_newsletter' => array(

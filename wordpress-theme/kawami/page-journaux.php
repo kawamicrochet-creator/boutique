@@ -18,8 +18,8 @@ $benefits = array(
 	array( 'emoji' => '🌸', 'bg' => '#fce3c8', 'title' => 'Un moment pour soi', 'text' => 'Un rituel doux, sans pression, rien qu\'à toi. Du self-care en quelques minutes.' ),
 );
 $premiers = array(
-	array( 'name' => 'Mon Journal de Gratitude', 'sous' => 'cultiver la gratitude, enrichir chaque jour', 'desc' => 'Chaque jour, quelques lignes pour cultiver la douceur : humeur, gratitude et petites victoires, guidé par de tendres illustrations.' ),
-	array( 'name' => 'Journal de mes Lectures', 'sous' => 'pour les amoureux des livres', 'desc' => "Note tes lectures, tes citations préférées, tes avis et ta PAL — un carnet cosy pour garder en mémoire tes meilleurs moments de lecture." ),
+	array( 'name' => 'Mon Journal de Gratitude', 'sous' => 'cultiver la gratitude, enrichir chaque jour', 'desc' => 'Chaque jour, quelques lignes pour cultiver la douceur : humeur, gratitude et petites victoires, guidé par de tendres illustrations.', 'image' => kawami_field_image( 'kawami_jr_gratitude_image' ) ),
+	array( 'name' => 'Journal de mes Lectures', 'sous' => 'pour les amoureux des livres', 'desc' => "Note tes lectures, tes citations préférées, tes avis et ta PAL — un carnet cosy pour garder en mémoire tes meilleurs moments de lecture.", 'image' => kawami_field_image( 'kawami_jr_lectures_image' ) ),
 );
 $a_venir = array(
 	array( 'emoji' => '🫧', 'bg' => '#d5c3e8', 'name' => "Journal d'anxiété", 'desc' => 'Un carnet doux pour accueillir ses émotions, repérer ses déclencheurs et respirer.' ),
@@ -83,6 +83,9 @@ $goodies = array(
 		<?php foreach ( $premiers as $j ) : ?>
 			<div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 24px; overflow: hidden; display: flex; flex-wrap: wrap">
 				<div class="k-journal-card__media" style="flex: 44 1 220px; min-height: 240px; position: relative; overflow: hidden; background: var(--k-beige)">
+					<?php if ( ! empty( $j['image'] ) ) : ?>
+						<img src="<?php echo esc_url( $j['image'] ); ?>" alt="<?php echo esc_attr( $j['name'] ); ?>" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+					<?php endif; ?>
 					<div style="position: absolute; top: 12px; left: 12px; font: 700 10px var(--k-font-ui); letter-spacing: .05em; color: #5b4479; background: var(--k-lavender); padding: 5px 10px; border-radius: 999px">Bientôt</div>
 				</div>
 				<div style="flex: 56 1 220px; padding: 22px 22px 20px; display: flex; flex-direction: column">
