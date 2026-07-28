@@ -432,14 +432,22 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   border-radius: 12px; border: 1.5px solid var(--k-border); padding: 12px 14px; font-family: var(--k-font-ui);
 }
 
-/* ---------- Single product: two-column layout (gallery | summary) ---------- */
+/* ---------- Single product: stacked layout (image on top, details below) ----------
+   A side-by-side grid kept fighting WooCommerce's own gallery/loop CSS
+   (dead space, squished columns); stacking removes that conflict
+   entirely and lets the photo be shown much larger. */
 .woocommerce div.product {
-  display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: start;
+  display: block !important;
 }
-@media (max-width: 749px) {
-  .woocommerce div.product { grid-template-columns: 1fr; gap: 28px; }
+.woocommerce div.product div.images {
+  max-width: 640px;
+  margin: 0 auto 36px !important;
+  border-radius: 26px; overflow: hidden; background: var(--k-card); border: 1.5px solid var(--k-border);
 }
-.woocommerce div.product div.images { border-radius: 26px; overflow: hidden; background: var(--k-card); border: 1.5px solid var(--k-border); }
+.woocommerce div.product div.summary {
+  max-width: 640px;
+  margin: 0 auto !important;
+}
 .woocommerce div.product div.images img {
   width: 100% !important;
   height: auto !important;
