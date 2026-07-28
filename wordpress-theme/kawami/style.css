@@ -377,21 +377,15 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .woocommerce ul.products,
 .woocommerce-page ul.products,
 .related.products ul.products {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
   gap: 20px !important;
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
   float: none !important;
   width: 100% !important;
-  justify-content: normal !important;
-}
-@media (max-width: 989px) {
-  .woocommerce ul.products, .woocommerce-page ul.products, .related.products ul.products { grid-template-columns: repeat(2, 1fr) !important; }
-}
-@media (max-width: 599px) {
-  .woocommerce ul.products, .woocommerce-page ul.products, .related.products ul.products { grid-template-columns: 1fr !important; }
+  justify-content: flex-start !important;
 }
 .woocommerce ul.products li.product,
 .woocommerce-page ul.products li.product,
@@ -399,12 +393,28 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .woocommerce ul.products li.product.first,
 .woocommerce ul.products li.product.last {
   float: none !important;
-  width: auto !important;
-  max-width: none !important;
+  flex: 0 0 calc(25% - 15px) !important;
+  width: calc(25% - 15px) !important;
+  max-width: calc(25% - 15px) !important;
   margin: 0 !important;
   position: static !important;
   left: auto !important;
   top: auto !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 989px) {
+  .woocommerce ul.products li.product, .woocommerce-page ul.products li.product, .related.products ul.products li.product {
+    flex-basis: calc(50% - 10px) !important;
+    width: calc(50% - 10px) !important;
+    max-width: calc(50% - 10px) !important;
+  }
+}
+@media (max-width: 599px) {
+  .woocommerce ul.products li.product, .woocommerce-page ul.products li.product, .related.products ul.products li.product {
+    flex-basis: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
 .woocommerce ul.products li.product { background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; overflow: hidden; }
 .woocommerce ul.products li.product img { border-radius: 0; }
