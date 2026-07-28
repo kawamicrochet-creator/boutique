@@ -482,12 +482,41 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
    related products) INSIDE .woocommerce div.product - our 2-column product
    grid (gallery | summary) - so without this it gets squeezed into a
    single column instead of spanning the full page width. */
-.woocommerce div.product .related.products { grid-column: 1 / -1; }
 .related.products { margin-top: 56px; clear: both; }
 .related.products > h2 { font: 900 24px var(--k-font-title); color: var(--k-text); margin: 0 0 18px; }
-.related.products ul.products { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 989px) { .related.products ul.products { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 599px) { .related.products ul.products { grid-template-columns: 1fr; } }
+
+/* Some WooCommerce setups render related/upsell products via the newer
+   block-based grid (Store API) instead of the classic PHP template -
+   completely different markup/classes, which is why the fixes above
+   for ul.products had zero visible effect. Cover that system too. */
+.wc-block-grid__products,
+.wp-block-woocommerce-related-products ul,
+.wc-block-related-products ul {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+.wc-block-grid__product {
+  width: auto !important;
+  max-width: none !important;
+  flex: none !important;
+  margin: 0 !important;
+  background: var(--k-card);
+  border: 1.5px solid var(--k-border);
+  border-radius: 22px;
+  overflow: hidden;
+  padding: 0 !important;
+}
+@media (max-width: 989px) {
+  .wc-block-grid__products, .wp-block-woocommerce-related-products ul, .wc-block-related-products ul { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 599px) {
+  .wc-block-grid__products, .wp-block-woocommerce-related-products ul, .wc-block-related-products ul { grid-template-columns: 1fr !important; }
+}
 
 /* ---------- Cart / checkout / my account ---------- */
 .woocommerce-cart table.cart img { border-radius: 12px; }
