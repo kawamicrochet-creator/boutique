@@ -111,6 +111,16 @@ function kawami_customize_register( $wp_customize ) {
 		'type'    => 'number',
 	) );
 
+	$wp_customize->add_setting( 'kawami_contact_email', array(
+		'default'           => get_option( 'admin_email' ),
+		'sanitize_callback' => 'sanitize_email',
+	) );
+	$wp_customize->add_control( 'kawami_contact_email', array(
+		'label'   => __( 'Email de contact (formulaire + affiché)', 'kawami' ),
+		'section' => 'kawami_options',
+		'type'    => 'email',
+	) );
+
 	$wp_customize->add_setting( 'kawami_social_instagram_url', array(
 		'default'           => '',
 		'sanitize_callback' => 'esc_url_raw',
@@ -268,6 +278,25 @@ function kawami_homepage_fields() {
 			'title'  => __( 'Accueil — Instagram', 'kawami' ),
 			'fields' => array(
 				'kawami_ig_title' => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'En ce moment sur Instagram 📸' ),
+			),
+		),
+		'kawami_story_page' => array(
+			'title'  => __( 'Page — Mon histoire', 'kawami' ),
+			'fields' => array(
+				'kawami_story_portrait'        => array( 'type' => 'image', 'label' => 'Photo portrait' ),
+				'kawami_story_companion_image' => array( 'type' => 'image', 'label' => 'Photo du compagnon' ),
+			),
+		),
+		'kawami_accessoires_page' => array(
+			'title'  => __( 'Page — Accessoires (bientôt)', 'kawami' ),
+			'fields' => array(
+				'kawami_acc_image' => array( 'type' => 'image', 'label' => 'Image centrale' ),
+			),
+		),
+		'kawami_journaux_page' => array(
+			'title'  => __( 'Page — Journaux (bientôt)', 'kawami' ),
+			'fields' => array(
+				'kawami_jr_image' => array( 'type' => 'image', 'label' => 'Image centrale' ),
 			),
 		),
 		'kawami_newsletter' => array(
@@ -431,3 +460,34 @@ function kawami_product_care_info_and_accordion() {
 	<?php
 }
 add_action( 'woocommerce_single_product_summary', 'kawami_product_care_info_and_accordion', 25 );
+
+/**
+ * Contact page form handler: sends a plain wp_mail() to the site admin
+ * email - no 3rd-party form plugin required. Swap kawami_contact_notify()
+ * later for a real ESP/CRM integration if needed.
+ */
+function kawami_handle_contact_form() {
+	if ( ! isset( $_POST['kawami_contact_nonce'] ) || ! wp_verify_nonce( $_POST['kawami_contact_nonce'], 'kawami_contact_form' ) ) {
+		wp_die( esc_html__( 'Requête invalide.', 'kawami' ) );
+	}
+
+	$name    = isset( $_POST['kawami_name'] ) ? sanitize_text_field( wp_unslash( $_POST['kawami_name'] ) ) : '';
+	$email   = isset( $_POST['kawami_email'] ) ? sanitize_email( wp_unslash( $_POST['kawami_email'] ) ) : '';
+	$subject = isset( $_POST['kawami_subject'] ) ? sanitize_text_field( wp_unslash( $_POST['kawami_subject'] ) ) : 'Une question';
+	$message = isset( $_POST['kawami_message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['kawami_message'] ) ) : '';
+
+	$sent = false;
+	if ( $email && is_email( $email ) && $message ) {
+		$to      = get_theme_mod( 'kawami_contact_email', get_option( 'admin_email' ) );
+		$headers = array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . ( $name ? "$name <$email>" : $email ) );
+		$body    = "De : {$name} <{$email}>\nSujet : {$subject}\n\n{$message}";
+		$sent    = wp_mail( $to, '[Kawami] ' . $subject, $body, $headers );
+		do_action( 'kawami_contact_form_submitted', $name, $email, $subject, $message );
+	}
+
+	$redirect = wp_get_referer() ?: home_url( '/' );
+	wp_safe_redirect( add_query_arg( 'kawami_contact', $sent ? 'ok' : 'error', $redirect ) );
+	exit;
+}
+add_action( 'admin_post_kawami_contact_form', 'kawami_handle_contact_form' );
+add_action( 'admin_post_nopriv_kawami_contact_form', 'kawami_handle_contact_form' );

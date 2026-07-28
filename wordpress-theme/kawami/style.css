@@ -435,3 +435,15 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 .woocommerce-MyAccount-navigation li a { display: block; padding: 10px 16px; border-radius: 999px; font: 700 13px var(--k-font-ui); color: var(--k-text); background: var(--k-card); border: 1.5px solid var(--k-border); }
 .woocommerce-MyAccount-navigation li.is-active a { background: var(--k-primary); color: #fff; border-color: var(--k-primary); }
 .woocommerce-account .woocommerce-MyAccount-content { margin-top: 20px; }
+
+/* ---------- Journaux page hero: photo with text overlay ---------- */
+.k-journal-hero { height: 540px; }
+.k-journal-hero__overlay { max-width: 600px; padding: 0 8%; }
+.k-journal-hero__title { font-size: 46px; }
+.k-journal-hero__subtitle { font-size: 21px; }
+@media (max-width: 749px) {
+  .k-journal-hero { height: auto !important; aspect-ratio: 3 / 4; }
+  .k-journal-hero__overlay { max-width: 100% !important; padding: 0 24px !important; gap: 10px !important; }
+  .k-journal-hero__title { font-size: 28px !important; }
+  .k-journal-hero__subtitle { font-size: 15px !important; }
+}
