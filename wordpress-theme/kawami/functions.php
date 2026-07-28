@@ -151,8 +151,162 @@ function kawami_customize_register( $wp_customize ) {
 			'type'    => 'dropdown-pages',
 		) );
 	}
+
+	// Homepage section content - one section per Shopify section it replaces,
+	// data-driven so every text/url/image field is a couple of lines instead
+	// of a full add_setting()+add_control() pair each.
+	foreach ( kawami_homepage_fields() as $section_id => $section ) {
+		$wp_customize->add_section( $section_id, array(
+			'title'    => $section['title'],
+			'priority' => 40,
+		) );
+		foreach ( $section['fields'] as $id => $field ) {
+			$setting_args = array( 'default' => $field['default'] ?? '' );
+			if ( 'image' === $field['type'] ) {
+				$setting_args['sanitize_callback'] = 'absint';
+			} elseif ( 'url' === $field['type'] ) {
+				$setting_args['sanitize_callback'] = 'esc_url_raw';
+			} elseif ( 'textarea' === $field['type'] ) {
+				$setting_args['sanitize_callback'] = 'wp_kses_post';
+			} else {
+				$setting_args['sanitize_callback'] = 'sanitize_text_field';
+			}
+			$wp_customize->add_setting( $id, $setting_args );
+
+			if ( 'image' === $field['type'] ) {
+				$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $id, array(
+					'label'   => $field['label'],
+					'section' => $section_id,
+				) ) );
+			} else {
+				$control_type = 'textarea' === $field['type'] ? 'textarea' : ( 'url' === $field['type'] ? 'url' : 'text' );
+				$wp_customize->add_control( $id, array(
+					'label'   => $field['label'],
+					'section' => $section_id,
+					'type'    => $control_type,
+				) );
+			}
+		}
+	}
 }
 add_action( 'customize_register', 'kawami_customize_register' );
+
+/**
+ * Data-driven definition of every editable homepage text/url/image field,
+ * grouped by the Customizer section (= the Shopify section it replaces).
+ * Read with kawami_field( $id, $default ) in front-page.php.
+ */
+function kawami_homepage_fields() {
+	return array(
+		'kawami_hero' => array(
+			'title'  => __( 'Accueil — Hero', 'kawami' ),
+			'fields' => array(
+				'kawami_hero_eyebrow'            => array( 'type' => 'text', 'label' => 'Petit texte au-dessus', 'default' => '🌸 NOUVELLE COLLECTION ÉTÉ' ),
+				'kawami_hero_title'              => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Des peluches au crochet, douces comme un câlin' ),
+				'kawami_hero_subtitle'           => array( 'type' => 'textarea', 'label' => 'Sous-titre', 'default' => 'Amigurumis kawaii inspirés des animés, de la k-pop et des jeux vidéo — crochetés maille par maille dans mon petit atelier.' ),
+				'kawami_hero_primary_cta_text'   => array( 'type' => 'text', 'label' => 'Bouton principal', 'default' => 'Découvrir la boutique' ),
+				'kawami_hero_primary_cta_url'    => array( 'type' => 'url', 'label' => 'Lien du bouton principal' ),
+				'kawami_hero_secondary_cta_text' => array( 'type' => 'text', 'label' => 'Bouton secondaire', 'default' => 'Mon histoire' ),
+				'kawami_hero_secondary_cta_url'  => array( 'type' => 'url', 'label' => 'Lien du bouton secondaire' ),
+				'kawami_hero_image_1'            => array( 'type' => 'image', 'label' => 'Photo (grande, arrondie)' ),
+				'kawami_hero_image_2'            => array( 'type' => 'image', 'label' => 'Photo (petite, ronde)' ),
+				'kawami_hero_price_tag_text'     => array( 'type' => 'text', 'label' => 'Étiquette produit — nom' ),
+				'kawami_hero_price_tag_price'    => array( 'type' => 'text', 'label' => 'Étiquette produit — prix' ),
+			),
+		),
+		'kawami_univers' => array(
+			'title'  => __( 'Accueil — Mes univers', 'kawami' ),
+			'fields' => array(
+				'kawami_univers_title'    => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Mes univers ⛩️' ),
+				'kawami_univers_subtitle' => array( 'type' => 'text', 'label' => 'Sous-titre', 'default' => 'choisis ton fandom' ),
+			),
+		),
+		'kawami_featured' => array(
+			'title'  => __( 'Accueil — Produits en vedette', 'kawami' ),
+			'fields' => array(
+				'kawami_featured_title'    => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Les petites nouveautés ✨' ),
+				'kawami_featured_subtitle' => array( 'type' => 'textarea', 'label' => 'Sous-titre', 'default' => "Certaines peluches partent tout de suite, d'autres sont crochetées rien que pour toi." ),
+			),
+		),
+		'kawami_custom_order' => array(
+			'title'  => __( 'Accueil — Commande personnalisée', 'kawami' ),
+			'fields' => array(
+				'kawami_co_eyebrow'  => array( 'type' => 'text', 'label' => 'Petit texte', 'default' => '🎨 Commande personnalisée' ),
+				'kawami_co_title'    => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Ta peluche, dans tes couleurs' ),
+				'kawami_co_text'     => array( 'type' => 'textarea', 'label' => 'Texte', 'default' => "Tu craques pour un de mes modèles mais tu le rêves dans d'autres teintes ? On peut adapter les couleurs d'un modèle existant rien que pour toi 💕" ),
+				'kawami_co_note'     => array( 'type' => 'textarea', 'label' => 'Note encadrée', 'default' => "🧵 Je réalise uniquement des variantes de couleur sur mes modèles déjà testés — je n'accepte pas les patrons extérieurs, pour garantir la qualité de chaque pièce." ),
+				'kawami_co_cta_text' => array( 'type' => 'text', 'label' => 'Bouton', 'default' => "Demander si c'est possible" ),
+				'kawami_co_cta_url'  => array( 'type' => 'url', 'label' => 'Lien du bouton' ),
+			),
+		),
+		'kawami_atelier' => array(
+			'title'  => __( 'Accueil — Atelier couture (teaser)', 'kawami' ),
+			'fields' => array(
+				'kawami_ac_image'        => array( 'type' => 'image', 'label' => 'Photo' ),
+				'kawami_ac_tag_text'     => array( 'type' => 'text', 'label' => 'Étiquette sur la photo', 'default' => 'cousu main, en petite série 🪡' ),
+				'kawami_ac_eyebrow'      => array( 'type' => 'text', 'label' => 'Petit texte', 'default' => "L'atelier couture · bientôt" ),
+				'kawami_ac_title'        => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Fleurs, tissus' ),
+				'kawami_ac_title_accent' => array( 'type' => 'text', 'label' => 'Titre (accent italique)', 'default' => '& romantisme' ),
+				'kawami_ac_text'         => array( 'type' => 'textarea', 'label' => 'Texte', 'default' => "À côté du crochet, l'atelier propose des accessoires aux tissus fleuris : trousses de toilette, housses pour livres et ordinateurs, totes bags matelassés. Chaque pièce est cousue à la main, en petite série." ),
+				'kawami_ac_cta_text'     => array( 'type' => 'text', 'label' => 'Bouton', 'default' => 'Être prévenue du lancement' ),
+				'kawami_ac_cta_url'      => array( 'type' => 'url', 'label' => 'Lien du bouton' ),
+			),
+		),
+		'kawami_story' => array(
+			'title'  => __( 'Accueil — Mon histoire (teaser)', 'kawami' ),
+			'fields' => array(
+				'kawami_st_image'     => array( 'type' => 'image', 'label' => 'Photo' ),
+				'kawami_st_tag_text'  => array( 'type' => 'text', 'label' => 'Étiquette sur la photo', 'default' => 'crocheté avec amour 💕' ),
+				'kawami_st_eyebrow'   => array( 'type' => 'text', 'label' => 'Petit texte', 'default' => 'Mon histoire' ),
+				'kawami_st_title'     => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Derrière Kawami, il y a Savie (et beaucoup de laine)' ),
+				'kawami_st_text'      => array( 'type' => 'textarea', 'label' => 'Texte', 'default' => "Kawami, c'est moi, Savannah ! Non-binaire, à mobilité réduite et atteinte de maladies chroniques, j'ai voulu offrir des amis réconfortants inspirés des univers que j'aime. Chaque vente contribue à mon confort et à mes frais médicaux. 親友, c'est « meilleur ami » : ce que chaque peluche devient en arrivant chez toi." ),
+				'kawami_st_link_text' => array( 'type' => 'text', 'label' => 'Lien', 'default' => 'Lire mon histoire' ),
+				'kawami_st_link_url'  => array( 'type' => 'url', 'label' => 'URL du lien' ),
+			),
+		),
+		'kawami_instagram' => array(
+			'title'  => __( 'Accueil — Instagram', 'kawami' ),
+			'fields' => array(
+				'kawami_ig_title' => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'En ce moment sur Instagram 📸' ),
+			),
+		),
+		'kawami_newsletter' => array(
+			'title'  => __( 'Accueil — Newsletter', 'kawami' ),
+			'fields' => array(
+				'kawami_nl_bg_image' => array( 'type' => 'image', 'label' => 'Image de fond' ),
+				'kawami_nl_title'    => array( 'type' => 'text', 'label' => 'Titre', 'default' => "La petite lettre de l'atelier" ),
+				'kawami_nl_text'     => array( 'type' => 'textarea', 'label' => 'Texte', 'default' => 'Nouveautés, précommandes et retours en convention (promis, pas de spam — juste de la douceur).' ),
+			),
+		),
+	);
+}
+
+/**
+ * Shorthand: get a homepage Customizer field's current value (falls back
+ * to its declared default from kawami_homepage_fields()).
+ */
+function kawami_field( $id ) {
+	return get_theme_mod( $id, '' );
+}
+
+/**
+ * Shorthand: get a homepage image field's URL (Customizer image controls
+ * store the attachment URL directly as the theme_mod value).
+ */
+function kawami_field_image( $id, $size = 'full' ) {
+	$value = get_theme_mod( $id, '' );
+	if ( ! $value ) {
+		return '';
+	}
+	$attachment_id = attachment_url_to_postid( $value );
+	if ( $attachment_id ) {
+		$src = wp_get_attachment_image_src( $attachment_id, $size );
+		if ( $src ) {
+			return $src[0];
+		}
+	}
+	return $value;
+}
 
 /**
  * WooCommerce layout hooks: Kawami markup replaces most default wrappers
