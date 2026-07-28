@@ -396,7 +396,7 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   background: var(--k-primary-hover) !important;
 }
 .woocommerce span.onsale {
-  background: var(--k-preorder-bg); color: var(--k-preorder-text); font: 700 10.5px var(--k-font-ui);
+  background: var(--k-primary); color: #fff; font: 700 10.5px var(--k-font-ui);
   border-radius: 999px; min-height: 0; min-width: 0; padding: 5px 11px; line-height: 1; top: 12px; left: 12px; right: auto;
 }
 .woocommerce div.product div.images, .woocommerce div.product div.summary { padding: 0; }
