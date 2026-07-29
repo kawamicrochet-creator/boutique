@@ -14,11 +14,11 @@ $contact_url     = kawami_nav_page_url( 'kawami_page_contact' );
 $account_enabled = class_exists( 'WooCommerce' );
 $cart_count      = kawami_cart_count();
 
-$announcements = array(
-	'🌍 Livraison soignée dans le monde entier 🌍',
-	'🎁 Livraison gratuite en France dès ' . absint( get_theme_mod( 'kawami_free_shipping_threshold', 120 ) ) . ' € 🎁',
-	'🧵 Précommandes : fabrication en ' . esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) ) . ' 🧵',
-);
+$announcements = array_filter( array(
+	kawami_field( 'kawami_announce_1' ),
+	kawami_field( 'kawami_announce_2' ),
+	kawami_field( 'kawami_announce_3' ),
+) );
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>

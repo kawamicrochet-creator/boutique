@@ -217,6 +217,36 @@ add_action( 'customize_register', 'kawami_customize_register' );
  */
 function kawami_homepage_fields() {
 	return array(
+		'kawami_product_page' => array(
+			'title'  => __( 'Fiche produit (tous les produits)', 'kawami' ),
+			'fields' => array(
+				'kawami_pp_care_banner'    => array( 'type' => 'text', 'label' => 'Bandeau (au-dessus du bouton panier)', 'default' => '🏮 Chaque pièce est crochetée à la main, prévois un léger délai de fabrication.' ),
+				'kawami_pp_care1'          => array( 'type' => 'text', 'label' => 'Encadré soin — ligne 1', 'default' => 'Laine et rembourrage sans matière animale, certifiés Oeko-Tex / GOTS' ),
+				'kawami_pp_care2'          => array( 'type' => 'text', 'label' => 'Encadré soin — ligne 2', 'default' => "Lavage max 40°, séchage à l'air libre" ),
+				'kawami_pp_care3'          => array( 'type' => 'text', 'label' => 'Encadré soin — ligne 3', 'default' => 'Pièce unique faite main — de légères variations la rendent unique' ),
+				'kawami_pp_shipping_title' => array( 'type' => 'text', 'label' => 'Accordéon « Livraison » — titre', 'default' => 'Livraison' ),
+				'kawami_pp_shipping_text'  => array( 'type' => 'textarea', 'label' => 'Accordéon « Livraison » — texte', 'default' => 'Expédiée soigneusement sous 2 à 5 jours ouvrés pour les articles en stock.' ),
+				'kawami_pp_preorder_title' => array( 'type' => 'text', 'label' => 'Accordéon « Précommande » — titre', 'default' => 'Précommande' ),
+				'kawami_pp_preorder_text'  => array( 'type' => 'textarea', 'label' => 'Accordéon « Précommande » — texte (utilise {delai} pour le délai configuré plus haut)', 'default' => 'Les pièces en précommande sont crochetées à la main et expédiées sous {delai}.' ),
+				'kawami_pp_safety_title'   => array( 'type' => 'text', 'label' => 'Accordéon « Sécurité & entretien » — titre', 'default' => 'Sécurité & entretien' ),
+				'kawami_pp_safety_text'    => array( 'type' => 'textarea', 'label' => 'Accordéon « Sécurité & entretien » — texte', 'default' => 'Convient à partir de 3 ans. Lavage à la main ou en machine à 30-40°, séchage à l\'air libre.' ),
+			),
+		),
+		'kawami_footer' => array(
+			'title'  => __( 'Pied de page', 'kawami' ),
+			'fields' => array(
+				'kawami_footer_tagline'   => array( 'type' => 'text', 'label' => 'Texte sous le logo', 'default' => 'Peluches au crochet et accessoires cousus main, depuis un petit atelier français.' ),
+				'kawami_footer_signature' => array( 'type' => 'text', 'label' => 'Fin de la ligne de copyright', 'default' => 'fait main avec 💕 et beaucoup de laine' ),
+			),
+		),
+		'kawami_announce_bar' => array(
+			'title'  => __( 'Bandeau d\'annonce (en haut du site)', 'kawami' ),
+			'fields' => array(
+				'kawami_announce_1' => array( 'type' => 'text', 'label' => 'Message 1', 'default' => '🌍 Livraison soignée dans le monde entier 🌍' ),
+				'kawami_announce_2' => array( 'type' => 'text', 'label' => 'Message 2', 'default' => '🎁 Livraison gratuite en France dès ' . absint( get_theme_mod( 'kawami_free_shipping_threshold', 120 ) ) . ' € 🎁' ),
+				'kawami_announce_3' => array( 'type' => 'text', 'label' => 'Message 3', 'default' => '🧵 Précommandes : fabrication en ' . esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) ) . ' 🧵' ),
+			),
+		),
 		'kawami_hero' => array(
 			'title'  => __( 'Accueil — Hero', 'kawami' ),
 			'fields' => array(
@@ -231,6 +261,9 @@ function kawami_homepage_fields() {
 				'kawami_hero_image_2'            => array( 'type' => 'image', 'label' => 'Photo (petite, ronde)' ),
 				'kawami_hero_price_tag_text'     => array( 'type' => 'text', 'label' => 'Étiquette produit — nom' ),
 				'kawami_hero_price_tag_price'    => array( 'type' => 'text', 'label' => 'Étiquette produit — prix' ),
+				'kawami_hero_badge1_text'        => array( 'type' => 'text', 'label' => 'Badge 1 (utilise | pour la 2e ligne)', 'default' => '100% fait main|pièces uniques' ),
+				'kawami_hero_badge2_text'        => array( 'type' => 'text', 'label' => 'Badge 2 (utilise | pour la 2e ligne)', 'default' => 'Laine certifiée|Oeko-Tex' ),
+				'kawami_hero_badge3_text'        => array( 'type' => 'text', 'label' => 'Badge 3 (utilise | pour la 2e ligne, {delai} pour le délai configuré plus bas)', 'default' => 'Précommande|{delai}' ),
 			),
 		),
 		'kawami_univers' => array(
@@ -293,14 +326,58 @@ function kawami_homepage_fields() {
 		'kawami_story_page' => array(
 			'title'  => __( 'Page — Mon histoire', 'kawami' ),
 			'fields' => array(
-				'kawami_story_portrait'        => array( 'type' => 'image', 'label' => 'Photo portrait' ),
-				'kawami_story_companion_image' => array( 'type' => 'image', 'label' => 'Photo du compagnon' ),
+				'kawami_story_portrait'         => array( 'type' => 'image', 'label' => 'Photo portrait' ),
+				'kawami_story_eyebrow'          => array( 'type' => 'text', 'label' => 'Petit texte au-dessus du titre', 'default' => 'Mon histoire' ),
+				'kawami_story_h1'               => array( 'type' => 'text', 'label' => 'Titre', 'default' => "Coucou, moi c'est Savie 🌸" ),
+				'kawami_story_paragraph_1'      => array( 'type' => 'textarea', 'label' => 'Premier paragraphe', 'default' => "Savie, c'est mon surnom — je m'appelle Savannah. Je suis non-binaire, à mobilité réduite et atteinte de maladies chroniques — et c'est moi qui m'occupe de Kawami. Grande fan d'animés et de k-pop, je voulais offrir des amis réconfortants inspirés de ces univers." ),
+				'kawami_story_paragraph_2'      => array( 'type' => 'textarea', 'label' => 'Deuxième paragraphe', 'default' => "Ma famille m'épaule pour la création et la logistique, mais Kawami, c'est mon bébé : un espace bienveillant où tout le monde est accepté et bienvenu." ),
+				'kawami_story_photo_tag'        => array( 'type' => 'text', 'label' => 'Étiquette sur la photo', 'default' => 'maille après maille 🎀' ),
+				'kawami_story_companion_image'  => array( 'type' => 'image', 'label' => 'Photo du compagnon' ),
+				'kawami_story_companion_name'   => array( 'type' => 'text', 'label' => 'Compagnon — nom', 'default' => 'Willow 🐾' ),
+				'kawami_story_companion_role'   => array( 'type' => 'text', 'label' => 'Compagnon — rôle', 'default' => "Chienne d'assistance officielle" ),
+				'kawami_story_companion_text'   => array( 'type' => 'textarea', 'label' => 'Compagnon — texte', 'default' => "Ma bouvier bernois, qui m'accompagne partout — et qui adore participer aux shootings photo des peluches." ),
+				'kawami_story_callout_text'     => array( 'type' => 'textarea', 'label' => 'Message de remerciement (encadré rose)', 'default' => 'Chaque peluche vendue contribue directement à mon confort et aux frais médicaux de mes déplacements chez les spécialistes. Merci du fond du cœur de faire vivre Kawami.' ),
+				'kawami_story_meetup_title'     => array( 'type' => 'text', 'label' => 'Bloc convention — titre', 'default' => 'On se croisera en convention !' ),
+				'kawami_story_meetup_text'      => array( 'type' => 'textarea', 'label' => 'Bloc convention — texte', 'default' => "J'adore aller en convention quand mon état de santé me le permet ! Les stands Kawami font une petite pause cette année, le temps de prendre soin de moi. Rendez-vous l'année prochaine ; en attendant, la boutique en ligne reste grande ouverte 💕" ),
+				'kawami_story_value1_title'     => array( 'type' => 'text', 'label' => 'Valeur 1 — titre', 'default' => '100 % fait main' ),
+				'kawami_story_value1_text'      => array( 'type' => 'textarea', 'label' => 'Valeur 1 — texte', 'default' => 'Chaque peluche demande des heures de crochet. Pas deux identiques — la tienne est unique au monde.' ),
+				'kawami_story_value2_title'     => array( 'type' => 'text', 'label' => 'Valeur 2 — titre', 'default' => 'Matières saines' ),
+				'kawami_story_value2_text'      => array( 'type' => 'textarea', 'label' => 'Valeur 2 — texte', 'default' => 'Laine chenille certifiée Oeko-Tex et rembourrage hypoallergénique.' ),
+				'kawami_story_value3_title'     => array( 'type' => 'text', 'label' => 'Valeur 3 — titre', 'default' => '親友, « meilleur ami »' ),
+				'kawami_story_value3_text'      => array( 'type' => 'textarea', 'label' => 'Valeur 3 — texte', 'default' => "Le slogan de Kawami : chaque peluche est pensée pour devenir le petit compagnon qu'on garde toujours près de soi." ),
+			),
+		),
+		'kawami_contact_page' => array(
+			'title'  => __( 'Page — Contact', 'kawami' ),
+			'fields' => array(
+				'kawami_contact_h1'          => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Écris-moi 💌' ),
+				'kawami_contact_intro'       => array( 'type' => 'textarea', 'label' => 'Texte d\'intro', 'default' => 'Une question sur une peluche, une précommande, ta commande en cours ? Je réponds en général sous 48 h (le crochet occupe beaucoup mes mains !).' ),
+				'kawami_contact_social_title' => array( 'type' => 'text', 'label' => 'Encadré contacts — titre', 'default' => 'Retrouve-moi ici' ),
+				'kawami_contact_faq_title'   => array( 'type' => 'text', 'label' => 'Encadré FAQ — titre', 'default' => 'Petites questions fréquentes' ),
+				'kawami_contact_faq1_q'      => array( 'type' => 'text', 'label' => 'FAQ 1 — question', 'default' => 'Quel délai pour une précommande ?' ),
+				'kawami_contact_faq1_a'      => array( 'type' => 'textarea', 'label' => 'FAQ 1 — réponse', 'default' => 'Fabrication en ' . esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) ) . ', puis envoi suivi sous 48 h.' ),
+				'kawami_contact_faq2_q'      => array( 'type' => 'text', 'label' => 'FAQ 2 — question', 'default' => 'Cela convient-il aux enfants ?' ),
+				'kawami_contact_faq2_a'      => array( 'type' => 'textarea', 'label' => 'FAQ 2 — réponse', 'default' => 'Nos peluches sont avant tout des objets de décoration et de collection. Certaines ont des yeux de sécurité (normes CE en cours) ; si c\'est pour un enfant, privilégiez les modèles aux yeux brodés.' ),
+				'kawami_contact_faq3_q'      => array( 'type' => 'text', 'label' => 'FAQ 3 — question', 'default' => 'Seras-tu en convention cette année ?' ),
+				'kawami_contact_faq3_a'      => array( 'type' => 'textarea', 'label' => 'FAQ 3 — réponse', 'default' => 'Pas cette année — rendez-vous l\'année prochaine 💕' ),
+				'kawami_contact_tip'         => array( 'type' => 'textarea', 'label' => 'Astuce (encadré rose)', 'default' => '🌸 Astuce : pour suivre la naissance des prochaines peluches, c\'est sur Instagram que tout se passe !' ),
 			),
 		),
 		'kawami_accessoires_page' => array(
 			'title'  => __( 'Page — Accessoires (bientôt)', 'kawami' ),
 			'fields' => array(
-				'kawami_acc_image' => array( 'type' => 'image', 'label' => 'Image centrale' ),
+				'kawami_acc_image'         => array( 'type' => 'image', 'label' => 'Image centrale' ),
+				'kawami_acc_eyebrow_text'  => array( 'type' => 'text', 'label' => 'Petit texte au-dessus', 'default' => '🌸 Bientôt disponible' ),
+				'kawami_acc_h1_line1'      => array( 'type' => 'text', 'label' => 'Titre — ligne 1', 'default' => 'Les accessoires cousus main' ),
+				'kawami_acc_h1_line2'      => array( 'type' => 'text', 'label' => 'Titre — ligne 2 (italique)', 'default' => 'arrivent bientôt' ),
+				'kawami_acc_intro'         => array( 'type' => 'textarea', 'label' => 'Texte d\'intro', 'default' => 'Trousses de toilette, housses pour livres et ordinateurs, totes bags matelassés — des accessoires aux tissus fleuris et romantiques, cousus à la main en petite série. La collection se prépare dans l\'atelier 🪡' ),
+				'kawami_acc_photo_tag'     => array( 'type' => 'text', 'label' => 'Étiquette sur la photo', 'default' => 'cousu main, en petite série 🪡' ),
+				'kawami_acc_cat1'          => array( 'type' => 'text', 'label' => 'Catégorie 1', 'default' => 'Trousses de toilette' ),
+				'kawami_acc_cat2'          => array( 'type' => 'text', 'label' => 'Catégorie 2', 'default' => 'Housses de livre' ),
+				'kawami_acc_cat3'          => array( 'type' => 'text', 'label' => 'Catégorie 3', 'default' => "Housses d'ordinateur" ),
+				'kawami_acc_cat4'          => array( 'type' => 'text', 'label' => 'Catégorie 4', 'default' => 'Totes bags matelassés' ),
+				'kawami_acc_nl_title'      => array( 'type' => 'text', 'label' => 'Newsletter — titre', 'default' => 'Sois la première prévenue du lancement' ),
+				'kawami_acc_nl_text'       => array( 'type' => 'textarea', 'label' => 'Newsletter — texte', 'default' => "Inscris-toi à la petite lettre de l'atelier : tu sauras dès que la collection d'accessoires sera en ligne (promis, pas de spam — juste de la douceur)." ),
 			),
 		),
 		'kawami_journaux_page' => array(
@@ -311,6 +388,50 @@ function kawami_homepage_fields() {
 				'kawami_jr_lectures_image'  => array( 'type' => 'image', 'label' => 'Image — Journal de mes Lectures' ),
 				'kawami_jr_feature_image'   => array( 'type' => 'image', 'label' => 'Image — bloc « Numérique & papier » (tablette/livret)' ),
 				'kawami_jr_cta_image'       => array( 'type' => 'image', 'label' => 'Photo de fond — bandeau final' ),
+				'kawami_jr_hero_eyebrow'    => array( 'type' => 'text', 'label' => 'Bandeau — petit texte', 'default' => '🌸 À venir prochainement' ),
+				'kawami_jr_hero_title'      => array( 'type' => 'text', 'label' => 'Bandeau — titre', 'default' => 'Esprits Divergents' ),
+				'kawami_jr_hero_subtitle'   => array( 'type' => 'text', 'label' => 'Bandeau — sous-titre', 'default' => 'une collection de journaux doux, bientôt chez toi 🌸' ),
+				'kawami_jr_hero_text'       => array( 'type' => 'textarea', 'label' => 'Bandeau — texte', 'default' => "Des carnets pensés pour ralentir, respirer et prendre soin de soi — illustrés dans l'univers tendre de Kawami." ),
+				'kawami_jr_why_title'       => array( 'type' => 'text', 'label' => '« Pourquoi tenir un journal » — titre', 'default' => 'Pourquoi tenir un journal ? ✿' ),
+				'kawami_jr_why_text'        => array( 'type' => 'textarea', 'label' => '« Pourquoi tenir un journal » — texte', 'default' => "Écrire quelques minutes par jour, c'est un petit geste de douceur envers soi. Nos journaux t'accompagnent avec bienveillance, sans pression ni performance." ),
+				'kawami_jr_benefit1_title'  => array( 'type' => 'text', 'label' => 'Bienfait 1 — titre', 'default' => 'Apaiser le mental' ),
+				'kawami_jr_benefit1_text'   => array( 'type' => 'textarea', 'label' => 'Bienfait 1 — texte', 'default' => 'Poser ses pensées sur le papier libère la tête et calme les journées agitées.' ),
+				'kawami_jr_benefit2_title'  => array( 'type' => 'text', 'label' => 'Bienfait 2 — titre', 'default' => 'Cultiver la gratitude' ),
+				'kawami_jr_benefit2_text'   => array( 'type' => 'textarea', 'label' => 'Bienfait 2 — texte', 'default' => 'Noter une petite joie chaque jour aide à voir le beau, même les jours gris.' ),
+				'kawami_jr_benefit3_title'  => array( 'type' => 'text', 'label' => 'Bienfait 3 — titre', 'default' => 'Garder une trace' ),
+				'kawami_jr_benefit3_text'   => array( 'type' => 'textarea', 'label' => 'Bienfait 3 — texte', 'default' => 'Tes lectures, tes projets, tes envies — tout au même endroit, joliment.' ),
+				'kawami_jr_benefit4_title'  => array( 'type' => 'text', 'label' => 'Bienfait 4 — titre', 'default' => 'Un moment pour soi' ),
+				'kawami_jr_benefit4_text'   => array( 'type' => 'textarea', 'label' => 'Bienfait 4 — texte', 'default' => "Un rituel doux, sans pression, rien qu'à toi. Du self-care en quelques minutes." ),
+				'kawami_jr_premiers_title'  => array( 'type' => 'text', 'label' => '« Les tout premiers » — titre', 'default' => 'Les tout premiers 🌷' ),
+				'kawami_jr_premiers_tag'    => array( 'type' => 'text', 'label' => '« Les tout premiers » — étiquette', 'default' => 'disponibles au lancement' ),
+				'kawami_jr_premiers_text'   => array( 'type' => 'textarea', 'label' => '« Les tout premiers » — texte', 'default' => 'Deux carnets pour commencer en douceur — en numérique à imprimer, ou en joli carnet papier.' ),
+				'kawami_jr_premier1_name'   => array( 'type' => 'text', 'label' => 'Carnet 1 — nom', 'default' => 'Mon Journal de Gratitude' ),
+				'kawami_jr_premier1_sous'   => array( 'type' => 'text', 'label' => 'Carnet 1 — sous-titre', 'default' => 'cultiver la gratitude, enrichir chaque jour' ),
+				'kawami_jr_premier1_desc'   => array( 'type' => 'textarea', 'label' => 'Carnet 1 — description', 'default' => 'Chaque jour, quelques lignes pour cultiver la douceur : humeur, gratitude et petites victoires, guidé par de tendres illustrations.' ),
+				'kawami_jr_premier2_name'   => array( 'type' => 'text', 'label' => 'Carnet 2 — nom', 'default' => 'Journal de mes Lectures' ),
+				'kawami_jr_premier2_sous'   => array( 'type' => 'text', 'label' => 'Carnet 2 — sous-titre', 'default' => 'pour les amoureux des livres' ),
+				'kawami_jr_premier2_desc'   => array( 'type' => 'textarea', 'label' => 'Carnet 2 — description', 'default' => "Note tes lectures, tes citations préférées, tes avis et ta PAL — un carnet cosy pour garder en mémoire tes meilleurs moments de lecture." ),
+				'kawami_jr_avenir_title'    => array( 'type' => 'text', 'label' => '« Et bientôt d\'autres » — titre', 'default' => "Et bientôt d'autres… 💫" ),
+				'kawami_jr_avenir_tag'      => array( 'type' => 'text', 'label' => '« Et bientôt d\'autres » — étiquette', 'default' => "en préparation dans l'atelier" ),
+				'kawami_jr_avenir1_name'    => array( 'type' => 'text', 'label' => 'À venir 1 — nom', 'default' => "Journal d'anxiété" ),
+				'kawami_jr_avenir1_desc'    => array( 'type' => 'textarea', 'label' => 'À venir 1 — description', 'default' => 'Un carnet doux pour accueillir ses émotions, repérer ses déclencheurs et respirer.' ),
+				'kawami_jr_avenir2_name'    => array( 'type' => 'text', 'label' => 'À venir 2 — nom', 'default' => 'Journal quotidien — parents occupés' ),
+				'kawami_jr_avenir2_desc'    => array( 'type' => 'textarea', 'label' => 'À venir 2 — description', 'default' => 'Un format rapide et bienveillant pour les journées bien remplies, pensé pour les parents.' ),
+				'kawami_jr_feature_eyebrow' => array( 'type' => 'text', 'label' => 'Bloc « Numérique & papier » — petit texte', 'default' => '📱 Numérique & 📖 papier' ),
+				'kawami_jr_feature_title'   => array( 'type' => 'text', 'label' => 'Bloc « Numérique & papier » — titre', 'default' => 'Sur ta tablette, à imprimer ou en joli livret' ),
+				'kawami_jr_feature1_text'   => array( 'type' => 'text', 'label' => 'Numérique & papier — ligne 1', 'default' => 'Version numérique interactive — Notability / GoodNotes' ),
+				'kawami_jr_feature2_text'   => array( 'type' => 'text', 'label' => 'Numérique & papier — ligne 2', 'default' => 'Format livret A5 — à imprimer ou en édition papier à couverture rigide' ),
+				'kawami_jr_feature3_text'   => array( 'type' => 'text', 'label' => 'Numérique & papier — ligne 3', 'default' => 'Fichier PDF à imprimer — incluant les formats A4 et Lettre (US)' ),
+				'kawami_jr_goodies_title'   => array( 'type' => 'text', 'label' => 'Goodies — titre', 'default' => 'À assortir avec des goodies 🪡' ),
+				'kawami_jr_goodies_text'    => array( 'type' => 'textarea', 'label' => 'Goodies — texte', 'default' => 'Pour prendre soin de tes carnets et de tes livres, des petits accessoires en tissu fleuri, à venir aussi.' ),
+				'kawami_jr_goodie1_name'    => array( 'type' => 'text', 'label' => 'Goodie 1 — nom', 'default' => 'Repère-pages' ),
+				'kawami_jr_goodie1_text'    => array( 'type' => 'textarea', 'label' => 'Goodie 1 — texte', 'default' => 'marque-pages en tissu fleuri, cousus main.' ),
+				'kawami_jr_goodie2_name'    => array( 'type' => 'text', 'label' => 'Goodie 2 — nom', 'default' => 'Book sleeves' ),
+				'kawami_jr_goodie2_text'    => array( 'type' => 'textarea', 'label' => 'Goodie 2 — texte', 'default' => 'housses matelassées pour protéger tes livres.' ),
+				'kawami_jr_goodie3_name'    => array( 'type' => 'text', 'label' => 'Goodie 3 — nom', 'default' => 'Marqueurs' ),
+				'kawami_jr_goodie3_text'    => array( 'type' => 'textarea', 'label' => 'Goodie 3 — texte', 'default' => 'jolis marqueurs assortis à tes carnets.' ),
+				'kawami_jr_nl_title'        => array( 'type' => 'text', 'label' => 'Newsletter — titre', 'default' => 'Sois au courant du lancement' ),
+				'kawami_jr_nl_text'         => array( 'type' => 'textarea', 'label' => 'Newsletter — texte', 'default' => "Inscris-toi à la petite lettre de l'atelier : tu sauras dès que les premiers journaux seront disponibles (et tu recevras des pages bonus à imprimer 🎁)." ),
 			),
 		),
 		'kawami_newsletter' => array(
@@ -482,12 +603,12 @@ add_action( 'woocommerce_single_product_summary', 'kawami_product_availability_b
 function kawami_product_care_info() {
 	?>
 	<div style="background: #fff7e8; border: 1.5px solid #f0dcb8; border-radius: 16px; padding: 14px 18px; margin: 0 0 18px; font: 600 13px/1.6 var(--k-font-ui); color: var(--k-beige-darker)">
-		🏮 <strong>Chaque pièce est crochetée à la main, prévois un léger délai de fabrication.</strong>
+		<strong><?php echo esc_html( kawami_field( 'kawami_pp_care_banner' ) ); ?></strong>
 	</div>
 	<div class="kawami-care-list">
-		<div><span class="icon">🌿</span>Laine et rembourrage sans matière animale, certifiés Oeko-Tex / GOTS</div>
-		<div><span class="icon">🫧</span>Lavage max 40°, séchage à l'air libre</div>
-		<div><span class="icon">🎀</span>Pièce unique faite main — de légères variations la rendent unique</div>
+		<div><span class="icon">🌿</span><?php echo esc_html( kawami_field( 'kawami_pp_care1' ) ); ?></div>
+		<div><span class="icon">🫧</span><?php echo esc_html( kawami_field( 'kawami_pp_care2' ) ); ?></div>
+		<div><span class="icon">🎀</span><?php echo esc_html( kawami_field( 'kawami_pp_care3' ) ); ?></div>
 	</div>
 	<?php
 }
@@ -496,19 +617,20 @@ function kawami_product_care_info() {
 add_action( 'woocommerce_single_product_summary', 'kawami_product_care_info', 25 );
 
 function kawami_product_accordion() {
-	$delay = esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) );
+	$delay        = esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) );
+	$preorder_text = str_replace( '{delai}', $delay, kawami_field( 'kawami_pp_preorder_text' ) );
 	?>
 	<details class="k-accordion-item" open>
-		<summary class="k-accordion-item__head">Livraison</summary>
-		<div class="k-accordion-item__body">Expédiée soigneusement sous 2 à 5 jours ouvrés pour les articles en stock.</div>
+		<summary class="k-accordion-item__head"><?php echo esc_html( kawami_field( 'kawami_pp_shipping_title' ) ); ?></summary>
+		<div class="k-accordion-item__body"><?php echo esc_html( kawami_field( 'kawami_pp_shipping_text' ) ); ?></div>
 	</details>
 	<details class="k-accordion-item">
-		<summary class="k-accordion-item__head">Précommande</summary>
-		<div class="k-accordion-item__body">Les pièces en précommande sont crochetées à la main et expédiées sous <?php echo $delay; // phpcs:ignore ?>.</div>
+		<summary class="k-accordion-item__head"><?php echo esc_html( kawami_field( 'kawami_pp_preorder_title' ) ); ?></summary>
+		<div class="k-accordion-item__body"><?php echo esc_html( $preorder_text ); ?></div>
 	</details>
 	<details class="k-accordion-item">
-		<summary class="k-accordion-item__head">Sécurité & entretien</summary>
-		<div class="k-accordion-item__body">Convient à partir de 3 ans. Lavage à la main ou en machine à 30-40°, séchage à l'air libre.</div>
+		<summary class="k-accordion-item__head"><?php echo esc_html( kawami_field( 'kawami_pp_safety_title' ) ); ?></summary>
+		<div class="k-accordion-item__body"><?php echo esc_html( kawami_field( 'kawami_pp_safety_text' ) ); ?></div>
 	</details>
 	<?php
 }

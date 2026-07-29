@@ -14,9 +14,9 @@ $portrait  = kawami_field_image( 'kawami_story_portrait' );
 $companion = kawami_field_image( 'kawami_story_companion_image' );
 
 $values = array(
-	array( 'icon' => '🎀', 'bg' => '#f8cdd8', 'title' => '100 % fait main', 'text' => 'Chaque peluche demande des heures de crochet. Pas deux identiques — la tienne est unique au monde.' ),
-	array( 'icon' => '🌿', 'bg' => '#bfe3d2', 'title' => 'Matières saines', 'text' => 'Laine chenille certifiée Oeko-Tex et rembourrage hypoallergénique.' ),
-	array( 'icon' => '💌', 'bg' => '#d5c3e8', 'title' => '親友, « meilleur ami »', 'text' => "Le slogan de Kawami : chaque peluche est pensée pour devenir le petit compagnon qu'on garde toujours près de soi." ),
+	array( 'icon' => '🎀', 'bg' => '#f8cdd8', 'title' => kawami_field( 'kawami_story_value1_title' ), 'text' => kawami_field( 'kawami_story_value1_text' ) ),
+	array( 'icon' => '🌿', 'bg' => '#bfe3d2', 'title' => kawami_field( 'kawami_story_value2_title' ), 'text' => kawami_field( 'kawami_story_value2_text' ) ),
+	array( 'icon' => '💌', 'bg' => '#d5c3e8', 'title' => kawami_field( 'kawami_story_value3_title' ), 'text' => kawami_field( 'kawami_story_value3_text' ) ),
 );
 ?>
 
@@ -25,13 +25,13 @@ $values = array(
 		<div class="k-photo-frame k-rotate-n2" style="aspect-ratio: .85">
 			<?php if ( $portrait ) : ?><img src="<?php echo esc_url( $portrait ); ?>" style="width: 100%; height: 100%; object-fit: cover" alt=""><?php endif; ?>
 		</div>
-		<div style="position: absolute; right: -8px; bottom: -12px; background: var(--k-pink-soft); border-radius: 999px; padding: 10px 18px; font: 700 12.5px var(--k-font-ui); color: var(--k-text); transform: rotate(3deg); box-shadow: 0 6px 16px rgba(92,67,81,.15)">maille après maille 🎀</div>
+		<div style="position: absolute; right: -8px; bottom: -12px; background: var(--k-pink-soft); border-radius: 999px; padding: 10px 18px; font: 700 12.5px var(--k-font-ui); color: var(--k-text); transform: rotate(3deg); box-shadow: 0 6px 16px rgba(92,67,81,.15)"><?php echo esc_html( kawami_field( 'kawami_story_photo_tag' ) ); ?></div>
 	</div>
 	<div>
-		<div style="font: 700 12px var(--k-font-ui); letter-spacing: .22em; color: var(--k-text-muted); text-transform: uppercase; margin-bottom: 12px">Mon histoire</div>
-		<h1 style="font: 900 40px/1.2 var(--k-font-title); color: var(--k-text); margin: 0 0 16px; text-wrap: pretty">Coucou, moi c'est Savie 🌸</h1>
-		<p class="k-lead" style="font-size: 15px; line-height: 1.75; margin: 0 0 12px">Savie, c'est mon surnom — je m'appelle Savannah. Je suis non-binaire, à mobilité réduite et atteinte de maladies chroniques — et c'est moi qui m'occupe de Kawami. Grande fan d'animés et de k-pop, je voulais offrir des amis réconfortants inspirés de ces univers.</p>
-		<p class="k-lead" style="font-size: 15px; line-height: 1.75; margin: 0">Ma famille m'épaule pour la création et la logistique, mais Kawami, c'est mon bébé : un espace bienveillant où tout le monde est accepté et bienvenu.</p>
+		<div style="font: 700 12px var(--k-font-ui); letter-spacing: .22em; color: var(--k-text-muted); text-transform: uppercase; margin-bottom: 12px"><?php echo esc_html( kawami_field( 'kawami_story_eyebrow' ) ); ?></div>
+		<h1 style="font: 900 40px/1.2 var(--k-font-title); color: var(--k-text); margin: 0 0 16px; text-wrap: pretty"><?php echo esc_html( kawami_field( 'kawami_story_h1' ) ); ?></h1>
+		<p class="k-lead" style="font-size: 15px; line-height: 1.75; margin: 0 0 12px"><?php echo esc_html( kawami_field( 'kawami_story_paragraph_1' ) ); ?></p>
+		<p class="k-lead" style="font-size: 15px; line-height: 1.75; margin: 0"><?php echo esc_html( kawami_field( 'kawami_story_paragraph_2' ) ); ?></p>
 	</div>
 </section>
 
@@ -41,15 +41,15 @@ $values = array(
 			<?php if ( $companion ) : ?><img src="<?php echo esc_url( $companion ); ?>" style="width: 100%; height: 100%; object-fit: cover" alt=""><?php endif; ?>
 		</div>
 		<div style="flex: 1; min-width: 260px">
-			<div style="font: 700 18px var(--k-font-title); color: var(--k-text); margin-bottom: 4px">Willow 🐾</div>
-			<div style="font: 700 11px var(--k-font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--k-text-muted); margin-bottom: 8px">Chienne d'assistance officielle</div>
-			<div style="font: 500 14px/1.65 var(--k-font-ui); color: var(--k-text-soft)">Ma bouvier bernois, qui m'accompagne partout — et qui adore participer aux shootings photo des peluches.</div>
+			<div style="font: 700 18px var(--k-font-title); color: var(--k-text); margin-bottom: 4px"><?php echo esc_html( kawami_field( 'kawami_story_companion_name' ) ); ?></div>
+			<div style="font: 700 11px var(--k-font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--k-text-muted); margin-bottom: 8px"><?php echo esc_html( kawami_field( 'kawami_story_companion_role' ) ); ?></div>
+			<div style="font: 500 14px/1.65 var(--k-font-ui); color: var(--k-text-soft)"><?php echo esc_html( kawami_field( 'kawami_story_companion_text' ) ); ?></div>
 		</div>
 	</div>
 
 	<div class="k-callout" style="background: var(--k-pink-soft)">
 		<div class="k-callout__icon">💕</div>
-		<div style="flex: 1; min-width: 280px; font: 600 14px/1.65 var(--k-font-ui); color: var(--k-text)">Chaque peluche vendue contribue directement à mon confort et aux frais médicaux de mes déplacements chez les spécialistes. Merci du fond du cœur de faire vivre Kawami.</div>
+		<div style="flex: 1; min-width: 280px; font: 600 14px/1.65 var(--k-font-ui); color: var(--k-text)"><?php echo esc_html( kawami_field( 'kawami_story_callout_text' ) ); ?></div>
 	</div>
 
 	<div class="k-grid k-grid-3" style="margin-top: 26px">
@@ -67,8 +67,8 @@ $values = array(
 	<div style="background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 26px; padding: 34px 38px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap">
 		<div style="font-size: 34px">⛩️</div>
 		<div style="flex: 1; min-width: 280px">
-			<div style="font: 700 18px var(--k-font-title); color: var(--k-text); margin-bottom: 6px">On se croisera en convention !</div>
-			<div style="font: 500 14px/1.65 var(--k-font-ui); color: var(--k-text-soft)">J'adore aller en convention quand mon état de santé me le permet ! Les stands Kawami font une petite pause cette année, le temps de prendre soin de moi. Rendez-vous l'année prochaine ; en attendant, la boutique en ligne reste grande ouverte 💕</div>
+			<div style="font: 700 18px var(--k-font-title); color: var(--k-text); margin-bottom: 6px"><?php echo esc_html( kawami_field( 'kawami_story_meetup_title' ) ); ?></div>
+			<div style="font: 500 14px/1.65 var(--k-font-ui); color: var(--k-text-soft)"><?php echo esc_html( kawami_field( 'kawami_story_meetup_text' ) ); ?></div>
 		</div>
 		<a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' ) ); ?>" class="k-btn k-btn-primary">Visiter la boutique</a>
 	</div>

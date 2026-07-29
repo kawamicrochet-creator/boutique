@@ -30,12 +30,16 @@ get_header();
 		</div>
 		<div class="k-anim-rise" style="display: flex; gap: 26px; margin-top: 34px; flex-wrap: wrap; animation-delay: .52s">
 			<?php
-			// Trust badges: fixed set of 3 (not exposed in the Customizer to keep
-			// its size manageable) - edit the array below to change text/colors.
+			// Badge colors stay hardcoded (decorative, not text) - the text
+			// itself comes from the Customizer ("Accueil — Hero").
+			$delay        = esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) );
+			$badge_text = function( $field ) use ( $delay ) {
+				return str_replace( array( '|', '{delai}' ), array( '<br>', $delay ), kawami_field( $field ) );
+			};
 			$trust_badges = array(
-				array( 'icon' => '🎀', 'bg' => '#f8cdd8', 'text' => '100% fait main<br>pièces uniques' ),
-				array( 'icon' => '🌿', 'bg' => '#d5c3e8', 'text' => 'Laine certifiée<br>Oeko-Tex' ),
-				array( 'icon' => '💌', 'bg' => '#bfe3d2', 'text' => 'Précommande<br>' . esc_html( get_theme_mod( 'kawami_preorder_delay_text', '2-3 semaines' ) ) ),
+				array( 'icon' => '🎀', 'bg' => '#f8cdd8', 'text' => $badge_text( 'kawami_hero_badge1_text' ) ),
+				array( 'icon' => '🌿', 'bg' => '#d5c3e8', 'text' => $badge_text( 'kawami_hero_badge2_text' ) ),
+				array( 'icon' => '💌', 'bg' => '#bfe3d2', 'text' => $badge_text( 'kawami_hero_badge3_text' ) ),
 			);
 			foreach ( $trust_badges as $badge ) : ?>
 				<div style="display: flex; align-items: center; gap: 9px">

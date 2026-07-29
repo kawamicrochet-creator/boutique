@@ -28,7 +28,7 @@ $tiktok_url      = get_theme_mod( 'kawami_social_tiktok_url', '' );
 					<span style="font: 500 11px var(--k-font-title); color: var(--k-pink); letter-spacing: .3em; margin-left: 4px">親友</span>
 				</span>
 			</div>
-			<p style="font: 500 12.5px/1.6 var(--k-font-ui); color: #c7a8b6; margin: 0; max-width: 260px">Peluches au crochet et accessoires cousus main, depuis un petit atelier français.</p>
+			<p style="font: 500 12.5px/1.6 var(--k-font-ui); color: #c7a8b6; margin: 0; max-width: 260px"><?php echo esc_html( kawami_field( 'kawami_footer_tagline' ) ); ?></p>
 		</div>
 		<div>
 			<div class="k-footer__heading">Boutique</div>
@@ -53,7 +53,7 @@ $tiktok_url      = get_theme_mod( 'kawami_social_tiktok_url', '' );
 			</div>
 		</div>
 	</div>
-	<div class="k-footer__bottom">© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ?: 'Kawami' ); ?> · fait main avec 💕 et beaucoup de laine</div>
+	<div class="k-footer__bottom">© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ?: 'Kawami' ); ?> · <?php echo esc_html( kawami_field( 'kawami_footer_signature' ) ); ?></div>
 </footer>
 
 <?php wp_footer(); ?>
