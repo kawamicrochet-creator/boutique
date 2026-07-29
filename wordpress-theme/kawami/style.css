@@ -428,22 +428,35 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   top: auto !important;
   box-sizing: border-box !important;
 }
+/* The base rule above also targets li.product.first/.last explicitly
+   (same specificity as the plain selectors here) - repeating those
+   variants at each breakpoint removes any doubt about which one wins,
+   instead of relying on a same-specificity source-order tiebreak. */
 @media (max-width: 989px) {
-  .woocommerce ul.products li.product, .woocommerce-page ul.products li.product, .related.products ul.products li.product {
-    flex-basis: calc(50% - 10px) !important;
+  .woocommerce ul.products li.product,
+  .woocommerce-page ul.products li.product,
+  .related.products ul.products li.product,
+  .woocommerce ul.products li.product.first,
+  .woocommerce ul.products li.product.last {
+    flex: 0 0 calc(50% - 10px) !important;
     width: calc(50% - 10px) !important;
     max-width: calc(50% - 10px) !important;
   }
 }
 @media (max-width: 599px) {
-  .woocommerce ul.products li.product, .woocommerce-page ul.products li.product, .related.products ul.products li.product {
-    flex-basis: 100% !important;
+  .woocommerce ul.products li.product,
+  .woocommerce-page ul.products li.product,
+  .related.products ul.products li.product,
+  .woocommerce ul.products li.product.first,
+  .woocommerce ul.products li.product.last {
+    flex: 0 0 100% !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 }
 .woocommerce ul.products li.product { background: var(--k-card); border: 1.5px solid var(--k-border); border-radius: 22px; overflow: hidden; }
-.woocommerce ul.products li.product img { border-radius: 0; }
+.woocommerce ul.products li.product img { border-radius: 0; width: 100% !important; height: auto !important; display: block !important; }
+.woocommerce ul.products li.product > a { display: block !important; width: 100% !important; }
 .woocommerce div.product p.price, .woocommerce ul.products li.product .price { color: var(--k-primary); font: 700 15px var(--k-font-ui); }
 .woocommerce a.button, .woocommerce button.button, .woocommerce input.button, .woocommerce #respond input#submit,
 .woocommerce a.added_to_cart {
