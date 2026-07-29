@@ -232,12 +232,7 @@ if ( ! is_wp_error( $univers_terms ) && $univers_terms ) :
 			</div>
 		</div>
 		<div class="k-insta-grid">
-			<?php
-			// Static grid of 6 tiles - swap the image for each attachment ID/URL
-			// directly here (no dedicated Customizer repeater for this MVP).
-			for ( $i = 0; $i < 6; $i++ ) : ?>
-				<a href="<?php echo esc_url( $ig_url ?: '#' ); ?>" target="_blank" rel="noopener" style="aspect-ratio: 1; border-radius: 14px; overflow: hidden; position: relative; display: block; background: var(--k-pink-soft)"></a>
-			<?php endfor; ?>
+			<?php echo do_shortcode( '[trustindex-feed-instagram]' ); ?>
 		</div>
 	</div>
 </section>
