@@ -353,29 +353,40 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
   .k-split { grid-template-columns: 1fr !important; gap: 28px !important; }
 }
 
-/* Tablet: same stacked layout as mobile, but the hero visual keeps a
-   bit more room than the phone sizing below since there's more width
-   to work with. */
+/* Tablet + mobile: the two hero photos were absolutely positioned one
+   above the other inside a fixed-height box (tuned for desktop's exact
+   sizes), which is fragile - any mismatch between the configured height
+   and the images' real offsets shows up as either a big empty gap or an
+   overlap. Below desktop, lay them out as a plain side-by-side flex row
+   instead, which can't produce that gap regardless of exact width. */
 @media (max-width: 1024px) {
-  .k-hero-visual { height: 380px !important; margin-top: 20px; }
-  .k-hero-visual__main { width: 280px !important; height: 280px !important; right: 10px !important; }
-  .k-hero-visual__accent { width: 180px !important; height: 180px !important; left: -6px !important; bottom: -8px !important; }
-  .k-hero-visual__tag {
-    top: auto !important; bottom: 10px !important; right: -10px !important;
-    max-width: 160px !important; white-space: normal !important; line-height: 1.3 !important;
-    font-size: 12px !important; padding: 9px 14px !important;
+  .k-hero-visual {
+    height: auto !important;
+    margin-top: 20px;
+    display: flex !important;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px;
   }
-}
-
-@media (max-width: 749px) {
-  .k-hero-visual { height: 340px !important; margin-top: 20px; }
-  .k-hero-visual__main { width: 240px !important; height: 240px !important; right: 10px !important; }
-  .k-hero-visual__accent { width: 150px !important; height: 150px !important; left: -6px !important; bottom: -8px !important; }
+  .k-hero-visual__main, .k-hero-visual__accent {
+    position: static !important;
+    inset: auto !important;
+    margin: 0 !important;
+  }
+  .k-hero-visual__main { width: 220px !important; height: 220px !important; }
+  .k-hero-visual__accent { width: 150px !important; height: 150px !important; }
   .k-hero-visual__tag {
-    top: auto !important; bottom: 6px !important; right: -10px !important;
+    position: absolute !important;
+    top: auto !important; bottom: -14px !important; right: 4px !important;
     max-width: 150px !important; white-space: normal !important; line-height: 1.3 !important;
     font-size: 11px !important; padding: 8px 12px !important;
   }
+  .k-anim-float, .k-anim-twinkle { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  .k-hero-visual__main { width: 170px !important; height: 170px !important; }
+  .k-hero-visual__accent { width: 120px !important; height: 120px !important; }
 }
 
 .k-insta-grid { display: grid; gap: 12px; grid-template-columns: repeat(6, 1fr); }
