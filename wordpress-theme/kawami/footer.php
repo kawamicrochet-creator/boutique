@@ -12,6 +12,9 @@ $apropos_url     = kawami_nav_page_url( 'kawami_page_apropos' );
 $contact_url     = kawami_nav_page_url( 'kawami_page_contact' );
 $instagram_url   = get_theme_mod( 'kawami_social_instagram_url', '' );
 $tiktok_url      = get_theme_mod( 'kawami_social_tiktok_url', '' );
+$mentions_url    = kawami_nav_page_url( 'kawami_page_mentions_legales' );
+$confidentialite_url = kawami_nav_page_url( 'kawami_page_confidentialite' );
+$ccv_url         = kawami_nav_page_url( 'kawami_page_ccv' );
 ?>
 <footer class="k-footer">
 	<div class="k-footer__top">
@@ -54,6 +57,13 @@ $tiktok_url      = get_theme_mod( 'kawami_social_tiktok_url', '' );
 		</div>
 	</div>
 	<div class="k-footer__bottom">© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ?: 'Kawami' ); ?> · <?php echo esc_html( kawami_field( 'kawami_footer_signature' ) ); ?></div>
+	<?php if ( $mentions_url || $confidentialite_url || $ccv_url ) : ?>
+		<div class="k-footer__legal" style="display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-top: 10px; font: 500 11.5px var(--k-font-ui)">
+			<?php if ( $mentions_url ) : ?><a href="<?php echo esc_url( $mentions_url ); ?>" style="color: #c7a8b6">Mentions légales</a><?php endif; ?>
+			<?php if ( $confidentialite_url ) : ?><a href="<?php echo esc_url( $confidentialite_url ); ?>" style="color: #c7a8b6">Politique de confidentialité</a><?php endif; ?>
+			<?php if ( $ccv_url ) : ?><a href="<?php echo esc_url( $ccv_url ); ?>" style="color: #c7a8b6">CGV</a><?php endif; ?>
+		</div>
+	<?php endif; ?>
 </footer>
 
 <?php wp_footer(); ?>

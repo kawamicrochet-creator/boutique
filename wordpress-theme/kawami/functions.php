@@ -154,10 +154,13 @@ function kawami_customize_register( $wp_customize ) {
 	// build's page-picker section settings, so the merchant just selects
 	// existing WordPress pages instead of hardcoding slugs.
 	$nav_pages = array(
-		'kawami_page_accessoires' => __( 'Page « Accessoires »', 'kawami' ),
-		'kawami_page_journaux'    => __( 'Page « Journaux »', 'kawami' ),
-		'kawami_page_apropos'     => __( 'Page « Mon histoire »', 'kawami' ),
-		'kawami_page_contact'     => __( 'Page « Contact »', 'kawami' ),
+		'kawami_page_accessoires'     => __( 'Page « Accessoires »', 'kawami' ),
+		'kawami_page_journaux'        => __( 'Page « Journaux »', 'kawami' ),
+		'kawami_page_apropos'         => __( 'Page « Mon histoire »', 'kawami' ),
+		'kawami_page_contact'         => __( 'Page « Contact »', 'kawami' ),
+		'kawami_page_mentions_legales' => __( 'Page « Mentions légales »', 'kawami' ),
+		'kawami_page_confidentialite'  => __( 'Page « Politique de confidentialité »', 'kawami' ),
+		'kawami_page_ccv'              => __( 'Page « CGV »', 'kawami' ),
 	);
 	foreach ( $nav_pages as $setting_id => $label ) {
 		$wp_customize->add_setting( $setting_id, array(
