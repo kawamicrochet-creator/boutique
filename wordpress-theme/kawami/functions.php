@@ -324,11 +324,29 @@ function kawami_homepage_fields() {
 }
 
 /**
+ * Builds a flat map of every homepage/page field id -> its declared
+ * 'default' value, from kawami_homepage_fields()'s nested sections.
+ */
+function kawami_field_defaults() {
+	static $defaults = null;
+	if ( null === $defaults ) {
+		$defaults = array();
+		foreach ( kawami_homepage_fields() as $section ) {
+			foreach ( $section['fields'] as $id => $field ) {
+				$defaults[ $id ] = $field['default'] ?? '';
+			}
+		}
+	}
+	return $defaults;
+}
+
+/**
  * Shorthand: get a homepage Customizer field's current value (falls back
  * to its declared default from kawami_homepage_fields()).
  */
 function kawami_field( $id ) {
-	return get_theme_mod( $id, '' );
+	$defaults = kawami_field_defaults();
+	return get_theme_mod( $id, $defaults[ $id ] ?? '' );
 }
 
 /**
