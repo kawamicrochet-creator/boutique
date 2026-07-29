@@ -72,7 +72,21 @@ get_header();
 <?php
 // ---------- Mes univers: product categories (each category's own image,
 // set in Produits > Catégories, becomes the tile photo) ----------
-$univers_terms = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'number' => 5, 'exclude' => array( get_option( 'default_product_cat' ) ) ) );
+$univers_slugs = array_filter( array_map( 'trim', explode( ',', kawami_field( 'kawami_univers_categories' ) ) ) );
+if ( $univers_slugs ) {
+	// Fetch by slug, then reorder to match the Customizer field's order
+	// (get_terms doesn't preserve the "slug" arg's input order).
+	$fetched        = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'slug' => $univers_slugs ) );
+	$fetched_by_slug = is_wp_error( $fetched ) ? array() : wp_list_pluck( $fetched, null, 'slug' );
+	$univers_terms  = array();
+	foreach ( $univers_slugs as $slug ) {
+		if ( isset( $fetched_by_slug[ $slug ] ) ) {
+			$univers_terms[] = $fetched_by_slug[ $slug ];
+		}
+	}
+} else {
+	$univers_terms = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'number' => 5, 'exclude' => array( get_option( 'default_product_cat' ) ) ) );
+}
 if ( ! is_wp_error( $univers_terms ) && $univers_terms ) :
 ?>
 <section class="k-container" style="padding: 34px 40px 10px">
