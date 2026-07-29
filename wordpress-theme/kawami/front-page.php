@@ -72,18 +72,23 @@ get_header();
 <?php
 // ---------- Mes univers: product categories (each category's own image,
 // set in Produits > Catégories, becomes the tile photo) ----------
-// Accept either real slugs ("pop-culture") or the category's display name
-// ("Pop culture") - sanitize_title() converts either into a matchable slug.
-$univers_slugs = array_filter( array_map( 'sanitize_title', explode( ',', kawami_field( 'kawami_univers_categories' ) ) ) );
-$univers_terms = array();
-if ( $univers_slugs ) {
-	// Fetch by slug, then reorder to match the Customizer field's order
-	// (get_terms doesn't preserve the "slug" arg's input order).
-	$fetched         = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'slug' => $univers_slugs ) );
-	$fetched_by_slug = is_wp_error( $fetched ) ? array() : wp_list_pluck( $fetched, null, 'slug' );
-	foreach ( $univers_slugs as $slug ) {
-		if ( isset( $fetched_by_slug[ $slug ] ) ) {
-			$univers_terms[] = $fetched_by_slug[ $slug ];
+// Accept either the category's display name ("Pop culture") or its slug
+// ("pop-culture"). Matching by name directly (not just sanitize_title()'d
+// slug) matters because renaming a category in wp-admin does NOT update
+// its slug, so an edited display name can stop matching its own slug.
+$univers_inputs = array_filter( array_map( 'trim', explode( ',', kawami_field( 'kawami_univers_categories' ) ) ) );
+$univers_terms  = array();
+if ( $univers_inputs ) {
+	$all_product_cats = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false ) );
+	if ( ! is_wp_error( $all_product_cats ) ) {
+		foreach ( $univers_inputs as $input ) {
+			$input_slug = sanitize_title( $input );
+			foreach ( $all_product_cats as $term ) {
+				if ( 0 === strcasecmp( $term->name, $input ) || $term->slug === $input_slug ) {
+					$univers_terms[] = $term;
+					break;
+				}
+			}
 		}
 	}
 }
