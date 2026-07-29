@@ -238,7 +238,7 @@ function kawami_homepage_fields() {
 			'fields' => array(
 				'kawami_univers_title'      => array( 'type' => 'text', 'label' => 'Titre', 'default' => 'Mes univers ⛩️' ),
 				'kawami_univers_subtitle'   => array( 'type' => 'text', 'label' => 'Sous-titre', 'default' => 'choisis ton fandom' ),
-				'kawami_univers_categories' => array( 'type' => 'text', 'label' => 'Catégories à afficher (slugs séparés par des virgules, dans l\'ordre voulu — ex: peluches, kawaii, en-stock — laisser vide pour un choix automatique)' ),
+				'kawami_univers_categories' => array( 'type' => 'text', 'label' => 'Catégories à afficher (noms ou slugs séparés par des virgules, dans l\'ordre voulu — ex: Peluches, Kawaii, En stock — laisser vide pour un choix automatique)' ),
 			),
 		),
 		'kawami_featured' => array(

@@ -72,19 +72,24 @@ get_header();
 <?php
 // ---------- Mes univers: product categories (each category's own image,
 // set in Produits > Catégories, becomes the tile photo) ----------
-$univers_slugs = array_filter( array_map( 'trim', explode( ',', kawami_field( 'kawami_univers_categories' ) ) ) );
+// Accept either real slugs ("pop-culture") or the category's display name
+// ("Pop culture") - sanitize_title() converts either into a matchable slug.
+$univers_slugs = array_filter( array_map( 'sanitize_title', explode( ',', kawami_field( 'kawami_univers_categories' ) ) ) );
+$univers_terms = array();
 if ( $univers_slugs ) {
 	// Fetch by slug, then reorder to match the Customizer field's order
 	// (get_terms doesn't preserve the "slug" arg's input order).
-	$fetched        = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'slug' => $univers_slugs ) );
+	$fetched         = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'slug' => $univers_slugs ) );
 	$fetched_by_slug = is_wp_error( $fetched ) ? array() : wp_list_pluck( $fetched, null, 'slug' );
-	$univers_terms  = array();
 	foreach ( $univers_slugs as $slug ) {
 		if ( isset( $fetched_by_slug[ $slug ] ) ) {
 			$univers_terms[] = $fetched_by_slug[ $slug ];
 		}
 	}
-} else {
+}
+if ( ! $univers_terms ) {
+	// Nothing typed, or nothing matched - fall back to an automatic pick
+	// rather than silently hiding the whole section.
 	$univers_terms = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false, 'number' => 5, 'exclude' => array( get_option( 'default_product_cat' ) ) ) );
 }
 if ( ! is_wp_error( $univers_terms ) && $univers_terms ) :
