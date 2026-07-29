@@ -231,7 +231,7 @@ if ( ! is_wp_error( $univers_terms ) && $univers_terms ) :
 				<?php $tt_url = get_theme_mod( 'kawami_social_tiktok_url', '' ); if ( $tt_url ) : ?><a href="<?php echo esc_url( $tt_url ); ?>" target="_blank" rel="noopener">TikTok ↗</a><?php endif; ?>
 			</div>
 		</div>
-		<div class="k-insta-grid">
+		<div class="k-insta-embed">
 			<?php echo do_shortcode( '[trustindex-feed-instagram]' ); ?>
 		</div>
 	</div>
