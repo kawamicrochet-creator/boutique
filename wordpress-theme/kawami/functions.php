@@ -390,6 +390,13 @@ add_action( 'init', 'kawami_woocommerce_setup' );
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 
 /**
+ * Hide the SKU (UGS) from product pages - it's an internal reference
+ * (auto-generated from the product name during the catalogue import),
+ * not something customers need to see. Categories/tags stay visible.
+ */
+add_filter( 'wc_product_sku_enabled', '__return_false' );
+
+/**
  * Returns the permalink for a nav page picked in the Customizer
  * (kawami_page_accessoires, kawami_page_journaux, kawami_page_apropos,
  * kawami_page_contact), or empty string if not set/published.
