@@ -50,19 +50,19 @@ get_header();
 		</div>
 	</div>
 
-	<div class="k-hero-visual" style="position: relative; height: 480px; z-index: 1; overflow: visible">
+	<div class="k-hero-visual" style="position: relative; height: 580px; z-index: 1; overflow: visible">
 		<?php $image_1 = kawami_field_image( 'kawami_hero_image_1' ); if ( $image_1 ) : ?>
-			<div class="k-hero-visual__main" style="position: absolute; right: 22px; top: 0; width: 330px; height: 330px; border-radius: 46% 54% 52% 48%/50% 46% 54% 50%; overflow: hidden; border: 8px solid #fff; box-shadow: 0 14px 40px rgba(92,67,81,.16)">
+			<div class="k-hero-visual__main" style="position: absolute; right: 10px; top: 0; width: 420px; height: 420px; border-radius: 46% 54% 52% 48%/50% 46% 54% 50%; overflow: hidden; border: 8px solid #fff; box-shadow: 0 14px 40px rgba(92,67,81,.16)">
 				<img src="<?php echo esc_url( $image_1 ); ?>" style="width: 100%; height: 100%; object-fit: cover" alt="">
 			</div>
 			<?php $tag_text = kawami_field( 'kawami_hero_price_tag_text' ); if ( $tag_text ) : ?>
-				<div class="k-hero-visual__tag" style="position: absolute; z-index: 3; background: #fff; border-radius: 16px; padding: 12px 18px; box-shadow: 0 8px 22px rgba(92,67,81,.14); font: 700 13px var(--k-font-ui); color: var(--k-text); transform: rotate(3deg); right: -18px; top: 120px; white-space: nowrap">
+				<div class="k-hero-visual__tag" style="position: absolute; z-index: 3; background: #fff; border-radius: 16px; padding: 12px 18px; box-shadow: 0 8px 22px rgba(92,67,81,.14); font: 700 13px var(--k-font-ui); color: var(--k-text); transform: rotate(3deg); right: -18px; top: 160px; white-space: nowrap">
 					<?php echo esc_html( $tag_text ); ?><br><span style="font: 600 12px var(--k-font-ui); color: var(--k-primary)"><?php echo esc_html( kawami_field( 'kawami_hero_price_tag_price' ) ); ?></span>
 				</div>
 			<?php endif; ?>
 		<?php endif; ?>
 		<?php $image_2 = kawami_field_image( 'kawami_hero_image_2' ); if ( $image_2 ) : ?>
-			<div class="k-hero-visual__accent" style="position: absolute; left: -10px; bottom: -6px; width: 200px; height: 200px; border-radius: 50%; overflow: hidden; border: 8px solid #fff; box-shadow: 0 12px 32px rgba(92,67,81,.18)">
+			<div class="k-hero-visual__accent" style="position: absolute; left: -20px; bottom: -6px; width: 260px; height: 260px; border-radius: 50%; overflow: hidden; border: 8px solid #fff; box-shadow: 0 12px 32px rgba(92,67,81,.18)">
 				<img src="<?php echo esc_url( $image_2 ); ?>" style="width: 100%; height: 100%; object-fit: cover" alt="">
 			</div>
 		<?php endif; ?>

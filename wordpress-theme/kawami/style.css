@@ -373,8 +373,8 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
     inset: auto !important;
     margin: 0 !important;
   }
-  .k-hero-visual__main { width: 220px !important; height: 220px !important; }
-  .k-hero-visual__accent { width: 150px !important; height: 150px !important; }
+  .k-hero-visual__main { width: 280px !important; height: 280px !important; }
+  .k-hero-visual__accent { width: 190px !important; height: 190px !important; }
   .k-hero-visual__tag {
     position: absolute !important;
     top: auto !important; bottom: -14px !important; right: 4px !important;
@@ -385,8 +385,8 @@ textarea.k-field { min-height: 130px; resize: vertical; font-family: var(--k-fon
 }
 
 @media (max-width: 480px) {
-  .k-hero-visual__main { width: 170px !important; height: 170px !important; }
-  .k-hero-visual__accent { width: 120px !important; height: 120px !important; }
+  .k-hero-visual__main { width: 210px !important; height: 210px !important; }
+  .k-hero-visual__accent { width: 150px !important; height: 150px !important; }
 }
 
 .k-insta-grid { display: grid; gap: 12px; grid-template-columns: repeat(6, 1fr); }
