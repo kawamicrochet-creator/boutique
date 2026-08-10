@@ -122,7 +122,7 @@ $goodies = array(
 	</div>
 </section>
 
-<section class="k-container" style="padding: 40px 40px 6px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center">
+<section class="k-container k-split" style="padding: 40px 40px 6px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center">
 	<div style="border-radius: 28px; overflow: hidden; border: 1.5px solid var(--k-border); box-shadow: 0 14px 40px rgba(92,67,81,.14)">
 		<?php if ( $feature_image ) : ?>
 			<img src="<?php echo esc_url( $feature_image ); ?>" alt="Numérique et papier" style="display: block; width: 100%; height: auto">
